@@ -1,0 +1,27 @@
+.emp-table {
+  width : 750px;
+}
+
+.empList-number {
+  width : 15%;
+  text-align: center;
+}
+.empList-name {
+  width : 25%;
+  text-align: center;
+}
+.empList-profile {
+  width : 50%;
+  text-align: center;
+}
+.empList-edit {
+  width : 10%;
+  text-align: center;
+}
+
+.number-of-list {
+  float: right;
+  vertical-align: bottom;
+  padding-bottom: 15px;
+}
+
