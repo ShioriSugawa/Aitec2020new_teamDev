@@ -24,6 +24,12 @@ import model.Employee;
  * EmployeeDAOの一覧/登録/更新/削除の単体テストクラス<br>
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
+/*
+ * 修正内容まとめ
+ * 6/15 既存テスト所属追加対応
+ *
+ */
 public class EmployeeDAOTest {
 
     /**
@@ -39,7 +45,8 @@ public class EmployeeDAOTest {
         try {
             connection_register = ConnectionManagerTest.getConnection();
             EmployeeDAO empDAO = new EmployeeDAO(connection_register);
-            empDAO.registerOneEmployee("666666", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９");
+            // 6/15 所属追加
+            empDAO.registerOneEmployee("666666", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９", "部署1");
             connection_register.commit();				//2020.05.28 10→30桁に変更
         } catch (SQLException e) {
             connection_register.rollback();
@@ -83,9 +90,14 @@ public class EmployeeDAOTest {
         final String actualEmployeeName = emp.getEmployeeName().trim();
         final String expectedEmployeeComment = "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９";
         final String actualEmployeeComment = emp.getEmployeeProfile().trim();
+        // 6/15 追加
+        final String expectedEmployeeDeployment = "部署1";
+        final String actualEmployeeDeployement = emp.getEmployeeDeployment().trim();
 
         assertEquals(expectedEmployeeName, actualEmployeeName);
         assertEquals(expectedEmployeeComment, actualEmployeeComment);
+        // 6/15 追加
+        assertEquals(expectedEmployeeDeployment, actualEmployeeDeployement);
     }
 
     /**
@@ -170,13 +182,14 @@ public class EmployeeDAOTest {
         Connection connection = null;
         String actual = "";
         String expected = "ERROR: 列\"employee_number\"内のNULL値はNOT NULL制約違反です" +
-                "\n  詳細: 失敗した行は(null, 氏名, プロフィール)を含みます";						//2020.05.27 エラーメッセージを日本語に修正
+                "\n  詳細: 失敗した行は(null, 氏名, プロフィール, 部署1, null, null)を含みます";						//2020.05.27 エラーメッセージを日本語に修正
 
         //テスト実行
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeDAO empDAO = new EmployeeDAO(connection);
-            empDAO.registerOneEmployee(null, "氏名", "プロフィール");
+            // 6/15 所属追加
+            empDAO.registerOneEmployee(null, "氏名", "プロフィール", "部署1");
 
             //Exceptionが発生しなければ失敗
             fail();
@@ -215,7 +228,8 @@ public class EmployeeDAOTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeDAO empDAO = new EmployeeDAO(connection);
-            empDAO.registerOneEmployee("0123456", "氏名", "プロフィール");
+            // 6/15 所属追加
+            empDAO.registerOneEmployee("0123456", "氏名", "プロフィール", "部署1");
 
             //Exceptionが発生しなければ失敗
             fail();
@@ -254,7 +268,8 @@ public class EmployeeDAOTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeDAO empDAO = new EmployeeDAO(connection);
-            empDAO.registerOneEmployee("666666", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０", "プロフィール");			//2020.05.28 11→31桁に変更
+            // 6/15 所属追加
+            empDAO.registerOneEmployee("666666", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０", "プロフィール", "部署1");			//2020.05.28 11→31桁に変更
 
             //Exceptionが発生しなければ失敗
             fail();
@@ -293,7 +308,8 @@ public class EmployeeDAOTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeDAO empDAO = new EmployeeDAO(connection);
-            empDAO.registerOneEmployee("666666", "氏名", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０");
+            // 6/15　所属追加
+            empDAO.registerOneEmployee("666666", "氏名", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０", "部署1");
             //Exceptionが発生しなければ失敗
             fail();
             connection.commit();
@@ -540,9 +556,12 @@ class FindOneEmployee {
                     String employee_number = resultSet.getString("employee_number");
                     String employee_name = resultSet.getString("employee_name");
                     String employee_profile = resultSet.getString("employee_profile");
+                    // 6/15 追加
+                    String employee_deployment = resultSet.getString("employee_deployment");
 
                     // 結果を格納
-                    emp = new Employee(employee_number, employee_name, employee_profile);
+                    // 6/15 所属追加
+                    emp = new Employee(employee_number, employee_name, employee_profile, employee_deployment);
                 }
             }
 

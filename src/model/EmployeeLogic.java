@@ -14,6 +14,10 @@ import dao.EmployeeDAO;
  * クラス概要：<br>
  *  従業員に関するビジネスロジックを記述するクラス<br>
  */
+/*
+ * 修正内容まとめ
+ * 従業員を登録するメソッド所属追加
+ */
 public class EmployeeLogic {
 
 	/** データベースへの接続オブジェクト */
@@ -78,7 +82,7 @@ public class EmployeeLogic {
 	 * @return 登録エラー有無（true：登録失敗（既に同じ従業員番号のデータが存在）, false：登録成功）
 	 * @throws ServletException
 	 */
-	public Boolean registerEmployee(String employeeNumber, String employeeName, String employeeProfile) throws ServletException {
+	public Boolean registerEmployee(String employeeNumber, String employeeName, String employeeProfile,String employeeDeployment) throws ServletException {
 		Boolean hasError = false;
 		EmployeeDAO empDAO = new EmployeeDAO(connection);
 		Employee emp = null;
@@ -109,6 +113,10 @@ public class EmployeeLogic {
 			if(employeeProfile.strip().length() == 0){
 				throw new IllegalArgumentException("プロフィールに値が入力されていません。");
 			}
+			// 6/15 追加
+			if(employeeDeployment.equals("所属を選択してください")) {
+				throw new IllegalArgumentException("所属が未選択です。");
+			}
 			// DB処理実行
 			emp = empDAO.findOneEmployee(employeeNumber);
 
@@ -117,7 +125,8 @@ public class EmployeeLogic {
 				hasError = true;
 			} else {
 				// 取得できなかったら（未登録の従業員番号であれば）登録処理を実施
-				empDAO.registerOneEmployee(employeeNumber, employeeName, employeeProfile);
+				// 6/15 所属追加
+				empDAO.registerOneEmployee(employeeNumber, employeeName, employeeProfile,employeeDeployment);
 				hasError = false;
 			}
 		} catch (SQLException | IllegalArgumentException e) {

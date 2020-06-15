@@ -15,6 +15,10 @@ import model.Employee;
  * クラス概要：<br>
  *  更新、削除等、データベースの各種操作を行うクラス<br>
  */
+/*
+ * 修正内容まとめ
+ * 6/15 register 所属追加対応
+ */
 public class EmployeeDAO {
 
 	/** データベースへの接続オブジェクト */
@@ -53,9 +57,12 @@ public class EmployeeDAO {
 				String employee_number = resultSet.getString("employee_number");
 				String employee_name = resultSet.getString("employee_name");
 				String employee_profile = resultSet.getString("employee_profile");
+				// 6/15 追加
+				String employee_deployment = resultSet.getString("employee_deployment");
 
 				// 結果リストに格納
-				Employee emp = new Employee(employee_number, employee_name, employee_profile);
+				// 6/15 所属追加
+				Employee emp = new Employee(employee_number, employee_name, employee_profile, employee_deployment);
 				empList.add(emp);
 			}
 		}
@@ -91,9 +98,11 @@ public class EmployeeDAO {
 					String employee_number = resultSet.getString("employee_number");
 					String employee_name = resultSet.getString("employee_name");
 					String employee_profile = resultSet.getString("employee_profile");
-
+					// 6/15　追加
+					String employee_deployment = resultSet.getString("employee_deployment");
 					// 結果を格納
-					emp = new Employee(employee_number, employee_name, employee_profile);
+					// 6/15 所属追加
+					emp = new Employee(employee_number, employee_name, employee_profile, employee_deployment);
 				}
 			}
 
@@ -108,8 +117,8 @@ public class EmployeeDAO {
 	 * @param employeeProfile プロフィール
 	 * @throws SQLException
 	 */
-	public void registerOneEmployee(String employeeNumber, String employeeName, String employeeProfile) throws SQLException {
-		String sql = "INSERT INTO employee (employee_number, employee_name, employee_profile) VALUES (?, ?, ?)";
+	public void registerOneEmployee(String employeeNumber, String employeeName, String employeeProfile, String employeeDeployment) throws SQLException {
+		String sql = "INSERT INTO employee (employee_number, employee_name, employee_profile, employee_deployment) VALUES (?, ?, ?, ?)";
 
 		// -------------------
 		// SQL発行
@@ -118,6 +127,7 @@ public class EmployeeDAO {
 			pStmt.setString(1, employeeNumber);
 			pStmt.setString(2, employeeName);
 			pStmt.setString(3, employeeProfile);
+			pStmt.setString(4, employeeDeployment);
 			pStmt.executeUpdate();
 		}
 	}

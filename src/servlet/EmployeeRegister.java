@@ -21,6 +21,11 @@ import model.EmployeeLogic;
  * クラス概要：<br>
  *  従業員登録のコントローラクラス<br>
  */
+/*
+ * 修正内容まとめ
+ * 2020/6/15　所属追加対応
+ *
+ */
 @WebServlet("/EmployeeRegister")
 public class EmployeeRegister extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -50,19 +55,31 @@ public class EmployeeRegister extends HttpServlet {
 		String employeeNumber = request.getParameter("employeeNumber");
 		String employeeName = request.getParameter("employeeName");
 		String employeeProfile = request.getParameter("employeeProfile");
+		// 2020/6/15 追加
+		String employeeDeployment = request.getParameter("deployment");
+
+		// 2020/6/15 所属が未選択なら再度登録画面にフォワード
+		Boolean noInputError = false;
+		if(employeeDeployment.equals("所属を選択してください")) {
+			noInputError = true;
+			request.setAttribute("noInputError", noInputError);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
+			dispatcher.forward(request, response);
+		}
 
 		Boolean hasError = false;
 
 		try (Connection connection = ConnectionManager.getConnection()) {
 			try {
 				// 該当の従業員を登録
+				// 6/15 所属追加
 				EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-				hasError = employeeLogic.registerEmployee(employeeNumber, employeeName, employeeProfile);
+				hasError = employeeLogic.registerEmployee(employeeNumber, employeeName, employeeProfile,employeeDeployment);
 
 				if(hasError == true) {
 					// 既に登録されている従業員番号の場合、登録画面へフォワードし、エラーメッセージを表示
 					request.setAttribute("hasError", hasError);
-					Employee emp = new Employee(employeeNumber, employeeName, employeeProfile);
+					Employee emp = new Employee(employeeNumber, employeeName, employeeProfile,employeeDeployment);
 					request.setAttribute("emp", emp);
 					RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
 					dispatcher.forward(request, response);
@@ -78,9 +95,6 @@ public class EmployeeRegister extends HttpServlet {
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		}
-
-
-
 	}
 
 }

@@ -8,9 +8,14 @@ import java.io.Serializable;
  * クラス概要：<br>
  *  従業員のJavaBeansクラス<br>
  */
+
+/*
+ * 修正内容まとめ
+ * 6/15 メンバ変数,setter,getterに所属追加、それに伴いコンストラクタ変更
+ */
 public class Employee implements Serializable {
 
-	private String employeeNumber, employeeName, employeeProfile;
+	private String employeeNumber, employeeName, employeeProfile,employeeDeployment;
 
 	/**
 	 * コンストラクタ
@@ -18,10 +23,11 @@ public class Employee implements Serializable {
 	 * @param employeeName 氏名
 	 * @param employeeProfile プロフィール
 	 */
-	public Employee(String employeeNumber, String employeeName, String employeeProfile) {
+	public Employee(String employeeNumber, String employeeName, String employeeProfile, String employeeDeployment) {
 		this.employeeNumber = employeeNumber;
 		this.employeeName = employeeName;
 		this.employeeProfile = employeeProfile;
+		this.employeeDeployment = employeeDeployment;
 	}
 
 	/**
@@ -70,5 +76,21 @@ public class Employee implements Serializable {
 	 */
 	public void setEmployeeProfile(String employeeProfile) {
 		this.employeeProfile = employeeProfile;
+	}
+
+	/**
+	 * 所属部署を取得
+	 * 	@return 所属部署
+	 */
+	public String getEmployeeDeployment() {
+		return this.employeeDeployment;
+	}
+
+	/**
+	 * 所属部署を設定
+	 * @param employeeDeployment 所属部署
+	 */
+	public void setEmployeeDeployment(String employeeDeployment) {
+		this.employeeDeployment = employeeDeployment;
 	}
 }

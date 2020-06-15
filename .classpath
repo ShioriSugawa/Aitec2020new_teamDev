@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="Test"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/AdoptOpenJDK11.0.6.10">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/AdaptOpenJDK11.0.6.10">
 		<attributes>
 			<attribute name="module" value="true"/>
 			<attribute name="owner.project.facets" value="java"/>
@@ -16,6 +16,7 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="C:/Users/Aitec/Desktop/DVD2/software/jmockit-1.48.jar"/>
+	<classpathentry kind="lib" path="C:/software/jmockit-1.48.jar"/>
+	<classpathentry kind="lib" path="C:/eclipse/JDBC/postgresql-42.2.11.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

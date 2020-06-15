@@ -33,8 +33,26 @@
                 <br/>
                 <input type="text" name="employeeName" class="register-name-input" maxlength='30' placeholder='氏名を入力してください。' value="${ emp.employeeName }" required >		<%-- 2020.05.28 maxlength='30'→maxlength='30'に変更 --%>
             </div>
+            <%--2020/6/15　追加 --%>
+             <label>所属</label><br>
+             <select name="deployment">
+				<option>所属を選択してください</option>
+				<option>部署1</option>
+				<option>部署2</option>
+				<option>部署3</option>
+				<option>部署4</option>
+				<option>部署5</option>
+			</select>
+
+			<%--2020/6/15 所属未選択で遷移されて来たらエラーメッセージ表示 --%>
+			<c:if test = "${ noInputError == true }"  >
+	            <font color="red">
+					<p>所属を未選択です。</p>
+	            </font>
+        	</c:if>
+
             <div class="register-profile">
-                <label>プロフィール（100文字以内）</label>
+                <br><label>プロフィール（100文字以内）</label>
                 <br/>
                 <textarea name="employeeProfile" class="register-profile-input" rows="6" cols="40" maxlength="100" placeholder="プロフィールを入力してください。" required >${ emp.employeeProfile }</textarea>
             </div>

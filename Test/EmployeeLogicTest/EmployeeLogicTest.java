@@ -24,6 +24,10 @@ import model.EmployeeLogic;
  * クラス概要：<br>
  * EmployeeLogicの一覧/登録/更新/削除の単体テストクラス<br>
  */
+/*
+ * 修正内容まとめ
+ * 6/15 登録関係既存テスト所属追加対応
+ */
 public class EmployeeLogicTest {
     @Mocked
     EmployeeDAO employeeDAO;
@@ -42,7 +46,8 @@ public class EmployeeLogicTest {
         //DAOのJMockit
         new Expectations() {
             {
-                employeeDAO.registerOneEmployee("666660", "０１２３４５", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９");
+            	// 2020/6/15 所属追加
+                employeeDAO.registerOneEmployee("666660", "０１２３４５", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９","部署1");
                 employeeDAO.findOneEmployee("666660");
                 result = null;
             }
@@ -52,7 +57,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            hasError = employeeLogic.registerEmployee("666660", "０１２３４５", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９");
+            // 2020/6/15 所属追加
+            hasError = employeeLogic.registerEmployee("666660", "０１２３４５", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９", "部署1");
 
             // ------------
             // 結果チェック
@@ -84,8 +90,9 @@ public class EmployeeLogicTest {
         //DAOのJMockit
         new Expectations() {{
             List<Employee> empList = new ArrayList<>();
-            Employee emp1 = new Employee("666661", "氏名1", "プロフィール1");
-            Employee emp2 = new Employee("666662", "氏名2", "プロフィール2");
+            // 2020/6/15 所属追加
+            Employee emp1 = new Employee("666661", "氏名1", "プロフィール1","部署1");
+            Employee emp2 = new Employee("666662", "氏名2", "プロフィール2", "部署2");
             empList.add(emp1);
             empList.add(emp2);
             employeeDAO.findAllEmployee();
@@ -127,7 +134,8 @@ public class EmployeeLogicTest {
 
         //DAOのJMockit
         new Expectations() {{
-            Employee emp = new Employee("666666", "氏名", "プロフィール");
+        	// 2020/6/15 所属追加
+            Employee emp = new Employee("666666", "氏名", "プロフィール", "部署1");
             employeeDAO.findOneEmployee("666666");
             result = emp;
         }};
@@ -154,12 +162,17 @@ public class EmployeeLogicTest {
         final String actualEmployeeName = emp.getEmployeeName();
         final String expectedEmployeeProfile = "プロフィール";
         final String actualEmployeeProfile = emp.getEmployeeProfile();
+        // 2020/6/15　追加
+        final String expectedEmployeeDeployment = "部署1";
+        final String actualEmployeeDeployment = emp.getEmployeeDeployment();
 
         // ------------
         // 結果チェック
         // ------------
         assertEquals(expectedEmployeeName, actualEmployeeName);
         assertEquals(expectedEmployeeProfile, actualEmployeeProfile);
+        // 2020/6/15 追加
+        assertEquals(expectedEmployeeDeployment, actualEmployeeDeployment);
     }
 
     /**
@@ -177,7 +190,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            hasError = employeeLogic.registerEmployee("0123456", "氏名", "プロフィール");
+            // 2020/6/15 所属追加
+            hasError = employeeLogic.registerEmployee("0123456", "氏名", "プロフィール", "部署1");
 
             //Exceptionが発生しなければ失敗
             fail();
@@ -214,7 +228,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            hasError = employeeLogic.registerEmployee(null, "氏名", "プロフィール");
+            // 2020/6/15 所属追加
+            hasError = employeeLogic.registerEmployee(null, "氏名", "プロフィール", "部署1");
 
             //Exceptionが発生しなければ失敗
             fail();
@@ -251,7 +266,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            hasError = employeeLogic.registerEmployee("", "氏名", "プロフィール");
+            // 2020/6/15 所属追加
+            hasError = employeeLogic.registerEmployee("", "氏名", "プロフィール", "部署1");
             //Exceptionが発生しなければ失敗
             fail();
         } catch (ServletException | IllegalArgumentException e) {
@@ -287,7 +303,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            hasError = employeeLogic.registerEmployee("01234", "氏名", "プロフィール");
+            // 2020/6/15 所属追加
+            hasError = employeeLogic.registerEmployee("01234", "氏名", "プロフィール", "部署1");
 
             //Exceptionが発生しなければ失敗
             fail();
@@ -322,7 +339,8 @@ public class EmployeeLogicTest {
 
         //DAOのJMockit
         new Expectations() {{
-            Employee emp = new Employee("666666", "氏名", "プロフィール");
+        	// 2020/6/15 所属追加
+            Employee emp = new Employee("666666", "氏名", "プロフィール", "部署1");
             employeeDAO.findOneEmployee("666666");
             result = emp;
         }};
@@ -331,7 +349,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            hasError = employeeLogic.registerEmployee("666666", "氏名", "プロフィール");
+            // 2020/6/15 所属追加
+            hasError = employeeLogic.registerEmployee("666666", "氏名", "プロフィール", "部署1");
 
             // ------------
             // 結果チェック
@@ -366,7 +385,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            hasError = employeeLogic.registerEmployee("666666", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０", "プロフィール");			//2020.05.28 11→31桁に変更
+            // 2020/6/15 所属追加
+            hasError = employeeLogic.registerEmployee("666666", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０", "プロフィール", "部署1");			//2020.05.28 11→31桁に変更
 
             //Exceptionが発生しなければ失敗
             fail();
@@ -403,7 +423,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            hasError = employeeLogic.registerEmployee("666666", null, "プロフィール");
+            // 2020/6/15 所属追加
+            hasError = employeeLogic.registerEmployee("666666", null, "プロフィール", "部署1");
 
             //Exceptionが発生しなければ失敗
             fail();
@@ -440,7 +461,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            hasError = employeeLogic.registerEmployee("666666", "", "プロフィール");
+            //2020/6/15 所属追加
+            hasError = employeeLogic.registerEmployee("666666", "", "プロフィール", "部署1");
 
             //Exceptionが発生しなければ失敗
             fail();
@@ -477,7 +499,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            hasError = employeeLogic.registerEmployee("666666", "氏名", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０");
+            // 2020/6/15　所属追加
+            hasError = employeeLogic.registerEmployee("666666", "氏名", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０", "部署1");
 
             //Exceptionが発生しなければ失敗
             fail();
@@ -514,7 +537,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            hasError = employeeLogic.registerEmployee("666666", "氏名", null);
+            // 2020/6/15 所属追加
+            hasError = employeeLogic.registerEmployee("666666", "氏名", null, "部署1");
 
             //Exceptionが発生しなければ失敗
             fail();
@@ -551,7 +575,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            hasError = employeeLogic.registerEmployee("666666", "氏名", "");
+            // 2020/6/15 所属追加
+            hasError = employeeLogic.registerEmployee("666666", "氏名", "", "部署1");
 
             //Exceptionが発生しなければ失敗
             fail();
