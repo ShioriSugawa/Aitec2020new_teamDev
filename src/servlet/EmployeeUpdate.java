@@ -21,6 +21,9 @@ import model.EmployeeLogic;
  *  従業員更新のコントローラクラスです。<br>
  *
  */
+/*
+ * 2020/6/16 所属追加対応
+ */
 @WebServlet("/EmployeeUpdate")
 public class EmployeeUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -68,12 +71,23 @@ public class EmployeeUpdate extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String employeeName = request.getParameter("employeeName");
 		String employeeProfile = request.getParameter("employeeProfile");
+		//2020/6/16　追加
+		String employeeDeployment = request.getParameter("deployment");
+
+		// 2020/6/16 追加　 所属が未選択なら再度更新画面にフォワード
+		Boolean noInputError = false;
+		if(employeeDeployment.equals("所属を選択してください")) {
+			noInputError = true;
+			request.setAttribute("noInputError", noInputError);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/update.jsp");
+			dispatcher.forward(request, response);
+		}
 
 		try (Connection connection = ConnectionManager.getConnection()) {
 			try {
 				// 該当の従業員を更新
 				EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-				employeeLogic.updateEmployee(request.getParameter("employeeNumber"), employeeName, employeeProfile);
+				employeeLogic.updateEmployee(request.getParameter("employeeNumber"), employeeName, employeeProfile,employeeDeployment);
 				connection.commit();
 			} catch (ServletException e) {
 				connection.rollback();

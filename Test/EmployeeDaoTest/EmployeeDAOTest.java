@@ -345,7 +345,8 @@ public class EmployeeDAOTest {
         try {
             connection_update = ConnectionManagerTest.getConnection();
             EmployeeDAO empDAO = new EmployeeDAO(connection_update);
-            empDAO.updateOneEmployee("666666", "９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０", "９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０");
+            // 2020/6/16 所属追加
+            empDAO.updateOneEmployee("666666", "９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０", "９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０","更新部署");
             connection_update.commit();				//2020.05.28 10→30桁に変更
         } catch (SQLException e) {
             connection_update.rollback();
@@ -388,9 +389,14 @@ public class EmployeeDAOTest {
         final String actualEmployeeName = emp.getEmployeeName().trim();
         final String expectedEmployeeComment = "９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０９８７６５４３２１０";
         final String actualEmployeeComment = emp.getEmployeeProfile().trim();
+        // 2020/6/16 追加
+        final String expectedEmployeeDeployment = "更新部署";
+        final String actualEmployeeDeployment = emp.getEmployeeDeployment().trim();
 
         assertEquals(expectedEmployeeName, actualEmployeeName);
         assertEquals(expectedEmployeeComment, actualEmployeeComment);
+        // 2020/6/16 追加
+        assertEquals(expectedEmployeeDeployment,actualEmployeeDeployment);
     }
 
     /**
@@ -408,7 +414,8 @@ public class EmployeeDAOTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeDAO empDAO = new EmployeeDAO(connection);
-            empDAO.updateOneEmployee("686033", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０", "テスト");			//2020.05.28 11→31桁に変更
+            // 2020/6/16 所属追加
+            empDAO.updateOneEmployee("686033", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０", "テスト", "部署1");			//2020.05.28 11→31桁に変更
             //Exceptionが発生しなければ失敗
             fail();
             connection.commit();
@@ -445,7 +452,8 @@ public class EmployeeDAOTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeDAO empDAO = new EmployeeDAO(connection);
-            empDAO.updateOneEmployee("686033", "テスト", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０");
+            // 2020/6/16 所属追加
+            empDAO.updateOneEmployee("686033", "テスト", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０", "部署1");
             //Exceptionが発生しなければ失敗
             fail();
             connection.commit();

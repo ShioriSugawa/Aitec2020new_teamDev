@@ -26,7 +26,10 @@ import model.EmployeeLogic;
  */
 /*
  * 修正内容まとめ
- * 6/15 登録関係既存テスト所属追加対応
+ * 2020/6/15 登録関係既存テスト所属追加対応
+ * 2020/6/16 登録異常系所属未選択テスト追加
+ * 2020/6/16 更新関係既存テスト所属追加対応
+ *
  */
 public class EmployeeLogicTest {
     @Mocked
@@ -597,7 +600,43 @@ public class EmployeeLogicTest {
 
         }
     }
+    // 2020/6/16 所属追加に伴う新規テスト
+    /**
+     * 従業員一覧の登録テスト（異常系 : 所属が未選択）
+     * @throws SQLException
+     */
+    @Test
+    public void registerEmployeeDeploymentBlankError() throws SQLException{
+    	 Connection connection = null;
+         @SuppressWarnings("unused")
+ 		Boolean hasError = false;
 
+         //テスト実行
+         try {
+             connection = ConnectionManagerTest.getConnection();
+             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
+             // 2020/6/15 所属追加
+             hasError = employeeLogic.registerEmployee("666666", "氏名", "プロフィール", "所属を選択してください");
+
+             //Exceptionが発生しなければ失敗
+             fail();
+         } catch (ServletException | IllegalArgumentException e) {
+
+             // ------------
+             // 結果チェック
+             // ------------
+             assertEquals("java.lang.IllegalArgumentException: 所属が未選択です。", e.getMessage());
+         } finally {
+             try {
+                 if (connection != null) {
+                     connection.close();
+                 }
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+
+         }
+    }
 
     /**
      * 従業員の更新テスト(正常)
@@ -612,7 +651,8 @@ public class EmployeeLogicTest {
         //DAOのJMockit
         new Expectations() {
             {
-                employeeDAO.updateOneEmployee("686033", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９");
+            	// 2020/6/16 所属追加
+                employeeDAO.updateOneEmployee("686033", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９","部署1");
             }												//2020.05.28 10→30桁に変更
         };
 
@@ -620,7 +660,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            employeeLogic.updateEmployee("686033", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９");
+            // 2020/6/16 所属追加
+            employeeLogic.updateEmployee("686033", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９", "部署1");
             											//2020.05.28 10→30桁に変更
         } catch (ServletException e) {
             throw e;
@@ -649,7 +690,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            employeeLogic.updateEmployee("012345", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０", "テスト");			//2020.05.28 11→31桁に変更
+            // 2020/6/16 所属追加
+            employeeLogic.updateEmployee("012345", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０", "テスト","部署1");			//2020.05.28 11→31桁に変更
 
             //Exceptionが発生しなければ失敗
             fail();
@@ -684,7 +726,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            employeeLogic.updateEmployee("012345", null, "テスト");
+            // 2020/6/16 所属追加
+            employeeLogic.updateEmployee("012345", null, "テスト", "部署1");
 
             //Exceptionが発生しなければ失敗
             fail();
@@ -719,7 +762,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            employeeLogic.updateEmployee("012345", "", "テスト");
+            // 2020/6/16 所属追加
+            employeeLogic.updateEmployee("012345", "", "テスト","部署1");
 
             //Exceptionが発生しなければ失敗
             fail();
@@ -754,7 +798,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            employeeLogic.updateEmployee("686033", "氏名", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０");
+            // 2020/6/16 所属追加
+            employeeLogic.updateEmployee("686033", "氏名", "０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０", "部署1");
 
             //Exceptionが発生しなければ失敗
             fail();
@@ -789,7 +834,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            employeeLogic.updateEmployee("686033", "氏名", null);
+            // 2020/6/16　所属追加
+            employeeLogic.updateEmployee("686033", "氏名", null,"部署1");
 
             //Exceptionが発生しなければ失敗
             fail();
@@ -824,7 +870,8 @@ public class EmployeeLogicTest {
         try {
             connection = ConnectionManagerTest.getConnection();
             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-            employeeLogic.updateEmployee("686033", "氏名", "");
+            // 2020/6/16 所属追加
+            employeeLogic.updateEmployee("686033", "氏名", "", "部署1");
 
             //Exceptionが発生しなければ失敗
             fail();
@@ -844,6 +891,43 @@ public class EmployeeLogicTest {
             }
 
         }
+    }
+    // 2020/6/16 所属追加に伴う新規テスト
+    /**
+     * 従業員一覧の更新テスト（異常系 : 所属が未選択）
+     * @throws SQLException
+     */
+    @Test
+    public void updateEmployeeDeploymentBlankError() throws SQLException{
+    	 Connection connection = null;
+         @SuppressWarnings("unused")
+ 		Boolean hasError = false;
+
+         //テスト実行
+         try {
+             connection = ConnectionManagerTest.getConnection();
+             EmployeeLogic employeeLogic = new EmployeeLogic(connection);
+             // 2020/6/15 所属追加
+             employeeLogic.registerEmployee("686033", "氏名", "プロフィール", "所属を選択してください");
+
+             //Exceptionが発生しなければ失敗
+             fail();
+         } catch (ServletException | IllegalArgumentException e) {
+
+             // ------------
+             // 結果チェック
+             // ------------
+             assertEquals("java.lang.IllegalArgumentException: 所属が未選択です。", e.getMessage());
+         } finally {
+             try {
+                 if (connection != null) {
+                     connection.close();
+                 }
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+
+         }
     }
 
     /**
@@ -880,4 +964,6 @@ public class EmployeeLogicTest {
 
         }
     }
+
+
 }

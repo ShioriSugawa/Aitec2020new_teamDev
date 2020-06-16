@@ -16,7 +16,8 @@ import dao.EmployeeDAO;
  */
 /*
  * 修正内容まとめ
- * 従業員を登録するメソッド所属追加
+ *  6/15 従業員登録メソッド所属追加対応
+ *  6/16 従業員更新メソッド所属追加対応
  */
 public class EmployeeLogic {
 
@@ -143,7 +144,7 @@ public class EmployeeLogic {
 	 * @param employeeProfile プロフィール
 	 * @throws ServletException
 	 */
-	public void updateEmployee(String employeeNumber, String employeeName, String employeeProfile) throws ServletException {
+	public void updateEmployee(String employeeNumber, String employeeName, String employeeProfile, String employeeDeployment) throws ServletException {
 		EmployeeDAO empDAO = new EmployeeDAO(connection);
 
 		try {
@@ -166,8 +167,12 @@ public class EmployeeLogic {
 			if(employeeProfile.length() > 100) {
 				throw new IllegalArgumentException("プロフィールが100桁を超えています。");
 			}
+			// 6/16 追加
+			if(employeeDeployment.equals("所属を選択してください")) {
+				throw new IllegalArgumentException("所属が未選択です。");
+			}
 			// DB処理実行
-			empDAO.updateOneEmployee(employeeNumber, employeeName, employeeProfile);
+			empDAO.updateOneEmployee(employeeNumber, employeeName, employeeProfile, employeeDeployment);
 		} catch (SQLException | IllegalArgumentException e) {
 			throw new ServletException(e);
 		}

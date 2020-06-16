@@ -18,6 +18,8 @@ import model.Employee;
 /*
  * 修正内容まとめ
  * 6/15 register 所属追加対応
+ * 6/16 update 所属追加対応
+ *
  */
 public class EmployeeDAO {
 
@@ -139,8 +141,8 @@ public class EmployeeDAO {
 	 * @param employeeProfie プロフィール
 	 * @throws SQLException
 	 */
-	public void updateOneEmployee(String employeeNumber, String employeeName, String employeeProfie) throws SQLException {
-		String sql = "UPDATE employee SET employee_name =?, employee_profile =? WHERE employee_number =?";
+	public void updateOneEmployee(String employeeNumber, String employeeName, String employeeProfie, String employeeDeployment) throws SQLException {
+		String sql = "UPDATE employee SET employee_name = ?, employee_profile = ?, employee_deployment = ? WHERE employee_number = ?";
 
 		// -------------------
 		// SQL発行
@@ -148,7 +150,8 @@ public class EmployeeDAO {
 		try(PreparedStatement pStmt = connection.prepareStatement(sql)) {
 			pStmt.setString(1, employeeName);
 			pStmt.setString(2, employeeProfie);
-			pStmt.setString(3, employeeNumber);
+			pStmt.setString(3, employeeDeployment);
+			pStmt.setString(4, employeeNumber);
 			pStmt.executeUpdate();
 		}
 	}

@@ -58,7 +58,7 @@ public class EmployeeRegister extends HttpServlet {
 		// 2020/6/15 追加
 		String employeeDeployment = request.getParameter("deployment");
 
-		// 2020/6/15 所属が未選択なら再度登録画面にフォワード
+		// 2020/6/15 追加　 所属が未選択なら再度登録画面にフォワード
 		Boolean noInputError = false;
 		if(employeeDeployment.equals("所属を選択してください")) {
 			noInputError = true;
