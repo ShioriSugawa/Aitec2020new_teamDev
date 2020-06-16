@@ -70,7 +70,8 @@ Employee emp = (Employee) request.getAttribute("emp");
                 <br/>
                 <textarea name="employeeProfile" class="update-profile-input" rows="6" cols="40" maxlength="100" placeholder="プロフィールを入力してください。" required >${ emp.employeeProfile }</textarea>
             </div>
-            <input type="button" class="button"value="キャンセル" onclick="location.href='/SelfIntroduction/EmployeeList'">
+            <%--キャンセル時遷移先一覧画面から詳細画面に変更 --%>
+            <input type="button" class="button"value="キャンセル" onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${ emp.employeeNumber }'">
             <input type="submit" class="button update-button" value="更新">
         </form>
 

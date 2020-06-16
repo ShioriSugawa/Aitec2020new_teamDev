@@ -54,7 +54,8 @@
                       <td>${ employee.employeeNumber }</td>
                       <td>${ employee.employeeName }</td>
                       <td>${ employee.employeeProfile }</td>
-                      <td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/EmployeeUpdate?employeeNumber=${ employee.employeeNumber }'"></td>
+                      <%--2020/6/16 編集ボタンから詳細ボタンに変更 --%>
+                      <td><input type="button" class="button" value="詳細"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${ employee.employeeNumber }'"></td>
                   </tr>
               </c:forEach>
             </tbody>

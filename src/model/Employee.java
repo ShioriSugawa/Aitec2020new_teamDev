@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 /**
  * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
@@ -12,16 +13,21 @@ import java.io.Serializable;
 /*
  * 修正内容まとめ
  * 6/15 メンバ変数,setter,getterに所属追加、それに伴いコンストラクタ変更
+ * 6/16 詳細情報画面で利用するためメンバ変数、コンストラクタ、getter追加
  */
 public class Employee implements Serializable {
 
-	private String employeeNumber, employeeName, employeeProfile,employeeDeployment;
+	private String employeeNumber, employeeName, employeeProfile,employeeDeployment,
+					certificationGenreName,certificationName;
+	private int ownedCertificationId;
+	private Date certificationDate;
 
 	/**
-	 * コンストラクタ
+	 * コンストラクタ　基本情報
 	 * @param employeeNumber 従業員番号
 	 * @param employeeName 氏名
 	 * @param employeeProfile プロフィール
+	 * @param employeeDeployment 所属
 	 */
 	public Employee(String employeeNumber, String employeeName, String employeeProfile, String employeeDeployment) {
 		this.employeeNumber = employeeNumber;
@@ -29,6 +35,22 @@ public class Employee implements Serializable {
 		this.employeeProfile = employeeProfile;
 		this.employeeDeployment = employeeDeployment;
 	}
+
+	/**
+	 * コンストラクタ　資格スキル
+	 * @param certificationGenreName 資格ジャンル
+	 * @param certificationName マスター登録資格名
+	 * @param ownedCertificationId 保有資格ID
+	 * @param certificationDate マスター登録資格認定日
+	 */
+	public Employee(String certificationGenreName, String certificationName, int ownedCertificationId, Date certificationDate) {
+		this.certificationGenreName = certificationGenreName;
+		this.certificationName = certificationName;
+		this.ownedCertificationId = ownedCertificationId;
+		this.certificationDate = certificationDate;
+	}
+
+
 
 	/**
 	 * 従業員番号を取得
@@ -92,5 +114,34 @@ public class Employee implements Serializable {
 	 */
 	public void setEmployeeDeployment(String employeeDeployment) {
 		this.employeeDeployment = employeeDeployment;
+	}
+
+	/**
+	 * 資格ジャンルを取得
+	 * @return 資格ジャンル
+	 */
+	public String getCertificationGenreName() {
+		return certificationGenreName;
+	}
+	/**
+	 * マスター登録資格名を取得
+	 * @return マスター登録資格名
+	 */
+	public String getCertificationName() {
+		return certificationName;
+	}
+	/**
+	 * 保有資格IDを取得
+	 * @return 保有資格ID
+	 */
+	public int getOwnedCertificationId() {
+		return ownedCertificationId;
+	}
+	/**
+	 * マスター登録資格認定日を取得
+	 * @return マスター登録資格認定日
+	 */
+	public Date certificationDate() {
+		return certificationDate;
 	}
 }
