@@ -45,6 +45,15 @@ public class CareerDAO {
 	 * @param businessName 業務名
 	 * @throws SQLException
 	 */
+	public void updateOneCareer() throws SQLException{
+
+	}
+
+	/**
+	 * 従業員を削除するメソッド
+	 * @param employeeNumber 従業員番号
+	 * @throws SQLException
+	 */
 	public void deleteOneCareer() throws SQLException{
 
 	}
