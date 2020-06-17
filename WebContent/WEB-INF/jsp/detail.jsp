@@ -31,7 +31,7 @@
 
 	<div class="skillList">
 		<br><br><label>資格/スキル一覧</label>
-		<input type="button" class="button" value="新規"><br>
+		<input type="button" class="button" value="新規" onclick="location.href='/SelfIntroduction/skillsRegister'"><br>
 		<br><table class="table table-bordered table-striped" >
 			<thead  class="thead-light">
 			<tr>
@@ -43,29 +43,33 @@
 		<tbody>
 		<c:forEach var="mc" items="${masterCertificationList}">
 		<tr>
-			<td>${ mc.certificationGenreName }</td>
-			<td>${ mc.certificationName }</td>
+			<td>${ mc.genreName }</td>
+			<td>${ mc.certificationOrSkillName }</td>
 			<td>${ mc.certificationDate }</td>
-			<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/CertificationUpdate?owned_certification_id=${ mc.ownedCertificationId }'"></td>
+			<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/skillsUpdate?owned_certification_id=${ mc.ownedId }'"></td>
 		</tr>
 
 
 
 		</c:forEach>
-		<c:forEach var="otherCertification" items="${otherCertificationList}">
-
-
-
+		<c:forEach var="others" items="${othersList}">
+		<tr>
+			<td>${ others.genreName }</td>
+			<td>${ others.certificationOrSkillName }</td>
+			<td>${ others.certificationDate }</td>
+			<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/skillsUpdate?owned_other_certification_id=${ others.ownedId }'"></td>
+		</tr>
 		</c:forEach>
 		<c:forEach var="skill" items="${skillList}">
-
-
-
+		<tr>
+			<td>${ skill.genreName }</td>
+			<td>${ skill.certificationOrSkillName }</td>
+			<td></td>
+			<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/skillsUpdate?owned_skill_id=${ others.ownedId }'"></td>
+		</tr>
 		</c:forEach>
-
 		</tbody>
 		</table>
-
 	</div>
 
 	<div class="career">
@@ -91,18 +95,16 @@
 	</div>
 	<br><br>
 	<input type="button" class="button" value="従業員の削除" onclick="confirmDelete()">
-<%--"location.href='/SelfIntroduction/EmployeeDelete?employeeNumber=${ emp.employeeNumber }'" --%>
 	  <script type="text/javascript">
           function confirmDelete(){
               // 確認ダイアログの表示
               if(window.confirm('削除してよろしいでしょうか？')){
-                  // 「OK」時の処理
-                  location.href='/SelfIntroduction/EmployeeDelete?employeeNumber=${ emp.employeeNumber }'
-                  return true; // 更新処理実行（post送信）
+					// 「OK」時の処理
+					location.href='/SelfIntroduction/EmployeeDelete?employeeNumber=${ emp.employeeNumber }'
+					return true; // 更新処理実行（post送信）
               }
-              return false; // キャンセル時は何もしない
-          }
-
+              	return false; // キャンセル時は何もしない
+          	}
       </script>
       <script src="./js/jquery-3.3.1.min.js"></script>
       <script src="./js/bootstrap.bundle.min.js"></script>

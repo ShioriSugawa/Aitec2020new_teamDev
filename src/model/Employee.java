@@ -1,7 +1,6 @@
 package model;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.List;
 
 /**
@@ -13,19 +12,18 @@ import java.util.List;
 
 /*
  * 修正内容まとめ
- * 6/15 メンバ変数,setter,getterに所属追加、それに伴いコンストラクタ変更
- * 6/16 詳細情報画面で利用するためメンバ変数、コンストラクタ、getter追加
- * 6/16 一覧画面で現在の業務表示のためコンストラクタ追加(資格所持数は途中）
+ * 2020/6/15 メンバ変数,setter,getterに所属追加、それに伴いコンストラクタ変更
+ * 2020/6/16 詳細情報画面で利用するためメンバ変数、コンストラクタ、getter追加
+ * 2020/6/16 一覧画面で現在の業務表示のためコンストラクタ追加(資格所持数は途中）
+ *
  *
  */
 public class Employee implements Serializable {
 
 	private String employeeNumber, employeeName, employeeProfile,employeeDeployment,
-					certificationGenreName,certificationName;
+					genreName,certificationOrSkillName,certificationDate;
 	@SuppressWarnings("unused")
-	private int ownedCertificationId,countCertification;
-	private Date certificationDate;
-	@SuppressWarnings("unused")
+	private int ownedId,countCertification;
 	private List<String> careerList;
 
 	/**
@@ -44,17 +42,18 @@ public class Employee implements Serializable {
 
 	/**
 	 * コンストラクタ　資格スキル
-	 * @param certificationGenreName 資格ジャンル
-	 * @param certificationName マスター登録資格名
-	 * @param ownedCertificationId 保有資格ID
+	 * @param genreName 資格ジャンル
+	 * @param certificationOrSkillName マスター登録資格名
+	 * @param ownedId 保有資格ID
 	 * @param certificationDate マスター登録資格認定日
 	 */
-	public Employee(String certificationGenreName, String certificationName, int ownedCertificationId, Date certificationDate) {
-		this.certificationGenreName = certificationGenreName;
-		this.certificationName = certificationName;
-		this.ownedCertificationId = ownedCertificationId;
+	public Employee(String genreName, String certificationOrSkillName, int ownedId, String certificationDate) {
+		this.genreName = genreName;
+		this.certificationOrSkillName = certificationOrSkillName;
+		this.ownedId = ownedId;
 		this.certificationDate = certificationDate;
 	}
+
 	/**
 	 * コンストラクタ　一覧画面
 	 * @param employeeNumber 従業員番号
@@ -145,28 +144,28 @@ public class Employee implements Serializable {
 	 * 資格ジャンルを取得
 	 * @return 資格ジャンル
 	 */
-	public String getCertificationGenreName() {
-		return certificationGenreName;
+	public String getgenreName() {
+		return genreName;
 	}
 	/**
 	 * マスター登録資格名を取得
 	 * @return マスター登録資格名
 	 */
-	public String getCertificationName() {
-		return certificationName;
+	public String getcertificationOrSkillName() {
+		return certificationOrSkillName;
 	}
 	/**
 	 * 保有資格IDを取得
 	 * @return 保有資格ID
 	 */
-	public int getOwnedCertificationId() {
-		return ownedCertificationId;
+	public int getownedId() {
+		return ownedId;
 	}
 	/**
 	 * マスター登録資格認定日を取得
 	 * @return マスター登録資格認定日
 	 */
-	public Date certificationDate() {
+	public String getCertificationDate() {
 		return certificationDate;
 	}
 }

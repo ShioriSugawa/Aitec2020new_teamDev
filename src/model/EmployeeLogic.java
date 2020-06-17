@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
+import dao.DetailDAO;
 import dao.EmployeeDAO;
 
 /**
@@ -193,5 +194,69 @@ public class EmployeeLogic {
 			throw new ServletException(e);
 		}
 	}
+	/**
+	 * 業務経歴一覧を取得するメソッド
+	 * @param employeeNumber 業務経歴一覧を取得したい従業員番号
+	 * @return　業務経歴一覧
+	 * @throws ServletException
+	 */
+	public List<Career> getCareerList(String employeeNumber) throws  ServletException{
+		DetailDAO dtlDAO = new DetailDAO(connection);
+		List<Career> list = null;
+
+		try {
+			//DB処理実行
+			list = dtlDAO.getAllCareer(employeeNumber);
+		} catch(SQLException e) {
+			throw new ServletException(e);
+		}
+		return list;
+	}
+
+	/**
+	 * 該当従業員の所持マスター登録有資格一覧を取得するメソッド
+	 * @param employeeNumber　所持マスター登録有資格一覧を取得したい従業員番号
+	 * @return　所持マスター登録有資格一覧
+	 * @throws ServletException
+	 */
+	public List<Employee> getMasterCertificationList(String employeeNumber) throws ServletException{
+		DetailDAO dtlDAO = new DetailDAO(connection);
+		List<Employee> list = null;
+
+		try {
+			//DB処理実行
+			list = dtlDAO.getAllMasterCertification(employeeNumber);
+			} catch(SQLException e) {
+				throw new ServletException(e);
+		}
+		return list;
+	}
+
+	public List<Employee> getOtherCertificationList(String employeeNumber) throws ServletException{
+		DetailDAO dtlDAO = new DetailDAO(connection);
+		List<Employee> list = null;
+
+		try {
+			//DB処理実行
+			list = dtlDAO.getAllOthers(employeeNumber);
+			} catch(SQLException e) {
+				throw new ServletException(e);
+		}
+		return list;
+	}
+
+	public List<Employee> getSkillList(String employeeNumber) throws ServletException{
+		DetailDAO dtlDAO = new DetailDAO(connection);
+		List<Employee> list = null;
+
+		try {
+			//DB処理実行
+			list = dtlDAO.getAllSkill(employeeNumber);
+			} catch(SQLException e) {
+				throw new ServletException(e);
+		}
+		return list;
+	}
+
 }
 

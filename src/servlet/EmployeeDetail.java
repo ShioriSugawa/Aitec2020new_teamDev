@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.ConnectionManager;
-import dao.DetailDAO;
 import model.Career;
 import model.Employee;
 import model.EmployeeLogic;
@@ -38,12 +37,19 @@ public class EmployeeDetail extends HttpServlet {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			// 該当の従業員を取得
 			EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-			Employee emp = employeeLogic.getEmployee(request.getParameter("employeeNumber"));
-			List<Career> careerList = new DetailDAO(connection).getAllCareer(request.getParameter("employeeNumber"));
+			String employeeNumber = request.getParameter("employeeNumber");
+			Employee emp = employeeLogic.getEmployee(employeeNumber);
+			List<Career> careerList = employeeLogic.getCareerList(employeeNumber);
+			List<Employee> masterCertificationList = employeeLogic.getMasterCertificationList(employeeNumber);
+			List<Employee> othersList = employeeLogic.getOtherCertificationList(employeeNumber);
+			List<Employee> skillList = employeeLogic.getSkillList(employeeNumber);
 
 			// リクエストスコープに保存
 			request.setAttribute("emp", emp);
 			request.setAttribute("careerList", careerList);
+			request.setAttribute("masterCertificationList", masterCertificationList);
+			request.setAttribute("othersList", othersList);
+			request.setAttribute("skillList", skillList);
 
 		} catch (SQLException e) {
 			throw new ServletException(e);
