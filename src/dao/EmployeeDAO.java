@@ -70,7 +70,7 @@ public class EmployeeDAO {
 				// 2020/6/16 現在の業務経歴リスト追加
 				List<String>careerList = getCareerList(employee_number);
 				//int countCertification = getCountcertification(employee_number);
-				Employee emp = new Employee(employee_number, employee_name, employee_profile, employee_deployment);
+				Employee emp = new Employee(employee_number, employee_name, employee_profile, employee_deployment, careerList);
 				empList.add(emp);
 			}
 		}

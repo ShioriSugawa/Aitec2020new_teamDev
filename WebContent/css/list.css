@@ -1,21 +1,38 @@
 .emp-table {
-  width : 750px;
+ /*	2020/6/17　サイズ調整開始*/
+  /*width : 750px;*/
+  width : 1300px;
 }
 
 .empList-number {
-  width : 15%;
+  width : 5%;
   text-align: center;
 }
 .empList-name {
-  width : 25%;
+  width : 15%;
   text-align: center;
+}
+/* 2020/6/17 追加*/
+.empList-deployment{
+	width : 15%;
+	text-align: center;
 }
 .empList-profile {
-  width : 50%;
+  width : 30%;
   text-align: center;
 }
+/* 2020/6/17 追加*/
+.empList-count{
+	width : 3%;
+	text-align: center;
+}
+/* 2020/6/17 追加*/
+.empList-business{
+	width : 25%;
+	text-align: center;
+}
 .empList-edit {
-  width : 10%;
+  width : 7%;
   text-align: center;
 }
 

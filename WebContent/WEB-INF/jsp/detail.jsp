@@ -84,7 +84,7 @@
 			<tr>
 				<td>${career.businessName }</td>
 				<td>${career.businessStart }　～　${career.businessEnd }</td>
-				<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/'CareerUpdate"></td>
+				<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/CareerUpdate?businessNumber=${ career.businessNumber }'"></td>
 		</c:forEach>
 		</tbody>
 		</table>

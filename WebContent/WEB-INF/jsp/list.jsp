@@ -71,19 +71,20 @@
 		</select>
 			<input type="text" name="skill"  placeholder="スキルを入力してください" >
 		<input type="button" class="searchbutton" name="searchbutton" value="検索">
-          <br>
+          <br><br><br>
           <input type="button" class="searchbutton" name="searchbutton" value="資格所持数ランキング">
           <input type="button" class="searchbutton" name="searchbutton" value="従業員番号でソート">
 
           <table class="table table-bordered table-striped" >
             <thead class="thead-light">
                 <tr>
+                <%-- 2020/6/17 所属、資格数、現在の業務にclass指定 --%>
                     <th class="empList-number">従業員番号</th>
                     <th class="empList-name">氏名</th>
-                    <th>所属</th>
+                    <th class="empList-deployment">所属</th>
                     <th class="empList-profile">プロフィール</th>
-                    <th>資格数</th>
-                    <th>現在の業務</th>
+                    <th class="empList-count">資格数</th>
+                    <th class="empList-business">現在の業務</th>
                     <th class="empList-edit"></th>
                 </tr>
             </thead>
@@ -98,7 +99,7 @@
                       <td>未実装</td>
                       <td>
                       <c:forEach var="career" items="${employee.careerList}">
-                     	<c:out value="${career}" />
+                     	<c:out value="${career}" /><br>
                       </c:forEach>
                       </td>
                       <%--2020/6/16 編集ボタンから詳細ボタンに変更 --%>
