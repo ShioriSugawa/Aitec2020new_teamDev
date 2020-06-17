@@ -70,7 +70,7 @@
 
 	<div class="career">
 		<br><br><label>業務経歴</label>
-		<input type="button" class="button" value="新規"  onclick="location.href='/SelfIntroduction/'CareerRegister"><br>
+		<input type="button" class="button" value="新規"  onclick="location.href='/SelfIntroduction/'CareerRegister'"><br>
 		<br><table class="table table-bordered table-striped" >
 		<thead class="thead-light">
 			<tr>
@@ -90,7 +90,22 @@
 		</table>
 	</div>
 	<br><br>
-	<input type="button" class="button" value="従業員の削除">
+	<input type="button" class="button" value="従業員の削除" onclick="confirmDelete()">
+<%--"location.href='/SelfIntroduction/EmployeeDelete?employeeNumber=${ emp.employeeNumber }'" --%>
+	  <script type="text/javascript">
+          function confirmDelete(){
+              // 確認ダイアログの表示
+              if(window.confirm('削除してよろしいでしょうか？')){
+                  // 「OK」時の処理
+                  location.href='/SelfIntroduction/EmployeeDelete?employeeNumber=${ emp.employeeNumber }'
+                  return true; // 更新処理実行（post送信）
+              }
+              return false; // キャンセル時は何もしない
+          }
+
+      </script>
+      <script src="./js/jquery-3.3.1.min.js"></script>
+      <script src="./js/bootstrap.bundle.min.js"></script>
 
 
 </body>

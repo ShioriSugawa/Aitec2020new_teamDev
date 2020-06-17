@@ -17,11 +17,12 @@ import model.Employee;
  */
 /*
  * 修正内容まとめ
- * 6/15 register 所属追加対応
- * 6/16 update 所属追加対応
- * 6/16 一覧表示変更に伴い従業員全員分のデータを取得変更
- * 6/16 現在の業務経歴一覧取得追加
- * 6/16 資格所持数取得追加
+ * 2020/6/15 register 所属追加対応
+ * 2020/6/16 update 所属追加対応
+ * 2020/6/16 一覧表示変更に伴い従業員全員分のデータを取得変更
+ * 2020/6/16 現在の業務経歴一覧取得追加
+ * 2020/6/16 資格所持数取得追加
+ * 2020/6/17 従業員削除論理削除に変更対応
  *
  */
 public class EmployeeDAO {
@@ -45,7 +46,8 @@ public class EmployeeDAO {
 	public List<Employee> findAllEmployee() throws SQLException {
 
 		List<Employee> empList = new ArrayList<>();
-		String sql = "SELECT * FROM employee order by employee_number";
+		// 2020/6/17 従業員削除を論理削除にするため変更
+		String sql = "SELECT * FROM employee WHERE employment = 1 order by employee_number";
 
 		// -------------------
 		// SQL発行
@@ -126,7 +128,8 @@ public class EmployeeDAO {
 	 * @throws SQLException
 	 */
 	public void registerOneEmployee(String employeeNumber, String employeeName, String employeeProfile, String employeeDeployment) throws SQLException {
-		String sql = "INSERT INTO employee (employee_number, employee_name, employee_profile, employee_deployment) VALUES (?, ?, ?, ?)";
+		// 2020/6/17 従業員削除を論理削除にするため変更
+		String sql = "INSERT INTO employee (employee_number, employee_name, employee_profile, employee_deployment, employment) VALUES (?, ?, ?, ?,'1')";
 
 		// -------------------
 		// SQL発行
@@ -168,7 +171,8 @@ public class EmployeeDAO {
 	 * @throws SQLException
 	 */
 	public void deleteOneEmployee(String employeeNumber) throws SQLException {
-		String sql = "DELETE FROM employee WHERE employee_number =?";
+		// 2020/6/17 従業員削除論理削除にするため変更
+		String sql = "UPDATE employee SET employment = 0 WHERE employee_number = ?";
 
 		// -------------------
 		// SQL発行
@@ -176,6 +180,7 @@ public class EmployeeDAO {
 		try(PreparedStatement pStmt = connection.prepareStatement(sql)) {
 			pStmt.setString(1, employeeNumber);
 			pStmt.executeUpdate();
+
 		}
 	}
 	/**
