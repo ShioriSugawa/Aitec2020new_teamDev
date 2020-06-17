@@ -74,7 +74,7 @@
 
 	<div class="career">
 		<br><br><label>業務経歴</label>
-		<input type="button" class="button" value="新規"  onclick="location.href='/SelfIntroduction/'CareerRegister'"><br>
+		<input type="button" class="button" value="新規"  onclick="location.href='/SelfIntroduction/CareerRegister?employeeNumber=${ emp.employeeNumber }'"><br>
 		<br><table class="table table-bordered table-striped" >
 		<thead class="thead-light">
 			<tr>
