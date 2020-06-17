@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,16 +36,19 @@ public class DetailDAO {
 	 * @return 該当従業員の業務経歴一覧
 	 * @throws SQLException
 	 */
-	public List<Career> getAllCareer(String employee_numver) throws SQLException{
+	public List<Career> getAllCareer(String employee_number) throws SQLException{
 
 		List<Career> careList = new ArrayList<>();
-		final String sql = "";
+		final String sql = "SELECT * FROM career  WHERE employee_number=?";
 
 		// -------------------
 		// SQL発行
 		// -------------------
-		try(PreparedStatement pStmt = conn.prepareStatement(sql);
-				ResultSet resultSet = pStmt.executeQuery()) {
+
+		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
+
+				pStmt.setString(1, employee_number);
+				ResultSet resultSet = pStmt.executeQuery();
 
 			// -------------------
 			// 値の取得
@@ -59,6 +63,15 @@ public class DetailDAO {
 
 
 				//結果をリストに格納
+				String id = String.valueOf(owned_career_id);
+				 String start = new SimpleDateFormat("yyyy-MM-dd").format(business_start);
+				 String end = null;
+				 if(business_end != null) {
+					end  = new SimpleDateFormat("yyyy-MM-dd").format(business_end);
+				 }
+				 Career career = new Career(id, employee_number, business_name, start, end);
+
+				careList.add(career);
 
 
 			}

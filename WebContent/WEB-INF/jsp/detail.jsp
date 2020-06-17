@@ -83,7 +83,7 @@
 		<c:forEach var="career" items="${careerList}">
 			<tr>
 				<td>${career.businessName }</td>
-				<td>${career.businessStartDate }　～　${career.businessEndDate }</td>
+				<td>${career.businessStart }　～　${career.businessEnd }</td>
 				<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/'CareerUpdate"></td>
 		</c:forEach>
 		</tbody>

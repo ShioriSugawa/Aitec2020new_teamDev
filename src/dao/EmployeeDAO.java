@@ -19,6 +19,9 @@ import model.Employee;
  * 修正内容まとめ
  * 6/15 register 所属追加対応
  * 6/16 update 所属追加対応
+ * 6/16 一覧表示変更に伴い従業員全員分のデータを取得変更
+ * 6/16 現在の業務経歴一覧取得追加
+ * 6/16 資格所持数取得追加
  *
  */
 public class EmployeeDAO {
@@ -63,7 +66,10 @@ public class EmployeeDAO {
 				String employee_deployment = resultSet.getString("employee_deployment");
 
 				// 結果リストに格納
-				// 6/15 所属追加
+				// 2020/6/15 所属追加
+				// 2020/6/16 現在の業務経歴リスト追加
+				List<String>careerList = getCareerList(employee_number);
+				//int countCertification = getCountcertification(employee_number);
 				Employee emp = new Employee(employee_number, employee_name, employee_profile, employee_deployment);
 				empList.add(emp);
 			}
@@ -171,5 +177,94 @@ public class EmployeeDAO {
 			pStmt.setString(1, employeeNumber);
 			pStmt.executeUpdate();
 		}
+	}
+	/**
+	 * 該当従業員の現在の業務一覧取得
+	 * @param employeeNumber 現在の業務一覧を取得したい従業員の従業員番号
+	 * @return 該当従業員の現在の業務一覧
+	 * @throws SQLException
+	 */
+	private List<String> getCareerList(String employeeNumber) throws SQLException{
+
+		List<String> careerList = new ArrayList<>();
+		String sql = "SELECT business_name\n" +
+				"FROM career\n" +
+				"WHERE employee_number = ? AND situation = 1;";
+
+		// -------------------
+		// SQL発行
+		// -------------------
+		try(PreparedStatement pStmt = connection.prepareStatement(sql)){
+				pStmt.setString(1, employeeNumber);
+				ResultSet resultSet = pStmt.executeQuery();
+
+			// -------------------
+			// 値の取得
+			// -------------------
+			while(resultSet.next()) {
+
+				// ResultSetから各値を取得
+				String businessName = resultSet.getString("business_name");
+
+				// 結果リストに格納
+				careerList.add(businessName);
+			}
+		}
+		return careerList;
+	}
+
+	/**
+	 * 該当従業員の資格数を取得
+	 * @param employeeNumber
+	 * @throws SQLException
+	 */
+	private int getCountcertification(String employeeNumber) throws SQLException {
+
+		List<String> masterCertification = new ArrayList<>();
+		List<String> otherCertification = new ArrayList<>();
+		String sql ="";
+		int count =0;
+
+		// -------------------
+		// SQL発行(マスター登録資格取得)
+		// -------------------
+		try(PreparedStatement pStmt = connection.prepareStatement(sql)){
+				pStmt.setString(1, employeeNumber);
+				ResultSet resultSet = pStmt.executeQuery();
+
+			// -------------------
+			// 値の取得
+			// -------------------
+			while(resultSet.next()) {
+
+				// ResultSetから各値を取得
+				String certificationCode = resultSet.getString("certification_code");
+
+				// 結果リストに格納
+				masterCertification.add(certificationCode);
+			}
+		}
+		// -------------------
+		// SQL発行(マスター登録なし資格取得)
+		// -------------------
+		sql = "";
+		try(PreparedStatement pStmt = connection.prepareStatement(sql)){
+				pStmt.setString(1, employeeNumber);
+				ResultSet resultSet = pStmt.executeQuery();
+
+			// -------------------
+			// 値の取得
+			// -------------------
+			while(resultSet.next()) {
+
+				// ResultSetから各値を取得
+				String otherCertificationGenreCode = resultSet.getString("other_certification_genre_code");
+
+				// 結果リストに格納
+				otherCertification.add(otherCertificationGenreCode);
+			}
+		}
+		count = masterCertification.size() + otherCertification.size();
+		return count;
 	}
 }

@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 /**
  * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
@@ -14,13 +15,18 @@ import java.sql.Date;
  * 修正内容まとめ
  * 6/15 メンバ変数,setter,getterに所属追加、それに伴いコンストラクタ変更
  * 6/16 詳細情報画面で利用するためメンバ変数、コンストラクタ、getter追加
+ * 6/16 一覧画面で現在の業務表示のためコンストラクタ追加(資格所持数は途中）
+ *
  */
 public class Employee implements Serializable {
 
 	private String employeeNumber, employeeName, employeeProfile,employeeDeployment,
 					certificationGenreName,certificationName;
-	private int ownedCertificationId;
+	@SuppressWarnings("unused")
+	private int ownedCertificationId,countCertification;
 	private Date certificationDate;
+	@SuppressWarnings("unused")
+	private List<String> careerList;
 
 	/**
 	 * コンストラクタ　基本情報
@@ -49,8 +55,27 @@ public class Employee implements Serializable {
 		this.ownedCertificationId = ownedCertificationId;
 		this.certificationDate = certificationDate;
 	}
-
-
+	/**
+	 * コンストラクタ　一覧画面
+	 * @param employeeNumber 従業員番号
+	 * @param employeeName 氏名
+	 * @param employeeProfile プロフィール
+	 * @param employeeDeployment 所属
+	 * @param countCertification 資格所持数
+	 * @param careerList 現在の業務一覧
+	 */
+	public Employee(String employeeNumber, String employeeName, String employeeProfile, String employeeDeployment, List<String> careerList) {
+		this.employeeNumber = employeeNumber;
+		this.employeeName = employeeName;
+		this.employeeProfile = employeeProfile;
+		this.employeeDeployment = employeeDeployment;
+		//this.countCertification = countCertification;
+		this.careerList = careerList;
+	}
+	// 2020/6/16　仮追加
+	public List<String> getCareerList(){
+		return this.careerList;
+	}
 
 	/**
 	 * 従業員番号を取得

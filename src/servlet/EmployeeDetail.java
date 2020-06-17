@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.ConnectionManager;
+import dao.DetailDAO;
+import model.Career;
 import model.Employee;
 import model.EmployeeLogic;
 /**
@@ -36,12 +39,16 @@ public class EmployeeDetail extends HttpServlet {
 			// 該当の従業員を取得
 			EmployeeLogic employeeLogic = new EmployeeLogic(connection);
 			Employee emp = employeeLogic.getEmployee(request.getParameter("employeeNumber"));
+			List<Career> careerList = new DetailDAO(connection).getAllCareer(request.getParameter("employeeNumber"));
 
 			// リクエストスコープに保存
 			request.setAttribute("emp", emp);
+			request.setAttribute("careerList", careerList);
+
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		}
+
 
 		// フォワード
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/detail.jsp");
