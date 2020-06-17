@@ -23,7 +23,7 @@ public class Employee implements Serializable {
 	private String employeeNumber, employeeName, employeeProfile,employeeDeployment,
 					genreName,certificationOrSkillName,certificationDate;
 	@SuppressWarnings("unused")
-	private int ownedId,countCertification;
+	private int ownedId,count;
 	private List<String> careerList;
 
 	/**
@@ -63,12 +63,12 @@ public class Employee implements Serializable {
 	 * @param countCertification 資格所持数
 	 * @param careerList 現在の業務一覧
 	 */
-	public Employee(String employeeNumber, String employeeName, String employeeProfile, String employeeDeployment, List<String> careerList) {
+	public Employee(String employeeNumber, String employeeName, String employeeProfile, String employeeDeployment, int count, List<String> careerList) {
 		this.employeeNumber = employeeNumber;
 		this.employeeName = employeeName;
 		this.employeeProfile = employeeProfile;
 		this.employeeDeployment = employeeDeployment;
-		//this.countCertification = countCertification;
+		this.count = count;
 		this.careerList = careerList;
 	}
 	// 2020/6/16　仮追加
@@ -144,21 +144,21 @@ public class Employee implements Serializable {
 	 * 資格ジャンルを取得
 	 * @return 資格ジャンル
 	 */
-	public String getgenreName() {
+	public String getGenreName() {
 		return genreName;
 	}
 	/**
 	 * マスター登録資格名を取得
 	 * @return マスター登録資格名
 	 */
-	public String getcertificationOrSkillName() {
+	public String getCertificationOrSkillName() {
 		return certificationOrSkillName;
 	}
 	/**
 	 * 保有資格IDを取得
 	 * @return 保有資格ID
 	 */
-	public int getownedId() {
+	public int getOwnedId() {
 		return ownedId;
 	}
 	/**
@@ -167,5 +167,12 @@ public class Employee implements Serializable {
 	 */
 	public String getCertificationDate() {
 		return certificationDate;
+	}
+	/**
+	 * 資格所持数を取得
+	 * @return　資格所持数
+	 */
+	public int  getCount() {
+		return count;
 	}
 }

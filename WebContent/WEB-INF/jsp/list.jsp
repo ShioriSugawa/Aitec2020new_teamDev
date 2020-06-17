@@ -96,7 +96,7 @@
                       <td>${ employee.employeeName }</td>
                       <td>${ employee.employeeDeployment }</td>
                       <td>${ employee.employeeProfile }</td>
-                      <td>未実装</td>
+                      <td>${ employee.count }</td>
                       <td>
                       <c:forEach var="career" items="${employee.careerList}">
                      	<c:out value="${career}" /><br>

@@ -245,6 +245,12 @@ public class EmployeeLogic {
 		return list;
 	}
 
+	/**
+	 * 該当従業員の所持スキル一覧を取得するメソッド
+	 * @param employeeNumber　所持スキル一覧を取得したい従業員番号
+	 * @return　所持スキル一覧
+	 * @throws ServletException
+	 */
 	public List<Employee> getSkillList(String employeeNumber) throws ServletException{
 		DetailDAO dtlDAO = new DetailDAO(connection);
 		List<Employee> list = null;
@@ -256,6 +262,15 @@ public class EmployeeLogic {
 				throw new ServletException(e);
 		}
 		return list;
+	}
+	
+	public int countCertification(String employeeNumber) throws ServletException {
+		int countMaster = getMasterCertificationList(employeeNumber).size();
+		int countOther =  getOtherCertificationList(employeeNumber).size();
+		
+		int count = countMaster + countOther;
+		
+		return count;
 	}
 
 }

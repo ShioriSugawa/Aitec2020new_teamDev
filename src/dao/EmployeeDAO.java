@@ -71,8 +71,8 @@ public class EmployeeDAO {
 				// 2020/6/15 所属追加
 				// 2020/6/16 現在の業務経歴リスト追加
 				List<String>careerList = getCareerList(employee_number);
-				//int countCertification = getCountcertification(employee_number);
-				Employee emp = new Employee(employee_number, employee_name, employee_profile, employee_deployment, careerList);
+				int count = countCertification(employee_number);
+				Employee emp = new Employee(employee_number, employee_name, employee_profile, employee_deployment, count, careerList);
 				empList.add(emp);
 			}
 		}
@@ -218,58 +218,13 @@ public class EmployeeDAO {
 		return careerList;
 	}
 
-	/**
-	 * 該当従業員の資格数を取得
-	 * @param employeeNumber
-	 * @throws SQLException
-	 */
-	private int getCountcertification(String employeeNumber) throws SQLException {
+	private int countCertification(String employeeNumber) throws SQLException {
+		DetailDAO dtlDAO = new DetailDAO(connection);
+		int countMaster = dtlDAO.getAllMasterCertification(employeeNumber).size();
+		int countOther =  dtlDAO.getAllOthers(employeeNumber).size();
 
-		List<String> masterCertification = new ArrayList<>();
-		List<String> otherCertification = new ArrayList<>();
-		String sql ="";
-		int count =0;
+		int count = countMaster + countOther;
 
-		// -------------------
-		// SQL発行(マスター登録資格取得)
-		// -------------------
-		try(PreparedStatement pStmt = connection.prepareStatement(sql)){
-				pStmt.setString(1, employeeNumber);
-				ResultSet resultSet = pStmt.executeQuery();
-
-			// -------------------
-			// 値の取得
-			// -------------------
-			while(resultSet.next()) {
-
-				// ResultSetから各値を取得
-				String certificationCode = resultSet.getString("certification_code");
-
-				// 結果リストに格納
-				masterCertification.add(certificationCode);
-			}
-		}
-		// -------------------
-		// SQL発行(マスター登録なし資格取得)
-		// -------------------
-		sql = "";
-		try(PreparedStatement pStmt = connection.prepareStatement(sql)){
-				pStmt.setString(1, employeeNumber);
-				ResultSet resultSet = pStmt.executeQuery();
-
-			// -------------------
-			// 値の取得
-			// -------------------
-			while(resultSet.next()) {
-
-				// ResultSetから各値を取得
-				String otherCertificationGenreCode = resultSet.getString("other_certification_genre_code");
-
-				// 結果リストに格納
-				otherCertification.add(otherCertificationGenreCode);
-			}
-		}
-		count = masterCertification.size() + otherCertification.size();
 		return count;
 	}
 }
