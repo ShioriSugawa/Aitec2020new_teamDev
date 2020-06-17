@@ -48,16 +48,19 @@ public class CareerLogic {
 	 * @param businessEnd 終了日
 	 * @throws ServletException
 	 */
-	public void registerCareer(String businessNumber, String employeeNumber, String businessName, String businessStart, String businessEnd) throws ServletException{
+	public void registerCareer(String employeeNumber, String businessName, String startYear, String startMonth, String endYear, String endMonth) throws ServletException{
 		CareerDAO careerDAO = new CareerDAO(connection);
 		@SuppressWarnings("unused")
 		Career career = null;
 
+		String businessStart = startYear +"/"+ startMonth;
+		String businessEnd = endYear +"/"+ endMonth;
+
 		try {
 			// DB処理実行
-			career = careerDAO.findOneCareer(businessNumber, employeeNumber);
+			//career = careerDAO.findOneCareer(businessNumber, employeeNumber);
 			//登録処理を実施
-			careerDAO.registerOneCareer(businessNumber, employeeNumber, businessName, businessStart, businessEnd);
+			careerDAO.registerOneCareer(employeeNumber, businessName, businessStart, businessEnd);
 		}catch (SQLException | IllegalArgumentException e) {
 			throw new ServletException(e);
 		}
@@ -71,8 +74,11 @@ public class CareerLogic {
 	 * @param employeeProfile プロフィール
 	 * @throws ServletException
 	 */
-	public void updateCareer(String businessNumber, String employeeNumber, String businessName, String businessStart, String businessEnd) throws ServletException{
+	public void updateCareer(String businessNumber, String employeeNumber, String businessName, String startYear, String startMonth, String endYear, String endMonth) throws ServletException{
 		CareerDAO careerDAO = new CareerDAO(connection);
+
+		String businessStart = startYear +"/"+ startMonth;
+		String businessEnd = endYear +"/"+ endMonth;
 
 		try {
 			// DB処理実行

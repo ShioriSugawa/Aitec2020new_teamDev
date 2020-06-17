@@ -72,14 +72,13 @@ public class CareerDAO {
 	 * @param businessEnd 終了日
 	 * @throws SQLException
 	 */
-	public void registerOneCareer(String businessNumber, String employeeNumber, String businessName, String businessStart, String businessEnd) throws SQLException{
-		String sql = "INSERT INTO career (business_number, employee_number, business_name, business_start, business_end) VALUES (?, ?, ?, ?, ?)";
+	public void registerOneCareer(String employeeNumber, String businessName, String businessStart, String businessEnd) throws SQLException{
+		String sql = "INSERT INTO career (employee_number, business_name, business_start, business_end) VALUES (?, ?, ?, ?)";
 
 		// -------------------
 		// SQL発行
 		// -------------------
 		try(PreparedStatement pStmt = connection.prepareStatement(sql)){
-			pStmt.setString(1, businessNumber);
 			pStmt.setString(2, employeeNumber);
 			pStmt.setString(3, businessName);
 			pStmt.setString(4, businessStart);
