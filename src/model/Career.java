@@ -12,23 +12,25 @@ import java.io.Serializable;
 
 public class Career implements Serializable {
 
-	private String  businessNumber, employeeNumber, businessName, businessStart, businessEnd;
+	private String  businessNumber, employeeNumber, businessStart, businessEnd, businessName, situation;
 
 	/**
 	 * コンストラクタ
-	 * @param employeeNumber 従業員番号
 	 * @param businessNumber 業務経歴番号
-	 * @param businessNname 業務名
+	 * @param employeeNumber 従業員番号
 	 * @param businessStart 業務開始日
 	 * @param businessEnd 業務終了日
+	 * @param businessNname 業務名
+	 * @param situation 状況
 	 * @return
 	 */
-	public  Career(String businessNumber, String employeeNumber, String businessName, String businessStart, String businessEnd) {
+	public  Career(String businessNumber, String employeeNumber, String businessStart, String businessEnd, String businessName, String situation) {
 		this.businessNumber = businessNumber;
 		this.employeeNumber = employeeNumber;
-		this.businessName = businessName;
 		this.businessStart = businessStart;
 		this.businessEnd = businessEnd;
+		this.businessName = businessName;
+		this.situation = situation;
 	}
 
 	/**
@@ -48,14 +50,6 @@ public class Career implements Serializable {
 	}
 
 	/**
-	 * 業務名を取得
-	 * @return 業務名
-	 */
-	public String getBusinessName() {
-		return businessName;
-	}
-
-	/**
 	 * 業務開始日を取得
 	 * @return 業務名
 	 */
@@ -70,6 +64,24 @@ public class Career implements Serializable {
 	public String getBusinessEnd() {
 		return businessEnd;
 	}
+
+	/**
+	 * 業務名を取得
+	 * @return 業務名
+	 */
+	public String getBusinessName() {
+		return businessName;
+	}
+
+
+	/**
+	 * 状況を取得
+	 * @return 状況
+	 */
+	public String getSituation() {
+		return situation;
+	}
+
 
 
 	/**
@@ -89,14 +101,6 @@ public class Career implements Serializable {
 	}
 
 	/**
-	 * 業務名を設定
-	 * @param businessName 業務名
-	 */
-	public void setBusinessName(String businessName) {
-		this.businessName = businessName;
-	}
-
-	/**
 	 * 業務終了日を設定
 	 * @param businessName 業務名
 	 */
@@ -110,6 +114,22 @@ public class Career implements Serializable {
 	 */
 	public void setBusinessEnd(String businessEnd) {
 		this.businessEnd = businessEnd;
+	}
+
+	/**
+	 * 業務名を設定
+	 * @param businessName 業務名
+	 */
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
+	}
+
+	/**
+	 * 状況を設定
+	 * @param situation 状況
+	 */
+	public void setSituation(String situation) {
+		this.situation = situation;
 	}
 
 

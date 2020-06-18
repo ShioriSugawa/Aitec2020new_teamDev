@@ -38,7 +38,7 @@ public class CareerUpdate extends HttpServlet {
 		try (Connection connection = ConnectionManager.getConnection()){
 			// 該当の従業員を取得
 			CareerLogic careerLogic = new CareerLogic(connection);
-			Career career = careerLogic.getCareer(request.getParameter("businessNumber"), request.getParameter("employeeNumber"));
+			Career career = careerLogic.getCareer(request.getParameter("businessNumber"));
 
 			// リクエストスコープに保存
 			request.setAttribute("career", career);
@@ -57,16 +57,17 @@ public class CareerUpdate extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// リクエストパラメータを取得
 		request.setCharacterEncoding("UTF-8");
-		String businessName = request.getParameter("businessName");
 		String startYear = request.getParameter("startYear");
 		String startMonth = request.getParameter("startMonth");
 		String endYear = request.getParameter("endYear");
 		String endMonth = request.getParameter("endMonth");
+		String businessName = request.getParameter("businessName");
+		String situation = request.getParameter("situation");
 
 		try (Connection connection = ConnectionManager.getConnection()){
 			//該当の業務経歴を更新
 			CareerLogic careerLogic = new CareerLogic(connection);
-			careerLogic.updateCareer(request.getParameter("businessNumber"), request.getParameter("employeeNumber"), businessName, startYear, startMonth, endYear, endMonth);
+			careerLogic.updateCareer(request.getParameter("businessNumber"), request.getParameter("employeeNumber"), startYear, startMonth, endYear, endMonth, businessName, situation);
 			connection.commit();
 		}catch (SQLException e) {
 			throw new ServletException(e);

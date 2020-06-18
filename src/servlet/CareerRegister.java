@@ -58,15 +58,16 @@ public class CareerRegister extends HttpServlet {
 
 		// リクエストパラメータを取得
 		request.setCharacterEncoding("UTF-8");
-		String businessName = request.getParameter("businessName");
 		String startYear = request.getParameter("startYear");
 		String startMonth = request.getParameter("startMonth");
 		String endYear = request.getParameter("endYear");
 		String endMonth = request.getParameter("endMonth");
+		String businessName = request.getParameter("businessName");
+		String situation = request.getParameter("situation");
 
 		try (Connection connection = ConnectionManager.getConnection()){
 			CareerLogic careerLogic = new CareerLogic(connection);
-			careerLogic.registerCareer(request.getParameter("employeeNumber"), businessName, startYear, startMonth, endYear, endMonth);
+			careerLogic.registerCareer(request.getParameter("employeeNumber"), startYear, startMonth, endYear, endMonth, businessName, situation);
 			// 登録に成功した場合、従業員詳細画面へリダイレクト
 			connection.commit();
 			response.sendRedirect("/SelfIntroduction/EmployeeDetail?result=careerRegister");

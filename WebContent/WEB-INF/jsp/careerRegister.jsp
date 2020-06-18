@@ -26,7 +26,7 @@ Employee employee = (Employee) request.getAttribute("employee");
 		</header>
 
 		<%-- 入力した内容をPOSTで更新する。 --%>
-		<form class="careerRegister-form" action="/SelfIntroduction/CareerRegister" method="post" onSubmit="return confirmRegister()">
+		<form class="careerRegister-form" action="/SelfIntroduction/CareerRegister?employeeNumber=${ employee.employeeNumber }" method="post" onSubmit="return confirmRegister()">
 
 			<div class="careerRegister-start">
 
