@@ -31,7 +31,7 @@
 
 	<div class="skillList">
 		<br><br><label>資格/スキル一覧</label>
-		<input type="button" class="button" value="新規" onclick="location.href='/SelfIntroduction/skillsRegister'"><br>
+		<input type="button" class="button" value="新規" onclick="location.href='/SelfIntroduction/skillsRegister?employeeNumber=${emp.employeeNumber}'"><br>
 		<br><table class="table table-bordered table-striped" >
 			<thead  class="thead-light">
 			<tr>

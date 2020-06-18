@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -17,8 +18,10 @@ import dao.EmployeeDAO;
  */
 /*
  * 修正内容まとめ
- *  6/15 従業員登録メソッド所属追加対応
- *  6/16 従業員更新メソッド所属追加対応
+ *  2020/6/15 従業員登録メソッド所属追加対応
+ *  2020/6/16 従業員更新メソッド所属追加対応
+ *  2020/6/18 ArrayListソートメソッド追加
+ *  2020/6/18 ソート追加に伴い従業員リストArrayListに
  */
 public class EmployeeLogic {
 
@@ -38,9 +41,9 @@ public class EmployeeLogic {
 	 * @return 従業員一覧データ
 	 * @throws ServletException
 	 */
-	public List<Employee> getEmployeeList() throws ServletException {
+	public ArrayList<Employee> getEmployeeList() throws ServletException {
 		EmployeeDAO empDAO = new EmployeeDAO(connection);
-		List<Employee> empList = null;
+		ArrayList<Employee> empList = new ArrayList<Employee>();
 
 		try {
 			// DB処理実行
@@ -263,14 +266,32 @@ public class EmployeeLogic {
 		}
 		return list;
 	}
-	
+
 	public int countCertification(String employeeNumber) throws ServletException {
 		int countMaster = getMasterCertificationList(employeeNumber).size();
 		int countOther =  getOtherCertificationList(employeeNumber).size();
-		
+
 		int count = countMaster + countOther;
-		
+
 		return count;
+	}
+
+	/**
+	 * 従業員一覧ソート　従業員番号でソートor資格所持数でソート
+	 * @param item　押下されたボタン　資格所持ランキング or 従業員番号でソート
+	 * @param list　従業員一覧
+	 */
+	public void sortArrayList(String item, ArrayList<Employee> list) {
+		switch(item){
+
+			case "従業員番号":
+				list.sort((a,b)-> a.getEmployeeNumber().compareTo(b.getEmployeeNumber()) );
+				break;
+
+			case "資格所持数":
+				list.sort((a,b)-> b.getCount() - a.getCount() );
+				break;
+		}
 	}
 
 }
