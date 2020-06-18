@@ -56,12 +56,13 @@ public class CareerLogic {
 
 		String businessStart = startYear +"/"+ startMonth;
 		String businessEnd = endYear +"/"+ endMonth;
+		int situationNum = Integer.parseInt(situation);
 
 		try {
 			// DB処理実行
 			//career = careerDAO.findOneCareer(businessNumber, employeeNumber);
 			//登録処理を実施
-			careerDAO.registerOneCareer(employeeNumber, businessStart, businessEnd, businessName, situation);
+			careerDAO.registerOneCareer(employeeNumber, businessStart, businessEnd, businessName, situationNum);
 		}catch (SQLException | IllegalArgumentException e) {
 			throw new ServletException(e);
 		}
@@ -78,15 +79,16 @@ public class CareerLogic {
 	 * @param situation 状況
 	 * @throws ServletException
 	 */
-	public void updateCareer(String businessNumber, String employeeNumber, String startYear, String startMonth, String endYear, String endMonth, String businessName, String situation) throws ServletException{
+	public void updateCareer(String businessNumber, String startYear, String startMonth, String endYear, String endMonth, String businessName, String situation) throws ServletException{
 		CareerDAO careerDAO = new CareerDAO(connection);
 
 		String businessStart = startYear +"/"+ startMonth;
 		String businessEnd = endYear +"/"+ endMonth;
+		int situationNum = Integer.parseInt(situation);
 
 		try {
 			// DB処理実行
-			careerDAO.updateOneCareer(businessNumber, employeeNumber, businessStart, businessEnd, businessName, situation);
+			careerDAO.updateOneCareer(businessNumber, businessStart, businessEnd, businessName, situationNum);
 		}catch (SQLException | IllegalArgumentException e) {
 			throw new ServletException(e);
 		}

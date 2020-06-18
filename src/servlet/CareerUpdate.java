@@ -67,14 +67,17 @@ public class CareerUpdate extends HttpServlet {
 		try (Connection connection = ConnectionManager.getConnection()){
 			//該当の業務経歴を更新
 			CareerLogic careerLogic = new CareerLogic(connection);
-			careerLogic.updateCareer(request.getParameter("businessNumber"), request.getParameter("employeeNumber"), startYear, startMonth, endYear, endMonth, businessName, situation);
+			careerLogic.updateCareer(request.getParameter("businessNumber"), startYear, startMonth, endYear, endMonth, businessName, situation);
 			connection.commit();
+			//従業員一覧画面へリダイレクト
+			response.sendRedirect("/SelfIntroduction/EmployeeList?result=careerUpdate");
 		}catch (SQLException e) {
 			throw new ServletException(e);
 		}
 
-		// 自己紹介一覧画面へリダイレクト
-		response.sendRedirect("/SelfIntroduction/EmployeeDetail?result=careerUpdate");
+		// 従業員詳細画面へフォワード
+		//RequestDispatcher dispatcher = request.getRequestDispatcher("/SelfIntroduction/EmployeeDetail");
+		//dispatcher.forward(request, response);
 	}
 
 }

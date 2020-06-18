@@ -30,7 +30,7 @@ public class CareerDAO {
 	public Career findOneCareer(String businessNumber) throws SQLException{
 
 		Career career = null;
-		String sql = "SELECT * FROM employee WHERE business_number = ?";
+		String sql = "SELECT * FROM career WHERE owned_career_id = ?";
 
 		// -------------------
 		// SQL発行
@@ -72,7 +72,7 @@ public class CareerDAO {
 	 * @param situation 状況
 	 * @throws SQLException
 	 */
-	public void registerOneCareer(String employeeNumber, String businessStart, String businessEnd, String businessName, String situation) throws SQLException{
+	public void registerOneCareer(String employeeNumber, String businessStart, String businessEnd, String businessName, int situation) throws SQLException{
 		String sql = "INSERT INTO career (employee_number, business_start, business_end, business_name, situation) VALUES (?, ?, ?, ?, ?)";
 
 		// -------------------
@@ -83,7 +83,7 @@ public class CareerDAO {
 			pStmt.setString(2, businessStart);
 			pStmt.setString(3, businessEnd);
 			pStmt.setString(4, businessName);
-			pStmt.setString(5, situation);
+			pStmt.setInt(5, situation);
 			pStmt.executeUpdate();
 		}
 	}
@@ -98,8 +98,8 @@ public class CareerDAO {
 	 * @param situation 状況
 	 * @throws SQLException
 	 */
-	public void updateOneCareer(String businessNumber, String employeeNumber, String businessStart, String businessEnd, String businessName, String situation) throws SQLException{
-		String sql = "UPDATE career SET career_start = ?, career_end = ?, career_name = ?, situation = ? WHERE career_number = ?, employee_number = ?,";
+	public void updateOneCareer(String businessNumber, String businessStart, String businessEnd, String businessName, int situation) throws SQLException{
+		String sql = "UPDATE career SET career_start = ?, career_end = ?, career_name = ?, situation = ? WHERE owned_career_id = ?";
 
 		// -------------------
 		// SQL発行
@@ -108,9 +108,8 @@ public class CareerDAO {
 			pStmt.setString(1, businessStart);
 			pStmt.setString(2, businessEnd);
 			pStmt.setString(3, businessName);
-			pStmt.setString(4, situation);
-			pStmt.setString(5, employeeNumber);
-			pStmt.setString(6, businessNumber);
+			pStmt.setInt(4, situation);
+			pStmt.setString(5, businessNumber);
 			pStmt.executeUpdate();
 		}
 	}
@@ -121,7 +120,7 @@ public class CareerDAO {
 	 * @throws SQLException
 	 */
 	public void deleteOneCareer(String businessNumber) throws SQLException{
-		String sql = "DELETE FROM career WHERE business_number =?";
+		String sql = "DELETE FROM career WHERE owned_career_id =?";
 
 		// -------------------
 		// SQL発行
