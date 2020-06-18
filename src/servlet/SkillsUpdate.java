@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.ConnectionManager;
+import model.Skill;
 import model.SkillLogic;
 
 /**
@@ -43,22 +44,42 @@ public class SkillsUpdate extends HttpServlet {
 			mc=request.getParameter("owned_certification_id");
 			oth=request.getParameter("owned_other_certification_id");
 			skl=request.getParameter("owned_skill_id");
-			
-			if(mc!=null) {
 
-			// リクエストスコープに保存
-			//request.setAttribute("emp", emp);
+			if(mc!=null) {
+				int mcI = Integer.parseInt(mc);
+				Skill ownedSkill=skillLogic.getOwnedSkill(mcI);
+				// リクエストスコープに保存
+				request.setAttribute("ownedSkill", ownedSkill);
+				// フォワード
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/certificationUpdate.jsp");
+				dispatcher.forward(request, response);
+				}
+
+			if(oth!=null) {
+				int othI = Integer.parseInt(oth);
+				Skill ownedSkill=skillLogic.getOwnedSkill(othI);
+				// リクエストスコープに保存
+				request.setAttribute("ownedSkill", ownedSkill);
+				// フォワード
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/otherCertificationUpdate.jsp");
+				dispatcher.forward(request, response);
 			}
-			if(oth!=null) {}
-			if(skl!=null) {}
+
+			if(skl!=null) {
+				int sklI = Integer.parseInt(skl);
+				Skill ownedSkill=skillLogic.getOwnedSkill(sklI);
+				// リクエストスコープに保存
+				request.setAttribute("ownedSkill", ownedSkill);
+				// フォワード
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillUpdate.jsp");
+				dispatcher.forward(request, response);
+			}
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		}
-		
-		// フォワード
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillsupdate.jsp");
-		dispatcher.forward(request, response);
-		
+
+
+
 	}
 
 
