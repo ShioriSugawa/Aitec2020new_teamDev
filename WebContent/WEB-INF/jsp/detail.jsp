@@ -31,7 +31,7 @@
 
 	<div class="skillList">
 		<br><br><label>資格/スキル一覧</label>
-		<input type="button" class="button" value="新規" onclick="location.href='/SelfIntroduction/skillsRegister?employeeNumber=${emp.employeeNumber}'"><br>
+		<input type="button" class="button" value="新規" onclick="location.href='/SelfIntroduction/SkillsRegister?employeeNumber=${emp.employeeNumber}'"><br>
 		<br><table class="table table-bordered table-striped" >
 			<thead  class="thead-light">
 			<tr>
@@ -46,7 +46,7 @@
 			<td>${ mc.genreName }</td>
 			<td>${ mc.certificationOrSkillName }</td>
 			<td>${ mc.certificationDate }</td>
-			<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/skillsUpdate?owned_certification_id=${ mc.ownedId }'"></td>
+			<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/SkillsUpdate?owned_certification_id=${ mc.ownedId }'"></td>
 		</tr>
 
 
@@ -57,7 +57,7 @@
 			<td>${ others.genreName }</td>
 			<td>${ others.certificationOrSkillName }</td>
 			<td>${ others.certificationDate }</td>
-			<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/skillsUpdate?owned_other_certification_id=${ others.ownedId }'"></td>
+			<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/SkillsUpdate?owned_other_certification_id=${ others.ownedId }'"></td>
 		</tr>
 		</c:forEach>
 		<c:forEach var="skill" items="${skillList}">
@@ -65,7 +65,7 @@
 			<td>${ skill.genreName }</td>
 			<td>${ skill.certificationOrSkillName }</td>
 			<td></td>
-			<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/skillsUpdate?owned_skill_id=${ others.ownedId }'"></td>
+			<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/SkillsUpdate?owned_skill_id=${ others.ownedId }'"></td>
 		</tr>
 		</c:forEach>
 		</tbody>

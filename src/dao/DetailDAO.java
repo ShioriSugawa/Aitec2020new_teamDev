@@ -58,11 +58,12 @@ public class DetailDAO {
 				String business_start = resultSet.getString("business_start");
 				String business_end = resultSet.getString("business_end");
 				String business_name = resultSet.getString("business_name");
+				String situation = resultSet.getString("situation");
 
 
 				//結果をリストに格納
 				String id = String.valueOf(owned_career_id);
-				 Career career = new Career(id, employee_number, business_name, business_start, business_end);
+				 Career career = new Career(id, employee_number, business_name, business_start, business_end,situation);
 
 				careList.add(career);
 
