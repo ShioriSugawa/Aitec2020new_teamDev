@@ -72,8 +72,10 @@
 			<input type="text" name="skill"  placeholder="スキルを入力してください" >
 		<input type="button" class="searchbutton" name="searchbutton" value="検索">
           <br><br><br>
-          <input type="button" class="searchbutton" name="searchbutton" value="資格所持数ランキング">
-          <input type="button" class="searchbutton" name="searchbutton" value="従業員番号でソート">
+          <form action="/SelfIntroduction/EmployeeList" method="post">
+         	<button type="submit" class="sortButton" name="sort" value="資格所持数">資格所持ランキング</button>
+          	<button type="submit" class="sortButton" name="sort" value="従業員番号">従業員番号でソート</button>
+          </form>
 
           <table class="table table-bordered table-striped" >
             <thead class="thead-light">

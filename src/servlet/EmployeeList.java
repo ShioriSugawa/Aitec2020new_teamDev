@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -21,6 +22,11 @@ import model.EmployeeLogic;
  * システム名：自己紹介システム<br>
  * クラス概要：<br>
  *  従業員一覧のコントローラクラス<br>
+ */
+
+/*
+ * 修正内容まとめ
+ * 2020/6/18 ソート機能追加
  */
 @WebServlet("/EmployeeList")
 public class EmployeeList extends HttpServlet {
@@ -60,7 +66,29 @@ public class EmployeeList extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+
+		// 2020/6/17 追加
+		//文字コードエンコーディング
+				request.setCharacterEncoding("UTF-8");
+				response.setContentType("text/html;charset=UTF-8");
+		try (Connection connection = ConnectionManager.getConnection()) {
+			// 従業員一覧を取得
+			EmployeeLogic employeeLogic = new EmployeeLogic(connection);
+			ArrayList<Employee> empList = employeeLogic.getEmployeeList();
+
+			//押下されたボタンに応じてソート
+			String sortButton = request.getParameter("sort");
+			employeeLogic.sortArrayList(sortButton, empList);
+
+			// リクエストスコープに保存
+			request.setAttribute("empList", empList);
+		} catch (SQLException e) {
+			throw new ServletException(e);
+		}
+
+		// フォワード
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/list.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

@@ -23,6 +23,7 @@ import model.Employee;
  * 2020/6/16 現在の業務経歴一覧取得追加
  * 2020/6/16 資格所持数取得追加
  * 2020/6/17 従業員削除論理削除に変更対応
+ * 2020/6/18 ソート機能追加に伴い従業員リストArrayListに変更
  *
  */
 public class EmployeeDAO {
@@ -43,9 +44,10 @@ public class EmployeeDAO {
 	 * @return 従業員リスト
 	 * @throws SQLException
 	 */
-	public List<Employee> findAllEmployee() throws SQLException {
+	public ArrayList<Employee> findAllEmployee() throws SQLException {
 
-		List<Employee> empList = new ArrayList<>();
+		// 2020/6/18 ソートのためArrayListに
+		ArrayList<Employee> empList = new ArrayList<>();
 		// 2020/6/17 従業員削除を論理削除にするため変更
 		String sql = "SELECT * FROM employee WHERE employment = 1 order by employee_number";
 
