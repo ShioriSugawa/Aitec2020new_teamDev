@@ -14,6 +14,8 @@ Employee employee = (Employee) request.getAttribute("employee");
 		<meta charset="UTF-8">
 		<title>業務経歴登録</title>
 		<link href="./css/common.css" rel="stylesheet">
+		<link href="./css/career.css" rel="stylesheet">
+		<link href="./css/register.css" rel="stylesheet">
 	</head>
 
 	<body class="container-fluid">
@@ -28,7 +30,7 @@ Employee employee = (Employee) request.getAttribute("employee");
 		<%-- 入力した内容をPOSTで更新する。 --%>
 		<form class="careerRegister-form" action="/SelfIntroduction/CareerRegister?employeeNumber=${ employee.employeeNumber }" method="post" onSubmit="return confirmRegister()">
 
-			<div class="careerRegister-start">
+			<div class="career-start">
 
 				<label>業務開始</label>
 				<select name="startYear">
@@ -136,9 +138,9 @@ Employee employee = (Employee) request.getAttribute("employee");
 
 			</div>
 
-			<div class="careerRegister-start">
+			<div class="career-end">
 
-				<label>業務開始</label>
+				<label>業務終了</label>
 				<select name="endYear">
 					<option value="">-</option>
 					<option value="1950">1950</option>
@@ -250,15 +252,14 @@ Employee employee = (Employee) request.getAttribute("employee");
 				<br/>
 			</div>
 
-
-			<div class="careerRegister-name">
+			<div class="career-name">
 				<label>業務名と業務内容</label>
 				<br/>
 				<input type="text" name="businessName" class="careerRegister-name-input" maxlength='100' placeholder='○○プロジェクトの××業務を担当' value="${career.businessName}" required>
 			</div>
 
-			<input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${ emp.employeeNumber }'">
-			<input type="submit" class="button careerRegister-button" value="登録">
+			<input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${ employee.employeeNumber }'">
+			<input type="submit" class="button career-button" value="登録">
 
 		</form>
 
