@@ -14,7 +14,11 @@ public class SkillLogic {
 	public SkillLogic(Connection connection) {
 		this.connection = connection;
 	}
-	
-	public Skill getOwnedSkill(int )
+
+	public Skill getOwnedSkill(int ownedId) {
+
+		Skill ownedSkill=null;
+		return ownedSkill;
+	}
 
 }
