@@ -264,9 +264,6 @@ Career career = (Career) request.getAttribute("career");
 
 			</div>
 
-			<input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${ career.employeeNumber }'">
-			<input type="submit" class="button careerRegister-button" value="更新">
-
 			<div class="career-name">
 				<label>業務名と業務内容</label>
 				<br/>

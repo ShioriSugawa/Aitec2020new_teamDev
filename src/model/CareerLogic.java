@@ -28,10 +28,11 @@ public class CareerLogic {
 	public Career getCareer(String businessNumber) throws ServletException{
 		CareerDAO careerDAO = new CareerDAO(connection);
 		Career career = null;
+		int businessNum = Integer.parseInt(businessNumber);
 
 		try {
 			// DB処理実行
-			career = careerDAO.findOneCareer(businessNumber);
+			career = careerDAO.findOneCareer(businessNum);
 		}catch (SQLException | IllegalArgumentException e) {
 			throw new ServletException(e);
 		}
@@ -85,10 +86,11 @@ public class CareerLogic {
 		String businessStart = startYear +"/"+ startMonth;
 		String businessEnd = endYear +"/"+ endMonth;
 		int situationNum = Integer.parseInt(situation);
+		int businessNum = Integer.parseInt(businessNumber);
 
 		try {
 			// DB処理実行
-			careerDAO.updateOneCareer(businessNumber, businessStart, businessEnd, businessName, situationNum);
+			careerDAO.updateOneCareer(businessNum, businessStart, businessEnd, businessName, situationNum);
 		}catch (SQLException | IllegalArgumentException e) {
 			throw new ServletException(e);
 		}
@@ -102,10 +104,11 @@ public class CareerLogic {
 	 */
 	public void deleteCareer(String businessNumber) throws ServletException{
 		CareerDAO careerDAO = new CareerDAO(connection);
+		int businessNum = Integer.parseInt(businessNumber);
 
 		try {
 			// DB処理実行
-			careerDAO.deleteOneCareer(businessNumber);
+			careerDAO.deleteOneCareer(businessNum);
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		}

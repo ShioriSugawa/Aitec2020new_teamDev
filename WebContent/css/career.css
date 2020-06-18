@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+.careerRegister-form {
+  width : 400px;
+}
+
+.careerUpdater-form {
+  width : 400px;
+}
+
+
+.career-start{
+	width : 400px;
+	padding-bottom: 20px;
+}
+
+.career-end{
+	width : 400px;
+	padding-bottom: 20px;
+}
+
+.situation{
+	width : 250px;
+	padding-bottom: 20px;
+}
+
+.career-name {
+  width : 400px;
+  padding-bottom: 20px;
+}
+
+.career-name-input {
+  width : 1000px;
+}
+
+.register-button {
+	width : 100px;
+	float : right;
+}

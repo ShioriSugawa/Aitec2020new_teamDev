@@ -27,7 +27,7 @@ public class CareerDAO {
 	 * @return 業務経歴データ（対象が存在しない場合はnullを返却）
 	 * @throws SQLException
 	 */
-	public Career findOneCareer(String businessNumber) throws SQLException{
+	public Career findOneCareer(int businessNumber) throws SQLException{
 
 		Career career = null;
 		String sql = "SELECT * FROM career WHERE owned_career_id = ?";
@@ -37,7 +37,7 @@ public class CareerDAO {
 		// -------------------
 		try(PreparedStatement pStmt = connection.prepareStatement(sql)){
 
-			pStmt.setString(1, businessNumber);
+			pStmt.setInt(1, businessNumber);
 
 			try(ResultSet resultSet = pStmt.executeQuery()){
 				// -------------------
@@ -46,7 +46,7 @@ public class CareerDAO {
 				if(resultSet.next()) {
 
 					// ResultSetから各値を取得
-					String business_number = resultSet.getString("business_number");
+					String business_number = resultSet.getString("owned_career_id");
 					String employee_number = resultSet.getString("employee_number");
 					String business_start = resultSet.getString("business_start");
 					String business_end = resultSet.getString("business_end");
@@ -98,7 +98,7 @@ public class CareerDAO {
 	 * @param situation 状況
 	 * @throws SQLException
 	 */
-	public void updateOneCareer(String businessNumber, String businessStart, String businessEnd, String businessName, int situation) throws SQLException{
+	public void updateOneCareer(int businessNumber, String businessStart, String businessEnd, String businessName, int situation) throws SQLException{
 		String sql = "UPDATE career SET career_start = ?, career_end = ?, career_name = ?, situation = ? WHERE owned_career_id = ?";
 
 		// -------------------
@@ -109,7 +109,7 @@ public class CareerDAO {
 			pStmt.setString(2, businessEnd);
 			pStmt.setString(3, businessName);
 			pStmt.setInt(4, situation);
-			pStmt.setString(5, businessNumber);
+			pStmt.setInt(5, businessNumber);
 			pStmt.executeUpdate();
 		}
 	}
@@ -119,14 +119,14 @@ public class CareerDAO {
 	 * @param businessNumber 業務経歴番号
 	 * @throws SQLException
 	 */
-	public void deleteOneCareer(String businessNumber) throws SQLException{
+	public void deleteOneCareer(int businessNumber) throws SQLException{
 		String sql = "DELETE FROM career WHERE owned_career_id =?";
 
 		// -------------------
 		// SQL発行
 		// -------------------
 		try(PreparedStatement pStmt = connection.prepareStatement(sql)) {
-			pStmt.setString(1, businessNumber);
+			pStmt.setInt(1, businessNumber);
 			pStmt.executeUpdate();
 		}
 	}
