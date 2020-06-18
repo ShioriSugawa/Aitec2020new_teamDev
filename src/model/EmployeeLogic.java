@@ -22,6 +22,7 @@ import dao.EmployeeDAO;
  *  2020/6/16 従業員更新メソッド所属追加対応
  *  2020/6/18 ArrayListソートメソッド追加
  *  2020/6/18 ソート追加に伴い従業員リストArrayListに
+ *  2020/6/18 資格ジャンル、資格名、スキルジャンルのリスト取得メソッド追加
  */
 public class EmployeeLogic {
 
@@ -235,6 +236,12 @@ public class EmployeeLogic {
 		return list;
 	}
 
+	/**
+	 * 該当従業員の所持その他資格一覧を取得するメソッド
+	 * @param employeeNumber　所持その他資格一覧を取得したい従業員番号
+	 * @return　所持その他資格一覧
+	 * @throws ServletException
+	 */
 	public List<Employee> getOtherCertificationList(String employeeNumber) throws ServletException{
 		DetailDAO dtlDAO = new DetailDAO(connection);
 		List<Employee> list = null;
@@ -246,6 +253,27 @@ public class EmployeeLogic {
 				throw new ServletException(e);
 		}
 		return list;
+	}
+
+	//資格ジャンル一覧
+	public ArrayList<String> getGenreList() throws ServletException{
+		EmployeeDAO empDAO = new EmployeeDAO(connection);
+		ArrayList<String> list = null;
+
+		try {
+			//DB処理実行
+			list = empDAO.getGenreList();
+		}catch(SQLException e) {
+			throw new ServletException(e);
+	}
+		return list;
+	}
+
+	//資格名一覧
+	public ArrayList<String> getCertificationName(){
+
+
+		return null;
 	}
 
 	/**
@@ -267,6 +295,20 @@ public class EmployeeLogic {
 		return list;
 	}
 
+	//スキルジャンル一覧
+	public ArrayList<String> getSkillGenreList(){
+
+
+
+		return null;
+	}
+
+	/**
+	 * 該当従業員の所持資格数を取得するメソッド
+	 * @param employeeNumber　所持資格数を取得したい従業員番号
+	 * @return 所持資格数
+	 * @throws ServletException
+	 */
 	public int countCertification(String employeeNumber) throws ServletException {
 		int countMaster = getMasterCertificationList(employeeNumber).size();
 		int countOther =  getOtherCertificationList(employeeNumber).size();
@@ -292,6 +334,28 @@ public class EmployeeLogic {
 				list.sort((a,b)-> b.getCount() - a.getCount() );
 				break;
 		}
+	}
+
+	//検索
+	public ArrayList<Employee> searchEmployee(String deployment, String masterCertification, String otherCertification, String skillGenre, String skill) throws SQLException{
+
+		EmployeeDAO empDAO = new EmployeeDAO(connection);
+		ArrayList<Employee> searchList = new ArrayList<Employee>();
+		//所属項目が選択されていた場合
+		if(deployment != null) {
+			searchList.addAll(empDAO.getDeploymentSearchList(deployment));
+		}
+		//資格名、資格ジャンルが選択されていた場合
+		if(masterCertification != null) {
+
+		}
+
+
+
+
+
+		return searchList;
+
 	}
 
 }

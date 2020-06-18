@@ -24,6 +24,7 @@ import model.Employee;
  * 2020/6/16 資格所持数取得追加
  * 2020/6/17 従業員削除論理削除に変更対応
  * 2020/6/18 ソート機能追加に伴い従業員リストArrayListに変更
+ * 2020/6/18 資格ジャンル、資格名、スキルジャンル一覧取得メソッド追加
  *
  */
 public class EmployeeDAO {
@@ -229,4 +230,95 @@ public class EmployeeDAO {
 
 		return count;
 	}
+
+	//資格ジャンル一覧取得
+	public ArrayList<String> getGenreList() throws SQLException{
+
+		ArrayList<String> list = new ArrayList<String>();
+		final String sql ="SELECT certification_genre_name FROM certification_genre";
+		// -------------------
+		// SQL発行
+		// -------------------
+		try(PreparedStatement pStmt = connection.prepareStatement(sql)){
+				ResultSet resultSet = pStmt.executeQuery();
+
+			// -------------------
+			// 値の取得
+			// -------------------
+			while(resultSet.next()) {
+
+				// ResultSetから各値を取得
+				String genreName = resultSet.getString("certification_genre_name");
+
+				// 結果リストに格納
+				list.add(genreName);
+			}
+		}
+		return list;
+	}
+
+	//資格名一覧取得
+		public ArrayList<String> getCertificationNameList() throws SQLException{
+
+			ArrayList<String> list = new ArrayList<String>();
+			final String sql ="";
+			// -------------------
+			// SQL発行
+			// -------------------
+			try(PreparedStatement pStmt = connection.prepareStatement(sql)){
+					ResultSet resultSet = pStmt.executeQuery();
+
+				// -------------------
+				// 値の取得
+				// -------------------
+				while(resultSet.next()) {
+
+					// ResultSetから各値を取得
+					String certificationName = resultSet.getString("certification_name");
+
+					// 結果リストに格納
+					list.add(certificationName);
+				}
+			}
+			return list;
+		}
+
+		//所属検索
+		public ArrayList<Employee> getDeploymentSearchList(String deployment) throws SQLException {
+
+			ArrayList<Employee> list = new ArrayList<Employee>();
+			final String sql = "SELECT * FROM employee WHERE employee_deployment = ?";
+
+			// -------------------
+			// SQL発行
+			// -------------------
+			try(PreparedStatement pStmt = connection.prepareStatement(sql)){
+
+					pStmt.setString(1, deployment);
+					ResultSet resultSet = pStmt.executeQuery();
+
+				// -------------------
+				// 値の取得
+				// -------------------
+				while(resultSet.next()) {
+
+					// ResultSetから各値を取得
+					String employee_number = resultSet.getString("employee_number");
+					String employee_name = resultSet.getString("employee_name");
+					String employee_profile = resultSet.getString("employee_profile");
+					String employee_deployment = resultSet.getString("employee_deployment");
+
+					// 結果リストに格納
+					// 2020/6/15 所属追加
+					// 2020/6/16 現在の業務経歴リスト追加
+					List<String>careerList = getCareerList(employee_number);
+					int count = countCertification(employee_number);
+					Employee emp = new Employee(employee_number, employee_name, employee_profile, employee_deployment, count, careerList);
+					list.add(emp);
+				}
+			}
+			return list;
+		}
+
+
 }

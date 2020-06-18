@@ -40,37 +40,39 @@
         <input type="button" class="button" value="新規登録"  onclick="location.href='/SelfIntroduction/EmployeeRegister'">
         <label class="number-of-list">従業員数：${empList.size()}名</label>
         <%-- 2020/6/16　追加 --%>
-        <br><br><label>所属</label>
-        <select name="certification">
-				<option>所属を選択してください</option>
-				<option>部署1</option>
-				<option>部署2</option>
-				<option>部署3</option>
-				<option>部署4</option>
-				<option>部署5</option>
+        <%-- 2020/6/18　プルダウン項目データベース参照に変更 --%>
+        <form action="/SelfIntroduction/EmployeeList" method="post">
+	        <br><br><label>所属</label>
+	        <select name="deployment">
+					<option>所属を選択してください</option>
+					<option>部署1</option>
+					<option>部署2</option>
+					<option>部署3</option>
+					<option>部署4</option>
+					<option>部署5</option>
+				</select>
+	        <br><br><label>資格</label>
+	        <select name=”masterCertification” class="genre">
+	        	<option>ジャンルもしくは資格を選択してください</option>
+				<c:forEach var="genre" items="${genreList}">
+					<option><c:out value="${genre}" /></option>
+				</c:forEach>
+				<c:forEach var="certification" items="${certificationList}">
+					<option><c:out value="${certification}" /></option>
+				</c:forEach>
 			</select>
-        <br><br><label>資格</label>
-        <select name=”Genre” class="genre">
-        	<option>ジャンルもしくは資格を選択してください</option>
-			<option>ジャンル1</option>
-			<option>ジャンル2</option>
-			<option>ジャンル3</option>
-			<option>資格1</option>
-			<option>資格2</option>
-		</select>
-		<input type="text" name="skill"  placeholder="資格を入力してください" >
+			<input type="text" name="otherCertification"  placeholder="その他資格名" >
 
-			<br><label>スキル</label>
-			<select name=”Genre” class="genre">
-        	<option>ジャンルを選択してください</option>
-			<option>ジャンル1</option>
-			<option>ジャンル2</option>
-			<option>ジャンル3</option>
-			<option>ジャンル4</option>
-			<option>ジャンル5</option>
-		</select>
-			<input type="text" name="skill"  placeholder="スキルを入力してください" >
-		<input type="button" class="searchbutton" name="searchbutton" value="検索">
+				<br><label>スキル</label>
+				<select name=”skillGenre”>
+	        	<option>ジャンルを選択してください</option>
+				<c:forEach var="skillGenre" items="${skillGenreList}">
+					<option><c:out value="${skillGenre}" /></option>
+				</c:forEach>
+			</select>
+				<input type="text" name="skill"  placeholder="スキルを入力してください" >
+			<button type="submit" class="searchbutton" name="search" value="検索">検索</button>
+		</form>
           <br><br><br>
           <form action="/SelfIntroduction/EmployeeList" method="post">
          	<button type="submit" class="sortButton" name="sort" value="資格所持数">資格所持ランキング</button>
@@ -100,7 +102,7 @@
                       <td>${ employee.employeeProfile }</td>
                       <td>${ employee.count }</td>
                       <td>
-                      <c:forEach var="career" items="${employee.careerList}">
+               <c:forEach var="career" items="${employee.careerList}">
                      	<c:out value="${career}" /><br>
                       </c:forEach>
                       </td>

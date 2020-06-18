@@ -27,6 +27,7 @@ import model.EmployeeLogic;
 /*
  * 修正内容まとめ
  * 2020/6/18 ソート機能追加
+ * 2020/6/18 検索機能追加
  */
 @WebServlet("/EmployeeList")
 public class EmployeeList extends HttpServlet {
@@ -45,13 +46,27 @@ public class EmployeeList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		//文字コードエンコーディング
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+
 		try (Connection connection = ConnectionManager.getConnection()) {
 			// 従業員一覧を取得
 			EmployeeLogic employeeLogic = new EmployeeLogic(connection);
 			List<Employee> empList = employeeLogic.getEmployeeList();
 
+			// 2020/6/18　追加
+			//検索項目をDBより取得
+			List<String> genreList = employeeLogic.getGenreList();
+			List<String> masterCertificationList = employeeLogic.getCertificationName();
+			List<String> skillGenreList = employeeLogic.getSkillGenreList();
+
+
 			// リクエストスコープに保存
 			request.setAttribute("empList", empList);
+			request.setAttribute("genreList", genreList);
+			request.setAttribute("masterCertificationList", masterCertificationList);
+			request.setAttribute("skillGenreList", skillGenreList);
 			request.setAttribute("result", request.getParameter("result")); // 登録・更新・削除後に遷移してくる場合に格納
 		} catch (SQLException e) {
 			throw new ServletException(e);
@@ -69,16 +84,32 @@ public class EmployeeList extends HttpServlet {
 
 		// 2020/6/17 追加
 		//文字コードエンコーディング
-				request.setCharacterEncoding("UTF-8");
-				response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+
 		try (Connection connection = ConnectionManager.getConnection()) {
 			// 従業員一覧を取得
 			EmployeeLogic employeeLogic = new EmployeeLogic(connection);
 			ArrayList<Employee> empList = employeeLogic.getEmployeeList();
 
+			//検索ボタンが押下されていた場合条件に応じてリスト絞り込み
+			String searchButton = request.getParameter("search");
+			String deployment = request.getParameter("deployment");
+			String masterCertification = request.getParameter("mastercertification");
+			String otherCertification = request.getParameter("otherCertification");
+			String skillGenre = request.getParameter("skillGenre");
+			String skill = request.getParameter("skill");
+
+			if(searchButton != null) {
+				empList = employeeLogic.searchEmployee(deployment, masterCertification, otherCertification, skillGenre,skill);
+			}
+
 			//押下されたボタンに応じてソート
 			String sortButton = request.getParameter("sort");
-			employeeLogic.sortArrayList(sortButton, empList);
+
+			if(sortButton != null) {
+				employeeLogic.sortArrayList(sortButton, empList);
+			}
 
 			// リクエストスコープに保存
 			request.setAttribute("empList", empList);

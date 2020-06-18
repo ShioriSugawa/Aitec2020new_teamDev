@@ -22,7 +22,6 @@ public class Employee implements Serializable {
 
 	private String employeeNumber, employeeName, employeeProfile,employeeDeployment,
 					genreName,certificationOrSkillName,certificationDate;
-	@SuppressWarnings("unused")
 	private int ownedId,count;
 	private List<String> careerList;
 
