@@ -8,6 +8,7 @@ import java.io.Serializable;
  * クラス概要：<br>
  *  業務経歴のJavaBeansクラス<br>
  */
+
 public class Career implements Serializable {
 
 	private String  businessNumber, employeeNumber, businessStart, businessEnd, businessName, situation;
