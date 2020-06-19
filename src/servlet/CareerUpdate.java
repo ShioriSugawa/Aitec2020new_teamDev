@@ -64,6 +64,41 @@ public class CareerUpdate extends HttpServlet {
 		String businessName = request.getParameter("businessName");
 		String situation = request.getParameter("situation");
 
+		//開始日が未選択なら再度登録画面にフォワード
+		Boolean startYError = false;
+		Boolean startMError = false;
+		if(startYear.equals("")) {
+			startYError = true;
+			request.setAttribute("startYError", startYError);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
+			dispatcher.forward(request, response);
+		}
+		if(startMonth.equals("")) {
+			startMError = true;
+			request.setAttribute("startMError", startMError);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
+			dispatcher.forward(request, response);
+		}
+
+		//以前の業務を選択した場合
+		if(situation =="0") {
+			//終了日が未選択なら再度登録画面にフォワード
+			Boolean endYError = false;
+			Boolean endMError = false;
+			if(endYear.equals("")) {
+				endYError = true;
+				request.setAttribute("endYError", endYError);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
+				dispatcher.forward(request, response);
+			}
+			if(endMonth.equals("")) {
+				endMError = true;
+				request.setAttribute("endMError", endMError);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
+				dispatcher.forward(request, response);
+			}
+		}
+
 		try (Connection connection = ConnectionManager.getConnection()){
 			//該当の業務経歴を更新
 			CareerLogic careerLogic = new CareerLogic(connection);

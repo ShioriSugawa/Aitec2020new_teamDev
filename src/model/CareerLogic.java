@@ -56,8 +56,14 @@ public class CareerLogic {
 		Career career = null;
 
 		String businessStart = startYear +"/"+ startMonth;
-		String businessEnd = endYear +"/"+ endMonth;
+		String businessEnd = null;
 		int situationNum = Integer.parseInt(situation);
+
+		if(endYear==null || endMonth==null) {
+			businessEnd = endYear +"/"+ endMonth;
+		}else {
+
+		}
 
 		try {
 			// DB処理実行
@@ -84,9 +90,13 @@ public class CareerLogic {
 		CareerDAO careerDAO = new CareerDAO(connection);
 
 		String businessStart = startYear +"/"+ startMonth;
-		String businessEnd = endYear +"/"+ endMonth;
+		String businessEnd = null;
 		int situationNum = Integer.parseInt(situation);
 		int businessNum = Integer.parseInt(businessNumber);
+
+		if(endYear==null || endMonth==null) {
+			businessEnd = endYear +"/"+ endMonth;
+		}
 
 		try {
 			// DB処理実行

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 
 <%@ page import="model.Employee" %>
 <%
@@ -138,6 +139,12 @@ Employee employee = (Employee) request.getAttribute("employee");
 
 			</div>
 
+			<c:if test = "${ startYError == true || startMError == true }"  >
+				<font color="red">
+					<p>開始日を選択してください。</p>
+				</font>
+			</c:if>
+
 			<div class="career-end">
 
 				<label>業務終了</label>
@@ -246,16 +253,22 @@ Employee employee = (Employee) request.getAttribute("employee");
 
 			</div>
 
+			<c:if test = "${ endYError == true || endMError == true }"  >
+				<font color="red">
+					<p>終了日を選択してください。</p>
+				</font>
+			</c:if>
+
 			<div class="situation">
 				<input type="radio" name="situation" value="1">現在の業務
-				<input type="radio" name="situation" value="0">以前の業務
+				<input type="radio" name="situation" value="0" checked>以前の業務
 				<br/>
 			</div>
 
 			<div class="career-name">
-				<label>業務名と業務内容</label>
+				<label>業務名と業務内容（100文字以内）</label>
 				<br/>
-				<input type="text" name="businessName" class="careerRegister-name-input" maxlength='100' placeholder='○○プロジェクトの××業務を担当' value="${career.businessName}" required>
+				<input type="text" name="businessName" class="career-name-input" maxlength='100' placeholder='○○プロジェクトの××業務を担当' value="${career.businessName}" required>
 			</div>
 
 			<input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${ employee.employeeNumber }'">

@@ -99,7 +99,7 @@ public class CareerDAO {
 	 * @throws SQLException
 	 */
 	public void updateOneCareer(int businessNumber, String businessStart, String businessEnd, String businessName, int situation) throws SQLException{
-		String sql = "UPDATE career SET career_start = ?, career_end = ?, career_name = ?, situation = ? WHERE owned_career_id = ?";
+		String sql = "UPDATE career SET business_start = ?, business_end = ?, business_name = ?, situation = ? WHERE owned_career_id = ?";
 
 		// -------------------
 		// SQL発行

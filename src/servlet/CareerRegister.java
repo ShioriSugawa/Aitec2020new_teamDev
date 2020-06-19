@@ -67,47 +67,34 @@ public class CareerRegister extends HttpServlet {
 		String situation = request.getParameter("situation");
 
 
-		//開始年が未選択なら再度登録画面にフォワード
+		//開始日が未選択なら再度登録画面にフォワード
 		Boolean startYError = false;
-		if(startYear.equals("-")) {
+		Boolean startMError = false;
+		if(startYear.equals("")) {
 			startYError = true;
 			request.setAttribute("startYError", startYError);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
 			dispatcher.forward(request, response);
 		}
-
-		//開始月が未選択なら再度登録画面にフォワード
-		Boolean startMError = false;
-		if(startMonth.equals("-")) {
+		if(startMonth.equals("")) {
 			startMError = true;
 			request.setAttribute("startMError", startMError);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
 			dispatcher.forward(request, response);
 		}
 
-		//状況が未選択なら再度登録画面にフォワード
-		Boolean situationError = false;
-		if(situation ==null) {
-			situationError = true;
-			request.setAttribute("situationError", situationError);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
-			dispatcher.forward(request, response);
-		}
-
 		//以前の業務を選択した場合
 		if(situation =="0") {
-			//終了年が未選択なら再度登録画面にフォワード
+			//終了日が未選択なら再度登録画面にフォワード
 			Boolean endYError = false;
-			if(endYear.equals("-")) {
+			Boolean endMError = false;
+			if(endYear.equals("")) {
 				endYError = true;
 				request.setAttribute("endYError", endYError);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
 				dispatcher.forward(request, response);
 			}
-
-			//終了月が未選択なら再度登録画面にフォワード
-			Boolean endMError = false;
-			if(endMonth.equals("-")) {
+			if(endMonth.equals("")) {
 				endMError = true;
 				request.setAttribute("endMError", endMError);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");

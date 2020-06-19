@@ -30,10 +30,19 @@
 }
 
 .career-name-input {
-  width : 1000px;
+  width : 600px;
+}
+
+.register-button {
+  width : 100px;
+  float : right;
 }
 
 .register-button {
 	width : 100px;
 	float : right;
+}
+
+.delete-button {
+  width : 100px;
 }
