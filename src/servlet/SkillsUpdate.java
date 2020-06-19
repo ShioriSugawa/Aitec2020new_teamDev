@@ -74,8 +74,9 @@ public class SkillsUpdate extends HttpServlet {
 				Skill ownedSkill=skillLogic.getOwnedSkill(sklI);
 				List<Skill> skillGenre=skillLogic.getGenre();
 				// リクエストスコープに保存
-				request.setAttribute("ownedSkill", ownedSkill);
 				request.setAttribute("skillGenre", skillGenre);
+				request.setAttribute("ownedSkill", ownedSkill);
+
 				// フォワード
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillUpdate.jsp");
 				dispatcher.forward(request, response);
