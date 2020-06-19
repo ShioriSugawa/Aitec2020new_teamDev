@@ -79,8 +79,7 @@ public class SkillsDAO {
 	public List<Skill> getGenre()throws SQLException{
 		List<Skill> genreList=new ArrayList<>();
 		final String sql=
-				"SELECT skill_genre_code,skill_genre_name"
-				+ "FROM skill_genre";
+				"SELECT * FROM skill_genre";
 		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
 			ResultSet resultSet = pStmt.executeQuery();
 
@@ -105,9 +104,9 @@ public class SkillsDAO {
 		Skill ownedSkill;
 		final String sql=
 				"SELECT employee_number,skill_genre_code,skill_genre_name,skill_name"
-						+ "FROM owned_skill INNER JOIN skill_genre"
-						+ "ON owned_skill.skill_genre_code=skill_genre.skill_genre_code"
-						+ "WHERE owned_skill_id=? ";
+						+ " FROM owned_skill INNER JOIN skill_genre"
+						+ " ON owned_skill.skill_genre_code=skill_genre.skill_genre_code"
+						+ " WHERE owned_skill_id=? ";
 
 	try(PreparedStatement pStmt = conn.prepareStatement(sql)){
 		pStmt.setInt(1, ownedId);

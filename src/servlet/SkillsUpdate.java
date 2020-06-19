@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,6 +38,7 @@ public class SkillsUpdate extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
 		String mc,oth,skl;
 		try (Connection connection = ConnectionManager.getConnection()) {
 			// 編集IDのオーダーを取得
@@ -44,6 +46,8 @@ public class SkillsUpdate extends HttpServlet {
 			mc=request.getParameter("owned_certification_id");
 			oth=request.getParameter("owned_other_certification_id");
 			skl=request.getParameter("owned_skill_id");
+
+			skl="6";
 
 			if(mc!=null) {
 				int mcI = Integer.parseInt(mc);
@@ -68,8 +72,10 @@ public class SkillsUpdate extends HttpServlet {
 			if(skl!=null) {
 				int sklI = Integer.parseInt(skl);
 				Skill ownedSkill=skillLogic.getOwnedSkill(sklI);
+				List<Skill> skillGenre=skillLogic.getGenre();
 				// リクエストスコープに保存
 				request.setAttribute("ownedSkill", ownedSkill);
+				request.setAttribute("skillGenre", skillGenre);
 				// フォワード
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillUpdate.jsp");
 				dispatcher.forward(request, response);
