@@ -30,6 +30,12 @@ public class Skill implements Serializable {
 		this.skillName=skillName;
 	}
 
+	//スキルジャンル一覧取得用
+	public Skill(String genreCode,String genreName) {
+		this.genreCode=genreCode;
+		this.genreName=genreName;
+	}
+
 
 
 	//以下、getter
