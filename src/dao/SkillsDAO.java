@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Skill;
 
@@ -23,7 +25,7 @@ public class SkillsDAO {
 	//以下、保有IDによる検索
 	/**
 	 * 保有資格IDによる資格保有データ1件の取得
-	 * @param
+	 * @param 編集中
 	 */		/*	編集中
 	public Certification getOwnedCertification(int ownedId)throws SQLException {
 		Certification ownedCertification;
@@ -50,7 +52,7 @@ public class SkillsDAO {
 
 	/**
 	 * 保有その他資格IDによるその他資格保有データ1件の取得
-	 * @param
+	 * @param 編集中
 	 */		/*	編集中
 	public Certification getOtherOwnedCertification(int ownedId)throws SQLException {
 		Certification ownedOtherCertification;
@@ -74,7 +76,24 @@ public class SkillsDAO {
 		return ownedOtherCertification;
 	}//*/
 
-	//public
+	public List<Skill> getGenre()throws SQLException{
+		List<Skill> genreList=new ArrayList<>();
+		final String sql=
+				"SELECT skill_genre_code,skill_genre_name"
+				+ "FROM skill_genre";
+		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
+			ResultSet resultSet = pStmt.executeQuery();
+
+			while(resultSet.next()) {
+				String code=resultSet.getString("skill_genre_code");
+				String name=resultSet.getString("skill_genre_name");
+
+				Skill genre=new Skill(code,name);
+				genreList.add(genre);
+			}
+		}
+		return genreList;
+	}
 
 	/**
 	 * 保有スキルIDによるスキル保有データ1件の取得
