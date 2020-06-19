@@ -2,6 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@ page import="java.util.List" %>
+<%
+//リクエストスコープからインスタンスを取得
+String searchedDeployment = (String) request.getAttribute("searchedDeployment");
+String searchedMaster = (String) request.getAttribute("searchedMaster");
+String searchedOther = (String) request.getAttribute("searchedOther");
+String searchedSkillGenre = (String) request.getAttribute("searchedSkillGenre");
+String searchedSkill = (String) request.getAttribute("searchedSkill");
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,15 +49,16 @@
         <label class="number-of-list">従業員数：${empList.size()}名</label>
         <%-- 2020/6/16　追加 --%>
         <%-- 2020/6/18　プルダウン項目データベース参照に変更 --%>
+        <%-- 2020/6/19　検索実行後検索条件を検索欄に表示 --%>
         <form action="/SelfIntroduction/EmployeeList" method="post">
 	        <br><br><label>所属</label>
 	        <select name="deployment">
 					<option>所属を選択してください</option>
-					<option>部署1</option>
+					<option >部署1</option>
 					<option>部署2</option>
 					<option>部署3</option>
-					<option>部署4</option>
-					<option>部署5</option>
+					<option >部署4</option>
+					<option >部署5</option>
 				</select>
 	        <br><br><label>資格</label>
 	        <select name=”masterCertification” class="genre">
@@ -61,7 +70,7 @@
 					<option><c:out value="${certification}" /></option>
 				</c:forEach>
 			</select>
-			<input type="text" name="otherCertification"  placeholder="その他資格名" >
+			<input type="text" name="otherCertification" placeholder= "その他資格名">
 
 				<br><label>スキル</label>
 				<select name=”skillGenre”>
@@ -70,8 +79,9 @@
 					<option><c:out value="${skillGenre}" /></option>
 				</c:forEach>
 			</select>
-				<input type="text" name="skill"  placeholder="スキルを入力してください" >
+				<input type="text" name="skill"  placeholder="スキル名" >
 			<button type="submit" class="searchbutton" name="search" value="検索">検索</button>
+			<button type="submit" class="resetbutton" name="search" value="リセット">検索条件のクリア</button>
 		</form>
           <br><br><br>
           <form action="/SelfIntroduction/EmployeeList" method="post">

@@ -100,6 +100,7 @@ public class EmployeeList extends HttpServlet {
 			String skillGenre = request.getParameter("skillGenre");
 			String skill = request.getParameter("skill");
 
+			//
 			if(searchButton != null) {
 				empList = employeeLogic.searchEmployee(deployment, masterCertification, otherCertification, skillGenre,skill);
 			}
@@ -113,6 +114,11 @@ public class EmployeeList extends HttpServlet {
 
 			// リクエストスコープに保存
 			request.setAttribute("empList", empList);
+			request.setAttribute("searchedDeployment", deployment);
+			request.setAttribute("searchedMaster", masterCertification);
+			request.setAttribute("searchedOther", otherCertification);
+			request.setAttribute("searchedSkillGenre", skillGenre);
+			request.setAttribute("searchedSkill", skill);
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		}
