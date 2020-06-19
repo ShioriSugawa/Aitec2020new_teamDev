@@ -25,6 +25,7 @@ import model.Employee;
  * 2020/6/17 従業員削除論理削除に変更対応
  * 2020/6/18 ソート機能追加に伴い従業員リストArrayListに変更
  * 2020/6/18 資格ジャンル、資格名、スキルジャンル一覧取得メソッド追加
+ * 2020/6/18 各種検索メソッド追加
  *
  */
 public class EmployeeDAO {
@@ -283,11 +284,16 @@ public class EmployeeDAO {
 			return list;
 		}
 
-		//所属検索
-		public ArrayList<Employee> getDeploymentSearchList(String deployment) throws SQLException {
+		/**
+		 * 所属で従業員を検索するメソッド
+		 * @param deployment　検索条件に指定された部署名
+		 * @return 該当する部署に所属する従業員の一覧
+		 * @throws SQLException
+		 */
+		public ArrayList<Employee> deploymentSearch(String deployment) throws SQLException {
 
 			ArrayList<Employee> list = new ArrayList<Employee>();
-			final String sql = "SELECT * FROM employee WHERE employee_deployment = ?";
+			final String sql = "SELECT * FROM employee WHERE employee_deployment = ? AND employment = 1";
 
 			// -------------------
 			// SQL発行
@@ -318,6 +324,95 @@ public class EmployeeDAO {
 				}
 			}
 			return list;
+		}
+
+		/**
+		 * その他資格名で従業員を検索するメソッド　複数の該当する資格を所持している場合重複する　
+		 * @param otherCertification　検索条件に入力されたその他資格名
+		 * @return　該当するその他資格を保有する従業員のリスト
+		 * @throws SQLException
+		 */
+		public ArrayList<Employee> otherSearch(String otherCertification) throws SQLException{
+
+			ArrayList<Employee> list = new ArrayList<Employee>();
+			final String sql = 		"SELECT DISTINCT employee.employee_number,employee_name,employee_profile,employee_deployment,employee_year,employment\n" +
+									"FROM employee\n" +
+									"INNER JOIN owned_other_certification\n" +
+									"ON owned_other_certification.employee_number = employee.employee_number\n" +
+									"WHERE other_certification_name LIKE ? AND employment = 1";
+
+			// -------------------
+			// SQL発行
+			// -------------------
+			try(PreparedStatement pStmt = connection.prepareStatement(sql)){
+
+					pStmt.setString(1, "%" + otherCertification + "%");
+					ResultSet resultSet = pStmt.executeQuery();
+
+				// -------------------
+				// 値の取得
+				// -------------------
+				while(resultSet.next()) {
+
+					// ResultSetから各値を取得
+					String employee_number = resultSet.getString("employee_number");
+					String employee_name = resultSet.getString("employee_name");
+					String employee_profile = resultSet.getString("employee_profile");
+					String employee_deployment = resultSet.getString("employee_deployment");
+
+					// 結果リストに格納
+					List<String>careerList = getCareerList(employee_number);
+					int count = countCertification(employee_number);
+					Employee emp = new Employee(employee_number, employee_name, employee_profile, employee_deployment, count, careerList);
+					list.add(emp);
+				}
+			}
+			return list;
+		}
+
+
+		/**
+		 * スキル名で従業員を検索するメソッド
+		 * @param skillName
+		 * @return
+		 * @throws SQLException
+		 */
+		public ArrayList<Employee> skillNameSearch(String skillName) throws SQLException{
+			ArrayList<Employee> list = new ArrayList<Employee>();
+			final String sql = 		"SELECT DISTINCT employee.employee_number,employee_name,employee_profile,employee_deployment,employee_year,employment\n" +
+									"FROM employee\n" +
+									"INNER JOIN owned_skill\n" +
+									"ON owned_skill.employee_number = employee.employee_number\n" +
+									"WHERE skill_name LIKE ? AND employment = 1";
+
+			// -------------------
+			// SQL発行
+			// -------------------
+			try(PreparedStatement pStmt = connection.prepareStatement(sql)){
+
+					pStmt.setString(1, "%" + skillName + "%");
+					ResultSet resultSet = pStmt.executeQuery();
+
+				// -------------------
+				// 値の取得
+				// -------------------
+				while(resultSet.next()) {
+
+					// ResultSetから各値を取得
+					String employee_number = resultSet.getString("employee_number");
+					String employee_name = resultSet.getString("employee_name");
+					String employee_profile = resultSet.getString("employee_profile");
+					String employee_deployment = resultSet.getString("employee_deployment");
+
+					// 結果リストに格納
+					List<String>careerList = getCareerList(employee_number);
+					int count = countCertification(employee_number);
+					Employee emp = new Employee(employee_number, employee_name, employee_profile, employee_deployment, count, careerList);
+					list.add(emp);
+				}
+			}
+			return list;
+
 		}
 
 
