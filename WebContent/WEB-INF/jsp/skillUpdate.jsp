@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>スキル情報編集</title>
 </head>
 <body>
-
+<p>スキル編集のページです</p>
 </body>
 </html>
