@@ -2,7 +2,7 @@ package model;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 
@@ -28,12 +28,12 @@ public class SkillLogic {
 	}
 
 	//ジャンルのコードと名前の一覧を取って来るやつ
-	public ArrayList<Skill>getGenre()throws ServletException{
+	public List<Skill>getGenre()throws ServletException{
 		SkillsDAO sDAO=new SkillsDAO(connection);
-		ArrayList<Skill>genre=null;
+		List<Skill>genre=null;
 		try {
 			//DB処理実行
-			genre = empDAO.getGenreList();
+			genre = sDAO.getGenre();
 		}catch(SQLException e) {
 			throw new ServletException(e);
 	}
