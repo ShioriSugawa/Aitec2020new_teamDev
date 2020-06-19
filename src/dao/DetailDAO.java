@@ -63,7 +63,7 @@ public class DetailDAO {
 
 				//結果をリストに格納
 				String id = String.valueOf(owned_career_id);
-				 Career career = new Career(id, employee_number, business_name, business_start, business_end,situation);
+				 Career career = new Career(id, employee_number, business_start, business_end, business_name,situation);
 
 				careList.add(career);
 

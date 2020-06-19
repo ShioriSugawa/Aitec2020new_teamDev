@@ -198,7 +198,7 @@ public class EmployeeDAO {
 		List<String> careerList = new ArrayList<>();
 		String sql = "SELECT business_name\n" +
 				"FROM career\n" +
-				"WHERE employee_number = ? AND situation = 1;";
+				"WHERE employee_number = ? AND situation = 1";
 
 		// -------------------
 		// SQL発行
@@ -222,6 +222,12 @@ public class EmployeeDAO {
 		return careerList;
 	}
 
+	/**
+	 * 資格所持数取得メソッド
+	 * @param employeeNumber　資格所持数を取得したい従業員番号
+	 * @return 該当従業員の資格所持数
+	 * @throws SQLException
+	 */
 	private int countCertification(String employeeNumber) throws SQLException {
 		DetailDAO dtlDAO = new DetailDAO(connection);
 		int countMaster = dtlDAO.getAllMasterCertification(employeeNumber).size();
@@ -285,112 +291,74 @@ public class EmployeeDAO {
 		}
 
 		/**
-		 * 所属で従業員を検索するメソッド
-		 * @param deployment　検索条件に指定された部署名
-		 * @return 該当する部署に所属する従業員の一覧
-		 * @throws SQLException
-		 */
-		public ArrayList<Employee> deploymentSearch(String deployment) throws SQLException {
-
-			ArrayList<Employee> list = new ArrayList<Employee>();
-			final String sql = "SELECT * FROM employee WHERE employee_deployment = ? AND employment = 1";
-
-			// -------------------
-			// SQL発行
-			// -------------------
-			try(PreparedStatement pStmt = connection.prepareStatement(sql)){
-
-					pStmt.setString(1, deployment);
-					ResultSet resultSet = pStmt.executeQuery();
-
-				// -------------------
-				// 値の取得
-				// -------------------
-				while(resultSet.next()) {
-
-					// ResultSetから各値を取得
-					String employee_number = resultSet.getString("employee_number");
-					String employee_name = resultSet.getString("employee_name");
-					String employee_profile = resultSet.getString("employee_profile");
-					String employee_deployment = resultSet.getString("employee_deployment");
-
-					// 結果リストに格納
-					// 2020/6/15 所属追加
-					// 2020/6/16 現在の業務経歴リスト追加
-					List<String>careerList = getCareerList(employee_number);
-					int count = countCertification(employee_number);
-					Employee emp = new Employee(employee_number, employee_name, employee_profile, employee_deployment, count, careerList);
-					list.add(emp);
-				}
-			}
-			return list;
-		}
-
-		/**
-		 * その他資格名で従業員を検索するメソッド　複数の該当する資格を所持している場合重複する　
+		 * 入力された検索条件で従業員を検索するメソッド　条件が二項目以上ある場合全てに該当する従業員のみ表示
+		 * @param deployment　検索条件に入力された所属部署
+		 * @param masterCertification　検索条件に入力されたマスタ登録有資格
 		 * @param otherCertification　検索条件に入力されたその他資格名
-		 * @return　該当するその他資格を保有する従業員のリスト
+		 * @param skillGenre　検索条件に入力されたスキルジャンル
+		 * @param skillName　検索条件に入力されたスキル名
+		 * @return 検索条件に該当する従業員一覧
 		 * @throws SQLException
 		 */
-		public ArrayList<Employee> otherSearch(String otherCertification) throws SQLException{
-
+		public ArrayList<Employee> searchEmployee(String deployment, String masterCertification, String otherCertification, String skillGenre, String skillName) throws SQLException{
 			ArrayList<Employee> list = new ArrayList<Employee>();
-			final String sql = 		"SELECT DISTINCT employee.employee_number,employee_name,employee_profile,employee_deployment,employee_year,employment\n" +
+
+			/*-------------SQL文構成詳細-------------------------------
+			 * baseを基に検索条件の入力の有無に応じてWHERE句変更
+			 *
+			 * base : employee,owned_other_certification,owned_skill_certificationテーブルを外部結合しemployment(在職フラグ)が1の従業員一覧を取得
+			 *
+			 * 所属の検索条件が入力されていた場合 : where句に入力された所属部署を追加
+			 * その他資格名の検索条件が入力されていた場合 : where句に入力されたその他資格名を追加（前後にワイルドカードがあるため一部一致で抽出される）
+			 * スキル名の検索条件が入力されていた場合 : where句に入力されたスキル名を追加（前後にワイルドカードがあるため一部一致で抽出される）
+			 *
+			 * !!資格ジャンル、マスター登録有資格、スキルジャンルでの検索は未実装!!
+			 *----------------------------------------------------------
+			 */
+			final String base = 	"SELECT DISTINCT employee.employee_number,employee_name,employee_profile,employee_deployment,employee_year,employment\n" +
 									"FROM employee\n" +
-									"INNER JOIN owned_other_certification\n" +
+									"LEFT OUTER JOIN owned_other_certification\n" +
 									"ON owned_other_certification.employee_number = employee.employee_number\n" +
-									"WHERE other_certification_name LIKE ? AND employment = 1";
-
-			// -------------------
-			// SQL発行
-			// -------------------
-			try(PreparedStatement pStmt = connection.prepareStatement(sql)){
-
-					pStmt.setString(1, "%" + otherCertification + "%");
-					ResultSet resultSet = pStmt.executeQuery();
-
-				// -------------------
-				// 値の取得
-				// -------------------
-				while(resultSet.next()) {
-
-					// ResultSetから各値を取得
-					String employee_number = resultSet.getString("employee_number");
-					String employee_name = resultSet.getString("employee_name");
-					String employee_profile = resultSet.getString("employee_profile");
-					String employee_deployment = resultSet.getString("employee_deployment");
-
-					// 結果リストに格納
-					List<String>careerList = getCareerList(employee_number);
-					int count = countCertification(employee_number);
-					Employee emp = new Employee(employee_number, employee_name, employee_profile, employee_deployment, count, careerList);
-					list.add(emp);
-				}
-			}
-			return list;
-		}
-
-
-		/**
-		 * スキル名で従業員を検索するメソッド
-		 * @param skillName
-		 * @return
-		 * @throws SQLException
-		 */
-		public ArrayList<Employee> skillNameSearch(String skillName) throws SQLException{
-			ArrayList<Employee> list = new ArrayList<Employee>();
-			final String sql = 		"SELECT DISTINCT employee.employee_number,employee_name,employee_profile,employee_deployment,employee_year,employment\n" +
-									"FROM employee\n" +
-									"INNER JOIN owned_skill\n" +
+									"LEFT OUTER JOIN owned_skill\n" +
 									"ON owned_skill.employee_number = employee.employee_number\n" +
-									"WHERE skill_name LIKE ? AND employment = 1";
+									"WHERE employment = 1 ";
+
+			final String whereDeployment = " AND employee_deployment = ";
+			final String whereOther = " AND other_certification_name LIKE ";
+			final String whereSkill = " AND skill_name LIKE ";
+			StringBuffer buf = new StringBuffer();
+
+			buf.append(base);
+			//所属の検索条件が入力されていた場合
+			if(!(deployment.equals("所属を選択してください"))) {
+				buf.append(whereDeployment);
+				buf.append("\'" + deployment + "\'");
+			}
+			//その他資格名の検索条件が入力されていた場合
+			if(!(otherCertification.equals(""))) {
+				buf.append(whereOther);
+				buf.append("\'");
+				buf.append("%");
+				buf.append(otherCertification);
+				buf.append("%");
+				buf.append("\'");
+			}
+			//スキル名の検索条件が入力されていた場合
+			if(!(skillName.equals(""))) {
+				buf.append(whereSkill);
+				buf.append("\'");
+				buf.append("%");
+				buf.append(skillName);
+				buf.append("%");
+				buf.append("\'");
+			}
+
+			final String sql = buf.toString();
 
 			// -------------------
 			// SQL発行
 			// -------------------
 			try(PreparedStatement pStmt = connection.prepareStatement(sql)){
-
-					pStmt.setString(1, "%" + skillName + "%");
 					ResultSet resultSet = pStmt.executeQuery();
 
 				// -------------------
@@ -412,7 +380,6 @@ public class EmployeeDAO {
 				}
 			}
 			return list;
-
 		}
 
 

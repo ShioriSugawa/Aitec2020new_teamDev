@@ -336,42 +336,15 @@ public class EmployeeLogic {
 		}
 	}
 
-	//検索 http://javamemo.jpn.org/index.php?%5B%5B%BD%C5%CA%A3%A5%AA%A5%D6%A5%B8%A5%A7%A5%AF%A5%C8%A4%CE%C3%EA%BD%D0%5D%5D
+	//検索
 	public ArrayList<Employee> searchEmployee(String deployment, String masterCertification, String otherCertification, String skillGenre, String skill) throws SQLException{
 
 		EmployeeDAO empDAO = new EmployeeDAO(connection);
 		ArrayList<Employee> searchList = new ArrayList<Employee>();
-		//検索条件項目数カウント
-		int count = 0;
-		//所属が選択されていた場合
-		if(deployment != null) {
-			searchList.addAll(empDAO.deploymentSearch(deployment));
-			count++;
-		}
-		//資格名、資格ジャンルが選択されていた場合
-		if(masterCertification != null) {
-			count++;
-		}
-		//その他資格名が入力されていた場合
-		if(otherCertification != "") {
-			searchList.addAll(empDAO.otherSearch(otherCertification));
-			count++;
-		}
-		//スキルジャンルが選択されていた場合
-		if(skillGenre != null) {
-			//searchList.addAll(c);
-			count++;
-		}
-		//スキル名が入力されていた場合
-		if(skill != "") {
-			searchList.addAll(empDAO.skillNameSearch(skill));
-			count++;
-		}
-		//2項目以上条件が指定されている場合全項目で抽出されたデータだけに絞り込む
-		if(count >= 2) {
 
 
-		}
+		searchList = empDAO.searchEmployee(deployment, masterCertification, otherCertification, skillGenre, skill);
+
 		return searchList;
 	}
 
