@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>資格情報編集</title>
 </head>
 <body>
-
+<p>マスタ資格編集のページです</p>
 </body>
 </html>
