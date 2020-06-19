@@ -65,7 +65,7 @@
 			<td>${ skill.genreName }</td>
 			<td>${ skill.certificationOrSkillName }</td>
 			<td></td>
-			<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/SkillsUpdate?owned_skill_id=${ others.ownedId }'"></td>
+			<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/SkillsUpdate?owned_skill_id=${ skill.ownedId }'"></td>
 		</tr>
 		</c:forEach>
 		</tbody>
