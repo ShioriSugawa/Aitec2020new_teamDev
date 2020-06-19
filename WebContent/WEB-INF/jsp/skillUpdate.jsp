@@ -5,6 +5,7 @@
 <%@ page import="servlet.SkillsUpdate"%>
 <%@ page import ="java.util.List" %>
 
+
 <% List<Skill> skillGenre = (List<Skill>)request.getAttribute("skillGenre");%>
 <% Skill skl=(Skill)request.getAttribute("ownedSkill");%>
 
@@ -33,10 +34,15 @@
 
 		<label>ジャンル：</label>
 		<select name="skillGenre">
-			<c:forEach var="name" items="${skillGenre}">
-				<option><c:out value="${name.getGenreName()}" /></option>
+			<option>ジャンルを選択してください</option>
+			<c:forEach var="genre" items="${skillGenre}">
+				<option><c:out value="${genre.getGenreName()}" />
+				<%-- <c:if test="${ genre.getGenreName }">selected</c:if> --%>
+				</option>
 			</c:forEach>
-		</select>
+		</select><br>
+
+		<input type="text" name="skillName" maxlength='100' placeholder="スキルの内容を具体的に記入してください">
 
 	</body>
 
