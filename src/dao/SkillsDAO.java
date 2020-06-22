@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Certification;
 import model.Skill;
 
 public class SkillsDAO {
@@ -78,8 +79,7 @@ public class SkillsDAO {
 
 	public List<Skill> getGenre()throws SQLException{
 		List<Skill> genreList=new ArrayList<>();
-		final String sql=
-				"SELECT * FROM skill_genre";
+		final String sql="SELECT * FROM skill_genre";
 		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
 			ResultSet resultSet = pStmt.executeQuery();
 
@@ -92,6 +92,42 @@ public class SkillsDAO {
 			}
 		}
 		return genreList;
+	}
+
+	//資格ジャンル（コード＆名）一覧用（マスタその他共用）
+	public List<Certification> getCertiGenre()throws SQLException{
+		List<Certification> certiGenreList=new ArrayList<>();
+		final String sql="SELECT * FROM certification_genre";
+		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
+			ResultSet resultSet = pStmt.executeQuery();
+
+			while(resultSet.next()) {
+				String code=resultSet.getString("certification_genre_code");
+				String name=resultSet.getString("certification_genre_name");
+
+				Certification genre=new Certification(code,name);
+				certiGenreList.add(genre);
+			}
+		}
+		return certiGenreList;
+	}
+
+	//マスタ資格（コード＆名）一覧用
+	public List<Certification> getCertiName()throws SQLException{
+		List<Certification> certiGenreList=new ArrayList<>();
+		final String sql="SELECT * FROM certification";
+		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
+			ResultSet resultSet = pStmt.executeQuery();
+
+			while(resultSet.next()) {
+				String code=resultSet.getString("certification_code");
+				String name=resultSet.getString("certification_name");
+
+				Certification names=new Certification(code,name);
+				certiGenreList.add(names);
+			}
+		}
+		return certiGenreList;
 	}
 
 	/**

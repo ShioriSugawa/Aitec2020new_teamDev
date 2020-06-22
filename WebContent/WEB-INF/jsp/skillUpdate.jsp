@@ -37,13 +37,15 @@
 		<label>ジャンル：</label>
 		<select name="skillGenre">
 			<option>ジャンルを選択してください</option>
-			<c:forEach var="genre" items="${skillGenre}">
-				<option><c:out value="${genre.getGenreName()}" />
-				<%-- <c:if test="${ genre.getGenreName }">selected</c:if> --%>
+			<c:forEach var="skillGenre" items="${skillGenre}">
+				<option><c:out value="${skillGenre.getGenreName()}" />
+				<c:if test="${ skl.genreName.equals(skillGenre.getGenreName()) }">selected</c:if> <%-- --%>
 				</option>
 			</c:forEach>
 		</select>
-			<input type="button" class="button" value="削除" onclick="confirmDelete()"><br>
+		<input type="button" class="button" value="削除" onclick="confirmDelete()"><br>
+
+			<label>スキルの内容（100文字以内）</label>
 
 		<input type="text" name="skillName" maxlength='100' placeholder="スキルの内容を具体的に記入してください">
 

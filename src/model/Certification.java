@@ -11,7 +11,16 @@ import java.io.Serializable;
 
 public class Certification implements Serializable {
 
-	private String ownedId,employeeNumber,certiCode,certiGenre,certiName,certiDate;
+	private String employeeNumber,certiCode,certiGenre,certiName,certiDate;
+	private int ownedId;
+
+
+	//資格[コード&名]一覧用（ジャンル・資格名共用）（マスタその他共用）
+	public Certification(String certiCode,String certiName) {
+		this.certiCode=certiCode;
+		this.certiName=certiName;
+	}
+
 
 	/**
 	 * コンストラクタ(マスタ資格用)
@@ -20,13 +29,13 @@ public class Certification implements Serializable {
 	 * @param certiCode 資格コード
 	 * @param certiDate 認定日
 	 */
-	/*
-	public Certification(String certiId,String employeeNumber,String certiCode,String certiDate) {
-		this.certiId=certiId;
+
+	public Certification(int ownedId,String employeeNumber,String certiCode,String certiDate) {
+		this.ownedId=ownedId;
 		this.employeeNumber=employeeNumber;
 		this.certiCode=certiCode;
 		this.certiDate=certiDate;
-	}*/
+	}
 
 	/**
 	 * コンストラクタ(その他資格用)
@@ -49,7 +58,7 @@ public class Certification implements Serializable {
 	 * 保有資格(マスタ・その他)IDを取得
 	 * @return 保有資格(マスタ・その他)ID
 	 */
-	public String getCertiId() {
+	public int getCertiId() {
 		return ownedId;
 	}
 
@@ -83,6 +92,62 @@ public class Certification implements Serializable {
 	 */
 	public String getCertiDate() {
 		return certiDate;
+	}
+
+	/**
+	 * @return certiGenre
+	 */
+	public String getCertiGenre() {
+		return certiGenre;
+	}
+
+	/**
+	 * @return ownedId
+	 */
+	public int getOwnedId() {
+		return ownedId;
+	}
+
+	/**
+	 * @param employeeNumber セットする employeeNumber
+	 */
+	public void setEmployeeNumber(String employeeNumber) {
+		this.employeeNumber = employeeNumber;
+	}
+
+	/**
+	 * @param certiCode セットする certiCode
+	 */
+	public void setCertiCode(String certiCode) {
+		this.certiCode = certiCode;
+	}
+
+	/**
+	 * @param certiGenre セットする certiGenre
+	 */
+	public void setCertiGenre(String certiGenre) {
+		this.certiGenre = certiGenre;
+	}
+
+	/**
+	 * @param certiName セットする certiName
+	 */
+	public void setCertiName(String certiName) {
+		this.certiName = certiName;
+	}
+
+	/**
+	 * @param certiDate セットする certiDate
+	 */
+	public void setCertiDate(String certiDate) {
+		this.certiDate = certiDate;
+	}
+
+	/**
+	 * @param ownedId セットする ownedId
+	 */
+	public void setOwnedId(int ownedId) {
+		this.ownedId = ownedId;
 	}
 
 }

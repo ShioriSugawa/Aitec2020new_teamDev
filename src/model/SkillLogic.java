@@ -23,7 +23,12 @@ public class SkillLogic {
 
 	//IDで保有スキルデータ1件を取得
 	public Skill getOwnedSkill(int ownedId) {
+		SkillsDAO sDAO=new SkillsDAO(connection);
 		Skill ownedSkill=null;
+
+		//中身！！！
+
+
 		return ownedSkill;
 	}
 

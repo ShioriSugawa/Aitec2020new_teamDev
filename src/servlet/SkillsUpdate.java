@@ -47,7 +47,7 @@ public class SkillsUpdate extends HttpServlet {
 			oth=request.getParameter("owned_other_certification_id");
 			skl=request.getParameter("owned_skill_id");
 
-			//skl="6";	//実験用固定IDショートカット
+			skl="6";	//実験用固定IDショートカット
 
 			if(mc!=null) {
 				int mcI = Integer.parseInt(mc);
