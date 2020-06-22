@@ -342,7 +342,7 @@ public class EmployeeLogic {
 		EmployeeDAO empDAO = new EmployeeDAO(connection);
 		ArrayList<Employee> searchList = new ArrayList<Employee>();
 
-		String certificationGenre = "";
+		String certificationGenre = null;
 		//資格ジャンル/資格名入力欄に資格ジャンルが入力された場合（コードが3桁)
 		if(masterCertification != null && masterCertification.length() == 3) {
 			certificationGenre = masterCertification;

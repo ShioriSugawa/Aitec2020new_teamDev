@@ -306,8 +306,7 @@ public class EmployeeDAO {
 			/*-------------SQL文構成詳細-------------------------------
 			 * baseを基に検索条件の入力の有無に応じてWHERE句変更
 			 *
-			 * base : employee,owned_other_certification,owned_skill_テーブルを外部結合しemployment(在職フラグ)が1の従業員一覧を取得
-			 * (↑全テーブル結合すればいい？？？？)
+			 * base : employee,owned_certification,owned_other_certification,owned_skill_テーブルを外部結合しemployment(在職フラグ)が1の従業員一覧を取得
 			 *
 			 * 所属の検索条件が入力されていた場合 : where句に入力された所属部署を追加
 			 * 資格ジャンルの検索条件が入力されていた場合 : where	句に入力された資格ジャンルのジャンルコードを追加
@@ -319,6 +318,8 @@ public class EmployeeDAO {
 			 */
 			final String base = 	"SELECT DISTINCT employee.employee_number,employee_name,employee_profile,employee_deployment,employee_year,employment\n" +
 									"FROM employee\n" +
+									"LEFT OUTER JOIN owned_certification\n" +
+									"ON owned_certification.employee_number = employee.employee_number\n" +
 									"LEFT OUTER JOIN owned_other_certification\n" +
 									"ON owned_other_certification.employee_number = employee.employee_number\n" +
 									"LEFT OUTER JOIN owned_skill\n" +
@@ -326,7 +327,7 @@ public class EmployeeDAO {
 									"WHERE employment = 1 ";
 
 			final String whereDeployment = " AND employee_deployment = ";
-			final String whereCertificationGenre = " AND other_certification_code = ";
+			final String whereCertificationGenre = " AND certification_genre_code = ";
 			final String whereMaster = " AND certification_code = ";
 			final String whereOther = " AND other_certification_name LIKE ";
 			final String whereSkillGenre = " AND skill_genre_code = ";
@@ -340,12 +341,12 @@ public class EmployeeDAO {
 				buf.append("\'" + deployment + "\'");
 			}
 			//資格ジャンルの検索条件が入力されていた場合
-			if(!(masterCertification == null || masterCertification.equals(""))) {
+			if(!(masterCertification.equals("ジャンルもしくは資格を選択してください"))) {
 				buf.append(whereCertificationGenre);
 				buf.append("\'" + masterCertification + "\'");
 			}
 			//マスター登録有資格の検索条件が入力されていた場合
-			if(!(masterCertification == null || masterCertification.equals(""))) {
+			if(!(masterCertification.equals("ジャンルもしくは資格を選択してください"))) {
 				buf.append(whereMaster);
 				buf.append("\'" + masterCertification + "\'");
 			}
@@ -359,7 +360,7 @@ public class EmployeeDAO {
 				buf.append("\'");
 			}
 			//スキルジャンルの検索条件が入力されていた場合
-			if(!(skillGenre == null || skillGenre.equals(""))) {
+			if(!(skillGenre.equals("ジャンルを選択してください"))) {
 				buf.append(whereSkillGenre);
 				buf.append("\'" + skillGenre + "\'");
 			}

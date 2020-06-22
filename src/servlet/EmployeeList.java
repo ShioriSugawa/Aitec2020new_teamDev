@@ -106,7 +106,7 @@ public class EmployeeList extends HttpServlet {
 			//検索ボタンが押下されていた場合条件に応じてリスト絞り込み
 			String searchButton = request.getParameter("search");
 			String deployment = request.getParameter("deployment");
-			String masterCertification = request.getParameter("mastercertification");	//資格ジャンルorマスター登録有資格
+			String masterCertification = request.getParameter("masterCertification");	//資格ジャンルorマスター登録有資格
 			String otherCertification = request.getParameter("otherCertification");
 			String skillGenre = request.getParameter("skillGenre");
 			String skill = request.getParameter("skill");

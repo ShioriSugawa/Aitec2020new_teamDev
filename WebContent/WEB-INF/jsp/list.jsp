@@ -73,7 +73,7 @@ List<Skill> skillGenreList = (List<Skill>)request.getAttribute("skillGenre");
 				<%}%>>部署5</option>
 				</select>
 	        <br><br><label>資格</label>
-	        <select name=”masterCertification” class="genre">
+	        <select name="masterCertification">
 	        	<option>ジャンルもしくは資格を選択してください</option>
 				<c:forEach var="genre" items="${genreList}">
 					<option><c:out value="${genre}" /></option>
@@ -84,14 +84,18 @@ List<Skill> skillGenreList = (List<Skill>)request.getAttribute("skillGenre");
 			</select>
 			<input type="text" name="otherCertification" placeholder= "その他資格名" value="${ searchedOther }">
 
-				<br><label>スキル</label>
-				<select name=”skillGenre”>
+			<br><label>スキル</label>
+			<select name="skillGenre">
 	        	<option>ジャンルを選択してください</option>
 				<c:forEach var="skillGenre" items="${skillGenreList}">
-					<option><c:out value="${skillGenre.getGenreName()}" /></option>
+					<option value="${skillGenre.getGenreCode()}"
+					<c:if test="${searchedSkillGenre != null && searchedSkillGenre.equals(skillGenre.getGenreCode()) }">
+						selected
+					</c:if>
+					>${skillGenre.getGenreName()}</option>
 				</c:forEach>
 			</select>
-				<input type="text" name="skill"  placeholder="スキル名" value="${ searchedSkill }" >
+			<input type="text" name="skill"  placeholder="スキル名" value="${ searchedSkill }" >
 			<button type="submit" class="searchbutton" name="search" value="検索">検索</button>
 			<button type="submit" class="resetbutton" name="reset" value="リセット">検索条件のクリア</button>
 		</form>
