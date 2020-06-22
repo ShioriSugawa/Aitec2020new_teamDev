@@ -54,7 +54,7 @@ public class SkillsUpdate extends HttpServlet {
 				Skill ownedSkill=skillLogic.getOwnedSkill(mcI);
 				// リクエストスコープに保存
 				request.setAttribute("ownedSkill", ownedSkill);
-				// フォワード
+				// マスタ資格編集にフォワード
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/certificationUpdate.jsp");
 				dispatcher.forward(request, response);
 				}
@@ -64,7 +64,7 @@ public class SkillsUpdate extends HttpServlet {
 				Skill ownedSkill=skillLogic.getOwnedSkill(othI);
 				// リクエストスコープに保存
 				request.setAttribute("ownedSkill", ownedSkill);
-				// フォワード
+				// その他資格編集にフォワード
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/otherCertificationUpdate.jsp");
 				dispatcher.forward(request, response);
 			}
@@ -77,16 +77,13 @@ public class SkillsUpdate extends HttpServlet {
 				request.setAttribute("skillGenre", skillGenre);
 				request.setAttribute("ownedSkill", ownedSkill);
 
-				// フォワード
+				// スキル編集にフォワード
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillUpdate.jsp");
 				dispatcher.forward(request, response);
 			}
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		}
-
-
-
 	}
 
 
@@ -97,6 +94,25 @@ public class SkillsUpdate extends HttpServlet {
 		// リクエストパラメータを取得
 		request.setCharacterEncoding("UTF-8");
 
+		request.setCharacterEncoding("UTF-8");
+		String sklGenCode=request.getParameter("skillGenre");
+		String sklName=request.getParameter("skillName");
+
+		//あとで未入力チェックもつけないといけない
+
+		try(Connection connection = ConnectionManager.getConnection()){
+
+			try {
+				// 該当のスキル記述を更新
+				SkillLogic sLogic = new SkillLogic(connection);
+				sLogic.updateEmployee(request.getParameter("employeeNumber"), employeeName, employeeProfile,employeeDeployment);
+				connection.commit();
+			} catch (ServletException e) {
+				connection.rollback();
+				throw e;
+			}
+
+		}catch(SQLException e){}
 
 	}
 

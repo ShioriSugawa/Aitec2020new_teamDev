@@ -38,16 +38,16 @@
 		<select name="skillGenre">
 			<option>ジャンルを選択してください</option>
 			<c:forEach var="skillGenre" items="${skillGenre}">
-				<option><c:out value="${skillGenre.getGenreName()}" />
+				<option value="${skillGenre.getGenreCode() }"><c:out value="${skillGenre.getGenreName()}" />
 				<c:if test="${ skl.genreName.equals(skillGenre.getGenreName()) }">selected</c:if> <%-- --%>
 				</option>
 			</c:forEach>
 		</select>
 		<input type="button" class="button" value="削除" onclick="confirmDelete()"><br>
 
-			<label>スキルの内容（100文字以内）</label>
-
-		<input type="text" name="skillName" maxlength='100' placeholder="スキルの内容を具体的に記入してください">
+			<label>スキルの内容（100文字以内）</label><br>
+		<textarea name="skillName" maxlength='100' placeholder="スキルの内容を具体的に記入してください">${ skl.skillName }</textarea>
+		<br>
 
             <input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeList'">
             <input type="submit" class="button register-button" value="登録">
