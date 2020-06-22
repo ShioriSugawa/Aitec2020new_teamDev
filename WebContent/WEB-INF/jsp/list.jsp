@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@ page import="java.util.List" %>
+<%@ page import="model.Skill"%>
 <%
 //リクエストスコープからインスタンスを取得
 String searchedDeployment = (String) request.getAttribute("searchedDeployment");
@@ -9,6 +10,7 @@ String searchedMaster = (String) request.getAttribute("searchedMaster");
 String searchedOther = (String) request.getAttribute("searchedOther");
 String searchedSkillGenre = (String) request.getAttribute("searchedSkillGenre");
 String searchedSkill = (String) request.getAttribute("searchedSkill");
+List<Skill> skillGenreList = (List<Skill>)request.getAttribute("skillGenre");
 %>
 <!DOCTYPE html>
 <html>
@@ -86,12 +88,12 @@ String searchedSkill = (String) request.getAttribute("searchedSkill");
 				<select name=”skillGenre”>
 	        	<option>ジャンルを選択してください</option>
 				<c:forEach var="skillGenre" items="${skillGenreList}">
-					<option><c:out value="${skillGenre}" /></option>
+					<option><c:out value="${skillGenre.getGenreName()}" /></option>
 				</c:forEach>
 			</select>
 				<input type="text" name="skill"  placeholder="スキル名" value="${ searchedSkill }" >
 			<button type="submit" class="searchbutton" name="search" value="検索">検索</button>
-			<button type="submit" class="resetbutton" name="search" value="リセット">検索条件のクリア</button>
+			<button type="submit" class="resetbutton" name="reset" value="リセット">検索条件のクリア</button>
 		</form>
           <br><br><br>
           <form action="/SelfIntroduction/EmployeeList" method="post">

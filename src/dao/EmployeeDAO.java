@@ -293,26 +293,28 @@ public class EmployeeDAO {
 		/**
 		 * 入力された検索条件で従業員を検索するメソッド　条件が二項目以上ある場合全てに該当する従業員のみ表示
 		 * @param deployment　検索条件に入力された所属部署
-		 * @param masterCertification　検索条件に入力されたマスタ登録有資格
+		 * @param masterCertification　検索条件に入力されたマスタ登録有資格or
 		 * @param otherCertification　検索条件に入力されたその他資格名
 		 * @param skillGenre　検索条件に入力されたスキルジャンル
 		 * @param skillName　検索条件に入力されたスキル名
 		 * @return 検索条件に該当する従業員一覧
 		 * @throws SQLException
 		 */
-		public ArrayList<Employee> searchEmployee(String deployment, String masterCertification, String otherCertification, String skillGenre, String skillName) throws SQLException{
+		public ArrayList<Employee> searchEmployee(String deployment,String certificationGenre, String masterCertification, String otherCertification, String skillGenre, String skillName) throws SQLException{
 			ArrayList<Employee> list = new ArrayList<Employee>();
 
 			/*-------------SQL文構成詳細-------------------------------
 			 * baseを基に検索条件の入力の有無に応じてWHERE句変更
 			 *
-			 * base : employee,owned_other_certification,owned_skill_certificationテーブルを外部結合しemployment(在職フラグ)が1の従業員一覧を取得
+			 * base : employee,owned_other_certification,owned_skill_テーブルを外部結合しemployment(在職フラグ)が1の従業員一覧を取得
+			 * (↑全テーブル結合すればいい？？？？)
 			 *
 			 * 所属の検索条件が入力されていた場合 : where句に入力された所属部署を追加
+			 * 資格ジャンルの検索条件が入力されていた場合 : where	句に入力された資格ジャンルのジャンルコードを追加
+			 * マスター登録有資格の検索条件が入力されていた場合 : where句に入力されたマスター登録有資格の資格コードを追加
 			 * その他資格名の検索条件が入力されていた場合 : where句に入力されたその他資格名を追加（前後にワイルドカードがあるため一部一致で抽出される）
+			 * スキルジャンルの検索条件が入力されていた場合 : where句に入力されたスキルジャンルのジャンルコードを追加
 			 * スキル名の検索条件が入力されていた場合 : where句に入力されたスキル名を追加（前後にワイルドカードがあるため一部一致で抽出される）
-			 *
-			 * !!資格ジャンル、マスター登録有資格、スキルジャンルでの検索は未実装!!
 			 *----------------------------------------------------------
 			 */
 			final String base = 	"SELECT DISTINCT employee.employee_number,employee_name,employee_profile,employee_deployment,employee_year,employment\n" +
@@ -324,7 +326,10 @@ public class EmployeeDAO {
 									"WHERE employment = 1 ";
 
 			final String whereDeployment = " AND employee_deployment = ";
+			final String whereCertificationGenre = " AND other_certification_code = ";
+			final String whereMaster = " AND certification_code = ";
 			final String whereOther = " AND other_certification_name LIKE ";
+			final String whereSkillGenre = " AND skill_genre_code = ";
 			final String whereSkill = " AND skill_name LIKE ";
 			StringBuffer buf = new StringBuffer();
 
@@ -333,6 +338,16 @@ public class EmployeeDAO {
 			if(!(deployment.equals("所属を選択してください"))) {
 				buf.append(whereDeployment);
 				buf.append("\'" + deployment + "\'");
+			}
+			//資格ジャンルの検索条件が入力されていた場合
+			if(!(masterCertification == null || masterCertification.equals(""))) {
+				buf.append(whereCertificationGenre);
+				buf.append("\'" + masterCertification + "\'");
+			}
+			//マスター登録有資格の検索条件が入力されていた場合
+			if(!(masterCertification == null || masterCertification.equals(""))) {
+				buf.append(whereMaster);
+				buf.append("\'" + masterCertification + "\'");
 			}
 			//その他資格名の検索条件が入力されていた場合
 			if(!(otherCertification.equals(""))) {
@@ -343,8 +358,13 @@ public class EmployeeDAO {
 				buf.append("%");
 				buf.append("\'");
 			}
+			//スキルジャンルの検索条件が入力されていた場合
+			if(!(skillGenre == null || skillGenre.equals(""))) {
+				buf.append(whereSkillGenre);
+				buf.append("\'" + skillGenre + "\'");
+			}
 			//スキル名の検索条件が入力されていた場合
-			if(!(skillName.equals(""))) {
+			if(!(skillName == null || skillName.equals(""))) {
 				buf.append(whereSkill);
 				buf.append("\'");
 				buf.append("%");
