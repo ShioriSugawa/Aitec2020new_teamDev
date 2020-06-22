@@ -257,7 +257,7 @@ public class EmployeeDAO {
 			/*-------------SQL文構成詳細-------------------------------
 			 * baseを基に検索条件の入力の有無に応じてWHERE句変更
 			 *
-			 * base : employee,owned_certification,owned_other_certification,owned_skill_テーブルを外部結合しemployment(在職フラグ)が1の従業員一覧を取得
+			 * base : employee,owned_certification,certification,owned_other_certification,owned_skill_テーブルを外部結合しemployment(在職フラグ)が1の従業員一覧を取得
 			 *
 			 * 所属の検索条件が入力されていた場合 : where句に入力された所属部署を追加
 			 * 資格ジャンルの検索条件が入力されていた場合 : where	句に入力された資格ジャンルのジャンルコードを追加
@@ -271,6 +271,8 @@ public class EmployeeDAO {
 									"FROM employee\n" +
 									"LEFT OUTER JOIN owned_certification\n" +
 									"ON owned_certification.employee_number = employee.employee_number\n" +
+									"LEFT OUTER JOIN certification\n" +
+									"ON owned_certification.certification_code = certification.certification_code\n" +
 									"LEFT OUTER JOIN owned_other_certification\n" +
 									"ON owned_other_certification.employee_number = employee.employee_number\n" +
 									"LEFT OUTER JOIN owned_skill\n" +
@@ -278,8 +280,9 @@ public class EmployeeDAO {
 									"WHERE employment = 1 ";
 
 			final String whereDeployment = " AND employee_deployment = ";
-			final String whereCertificationGenre = " AND certification_genre_code = ";
-			final String whereMaster = " AND certification_code = ";
+			final String whereCertificationGenre1 = " AND ( certification.certification_genre_code = ";
+			final String whereCertificationGenre2 = " OR owned_other_certification.certification_genre_code = ";
+			final String whereMaster = " AND certification.certification_code = ";
 			final String whereOther = " AND other_certification_name LIKE ";
 			final String whereSkillGenre = " AND skill_genre_code = ";
 			final String whereSkill = " AND skill_name LIKE ";
@@ -293,8 +296,11 @@ public class EmployeeDAO {
 			}
 			//資格ジャンルの検索条件が入力されていた場合
 			if(certificationGenre != null) {
-				buf.append(whereCertificationGenre);
+				buf.append(whereCertificationGenre1);
 				buf.append("\'" + certificationGenre + "\'");
+				buf.append(whereCertificationGenre2);
+				buf.append("\'" + certificationGenre + "\'");
+				buf.append(")");
 			}
 			//マスター登録有資格の検索条件が入力されていた場合
 			if(!(masterCertification == null || masterCertification.equals("ジャンルもしくは資格を選択してください"))) {

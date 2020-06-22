@@ -329,8 +329,6 @@ public class EmployeeLogic {
 			certificationGenre = masterCertification;
 			masterCertification = null;
 		}
-
-
 		searchList = empDAO.searchEmployee(deployment, certificationGenre, masterCertification, otherCertification, skillGenre, skill);
 
 		return searchList;

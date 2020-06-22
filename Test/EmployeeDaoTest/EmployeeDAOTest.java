@@ -27,7 +27,8 @@ import model.Employee;
 
 /*
  * 修正内容まとめ
- * 6/15 既存テスト所属追加対応
+ * 2020/6/15 既存テスト所属追加対応
+ * 2020/6/15 資格所持数取得テスト追加
  *
  */
 public class EmployeeDAOTest {

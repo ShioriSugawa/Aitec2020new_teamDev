@@ -12,8 +12,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.ConnectionManager;
+import model.Certification;
+import model.CertificationLogic;
 import model.Employee;
 import model.EmployeeLogic;
 import model.Skill;
@@ -58,12 +61,13 @@ public class EmployeeList extends HttpServlet {
 			// 従業員一覧を取得
 			EmployeeLogic employeeLogic = new EmployeeLogic(connection);
 			List<Employee> empList = employeeLogic.getEmployeeList();
-			SkillLogic skillLogic = new SkillLogic(connection);
 
 			// 2020/6/18　追加
 			//検索項目をDBより取得
-			List<Skill> genreList = null;
-			List<Skill> masterCertificationList = null;
+			SkillLogic skillLogic = new SkillLogic(connection);
+			CertificationLogic certificationLogic = new CertificationLogic(connection);
+			List<Certification> genreList = certificationLogic.getCertiGenre();
+			List<Certification> masterCertificationList = certificationLogic.getCertiName();
 			List<Skill> skillGenreList = skillLogic.getGenre();
 
 
@@ -85,6 +89,7 @@ public class EmployeeList extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// 2020/6/17 追加
@@ -92,15 +97,18 @@ public class EmployeeList extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 
+		HttpSession session = request.getSession();
+
 		try (Connection connection = ConnectionManager.getConnection()) {
 			// 従業員一覧を取得
 			EmployeeLogic employeeLogic = new EmployeeLogic(connection);
 			ArrayList<Employee> empList = employeeLogic.getEmployeeList();
-			SkillLogic skillLogic = new SkillLogic(connection);
 
 			//検索項目をDBより取得
-			List<Skill> genreList = null;
-			List<Skill> masterCertificationList = null;
+			SkillLogic skillLogic = new SkillLogic(connection);
+			CertificationLogic certificationLogic = new CertificationLogic(connection);
+			List<Certification> genreList = certificationLogic.getCertiGenre();
+			List<Certification> masterCertificationList = certificationLogic.getCertiName();
 			List<Skill> skillGenreList = skillLogic.getGenre();
 
 			//検索ボタンが押下されていた場合条件に応じてリスト絞り込み
@@ -129,19 +137,26 @@ public class EmployeeList extends HttpServlet {
 			//押下されたボタンに応じてソート
 			String sortButton = request.getParameter("sort");
 			if(sortButton != null) {
+				deployment = request.getParameter("searchedDeployment");
+				masterCertification = request.getParameter("searchedMaster");
+				otherCertification = request.getParameter("searchedOther");
+				skillGenre = request.getParameter("searchedSkillGenre");
+				skill = request.getParameter("searchedSkill");
+				empList = (ArrayList<Employee>) session.getAttribute("empList");
 				employeeLogic.sortArrayList(sortButton, empList);
 			}
 
-			// リクエストスコープに保存
-			request.setAttribute("empList", empList);
-			request.setAttribute("genreList", genreList);
-			request.setAttribute("masterCertificationList", masterCertificationList);
-			request.setAttribute("skillGenreList", skillGenreList);
-			request.setAttribute("searchedDeployment", deployment);
-			request.setAttribute("searchedMaster", masterCertification);
-			request.setAttribute("searchedOther", otherCertification);
-			request.setAttribute("searchedSkillGenre", skillGenre);
-			request.setAttribute("searchedSkill", skill);
+			// 検索結果保持したままソート等リクエストを超えて保持する必要があるためセッションスコープに保存
+			session.setAttribute("empList", empList);
+			session.setAttribute("genreList", genreList);
+			session.setAttribute("masterCertificationList", masterCertificationList);
+			session.setAttribute("skillGenreList", skillGenreList);
+			session.setAttribute("searchedDeployment", deployment);
+			session.setAttribute("searchedMaster", masterCertification);
+			session.setAttribute("searchedOther", otherCertification);
+			session.setAttribute("searchedSkillGenre", skillGenre);
+			session.setAttribute("searchedSkill", skill);
+
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		}

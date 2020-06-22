@@ -66,7 +66,7 @@ Employee emp = (Employee) request.getAttribute("emp");
 	            </font>
         	</c:if>
             <div class="update-profile">
-                <label>プロフィール（100文字以内）</label>
+                <br><label>プロフィール（100文字以内）</label>
                 <br/>
                 <textarea name="employeeProfile" class="update-profile-input" rows="6" cols="40" maxlength="100" placeholder="プロフィールを入力してください。" required >${ emp.employeeProfile }</textarea>
             </div>

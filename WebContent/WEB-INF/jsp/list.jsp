@@ -2,15 +2,18 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@ page import="java.util.List" %>
+<%@ page import="model.Certification"%>
 <%@ page import="model.Skill"%>
 <%
 //リクエストスコープからインスタンスを取得
-String searchedDeployment = (String) request.getAttribute("searchedDeployment");
-String searchedMaster = (String) request.getAttribute("searchedMaster");
-String searchedOther = (String) request.getAttribute("searchedOther");
-String searchedSkillGenre = (String) request.getAttribute("searchedSkillGenre");
-String searchedSkill = (String) request.getAttribute("searchedSkill");
-List<Skill> skillGenreList = (List<Skill>)request.getAttribute("skillGenre");
+String searchedDeployment = (String) session.getAttribute("searchedDeployment");
+String searchedMaster = (String) session.getAttribute("searchedMaster");
+String searchedOther = (String) session.getAttribute("searchedOther");
+String searchedSkillGenre = (String) session.getAttribute("searchedSkillGenre");
+String searchedSkill = (String) session.getAttribute("searchedSkill");
+List<Certification> genreList = (List<Certification>)session.getAttribute("genreList");
+List<Certification> masterCertificationList = (List<Certification>)session.getAttribute("masterCertificationList");
+List<Skill> skillGenreList = (List<Skill>)session.getAttribute("skillGenre");
 %>
 <!DOCTYPE html>
 <html>
@@ -76,10 +79,18 @@ List<Skill> skillGenreList = (List<Skill>)request.getAttribute("skillGenre");
 	        <select name="masterCertification">
 	        	<option>ジャンルもしくは資格を選択してください</option>
 				<c:forEach var="genre" items="${genreList}">
-					<option><c:out value="${genre}" /></option>
+					<option value="${genre.getCertiCode() }"
+					<c:if test="${searchedMaster != null && searchedMaster.equals(genre.getCertiCode()) }">
+						selected
+					</c:if>
+					>${genre.getCertiName()}</option>
 				</c:forEach>
-				<c:forEach var="certification" items="${certificationList}">
-					<option><c:out value="${certification}" /></option>
+				<c:forEach var="certification" items="${masterCertificationList}">
+					<option value="${certification.getCertiCode() }"
+					<c:if test="${searchedMaster != null && searchedMaster.equals(certification.getCertiCode()) }">
+						selected
+					</c:if>
+					>${certification.getCertiName()}</option>
 				</c:forEach>
 			</select>
 			<input type="text" name="otherCertification" placeholder= "その他資格名" value="${ searchedOther }">
@@ -101,7 +112,14 @@ List<Skill> skillGenreList = (List<Skill>)request.getAttribute("skillGenre");
 		</form>
           <br><br><br>
           <form action="/SelfIntroduction/EmployeeList" method="post">
-         	<button type="submit" class="sortButton" name="sort" value="資格所持数">資格所持ランキング</button>
+
+          	<%--検索後にソートした際検索結果を保持するため入力されているの検索条件を渡す --%>
+          	<input type="hidden" name="searchedDeployment" value="${searchedDeployment}">
+          	<input type="hidden" name="searchedMaster" value="${searchedMaster}">
+          	<input type="hidden" name="searchedOther" value="${searchedOther}">
+          	<input type="hidden" name="searchedSkillGenre" value="${searchedSkillGenre}">
+          	<input type="hidden" name="searchedSkill" value="${searchedSkill}">
+         	<button type="submit" class="sortButton" name="sort" value="資格所持数" >資格所持ランキング</button>
           	<button type="submit" class="sortButton" name="sort" value="従業員番号">従業員番号でソート</button>
           </form>
 
