@@ -34,7 +34,7 @@ Employee employee = (Employee) request.getAttribute("employee");
 			<div class="career-start">
 
 				<label>業務開始</label>
-				<select name="startYear">
+				<select name="startYear" required>
 					<option value="">-</option>
 					<option value="1950">1950</option>
 					<option value="1951">1951</option>
@@ -120,7 +120,7 @@ Employee employee = (Employee) request.getAttribute("employee");
 				</select>
 				<label>年</label>
 
-				<select name="startMonth">
+				<select name="startMonth" required>
 					<option value="">-</option>
 					<option value="01">01</option>
 					<option value="02">02</option>
@@ -138,12 +138,6 @@ Employee employee = (Employee) request.getAttribute("employee");
 				<label>月</label>
 
 			</div>
-
-			<c:if test = "${ startYError == true || startMError == true }"  >
-				<font color="red">
-					<p>開始日を選択してください。</p>
-				</font>
-			</c:if>
 
 			<div class="career-end">
 
@@ -253,9 +247,21 @@ Employee employee = (Employee) request.getAttribute("employee");
 
 			</div>
 
-			<c:if test = "${ endYError == true || endMError == true }"  >
+			<c:if test = "${ endYError0 == true || endMError0 == true }"  >
 				<font color="red">
-					<p>終了日を選択してください。</p>
+					<p>以前の業務を選択した場合は終了日を選択してください。</p>
+				</font>
+			</c:if>
+
+			<c:if test = "${ endYError1 == true || endMError1 == true }"  >
+				<font color="red">
+					<p>現在の業務を選択した場合は終了日を選択しないでください。</p>
+				</font>
+			</c:if>
+
+			<c:if test = "${ seError == true || seError == true }"  >
+				<font color="red">
+					<p>終了日は開始日以降を選択してください。</p>
 				</font>
 			</c:if>
 

@@ -39,7 +39,7 @@ Career career = (Career) request.getAttribute("career");
 				<% String startMonth = start.substring(5); %>
 
 				<label>業務開始</label>
-				<select name="startYear">
+				<select name="startYear" required>
 					<option value="">-</option>
 					<option <%if(startYear =="1950"){ %>selected<%}%>>1950</option>
 					<option <%if(startYear =="1951"){ %>selected<%}%>>1951</option>
@@ -124,7 +124,7 @@ Career career = (Career) request.getAttribute("career");
 					<option <%if(startYear =="2030"){ %>selected<%}%>>2030</option>
 				</select>
 
-				<select name="startMonth">
+				<select name="startMonth" required>
 					<option value="">-</option>
 					<option <%if(startMonth =="01"){ %>selected<%}%>>01</option>
 					<option <%if(startMonth =="02"){ %>selected<%}%>>02</option>
@@ -142,17 +142,11 @@ Career career = (Career) request.getAttribute("career");
 
 			</div>
 
-			<c:if test = "${ startYError == true || startMError == true }"  >
-				<font color="red">
-					<p>開始日を選択してください。</p>
-				</font>
-			</c:if>
-
 			<div class="career-end">
 
 			<% if(career.getBusinessEnd() ==null){ %>
 				<label>業務終了</label>
-				<select name="endYear">
+				<select name="endYear" required>
 					<option value="">-</option>
 					<option value="1950">1950</option>
 					<option value="1951">1951</option>
@@ -238,7 +232,7 @@ Career career = (Career) request.getAttribute("career");
 				</select>
 				<label>年</label>
 
-				<select name="endMonth">
+				<select name="endMonth" required>
 					<option value="">-</option>
 					<option value="01">01</option>
 					<option value="02">02</option>
@@ -261,7 +255,7 @@ Career career = (Career) request.getAttribute("career");
 				<% String endMonth = end.substring(5); %>
 
 				<label>業務終了</label>
-				<select name="endYear">
+				<select name="endYear" required>
 					<option value="">-</option>
 					<option <%if(endYear =="1950"){ %>selected<%}%>>1950</option>
 					<option <%if(endYear =="1951"){ %>selected<%}%>>1951</option>
@@ -346,7 +340,7 @@ Career career = (Career) request.getAttribute("career");
 					<option <%if(endYear =="2030"){ %>selected<%}%>>2030</option>
 				</select>
 
-				<select name="endMonth">
+				<select name="endMonth" required>
 					<option value="">-</option>
 					<option <%if(endMonth =="01"){ %>selected<%}%>>01</option>
 					<option <%if(endMonth =="02"){ %>selected<%}%>>02</option>
@@ -365,9 +359,21 @@ Career career = (Career) request.getAttribute("career");
 
 			</div>
 
-			<c:if test = "${ endYError == true || endMError == true }"  >
+			<c:if test = "${ endYError0 == true || endMError0 == true }"  >
 				<font color="red">
-					<p>終了日を選択してください。</p>
+					<p>以前の業務を選択した場合は終了日を選択してください。</p>
+				</font>
+			</c:if>
+
+			<c:if test = "${ endYError1 == true || endMError1 == true }"  >
+				<font color="red">
+					<p>現在の業務を選択した場合は終了日を選択しないでください。</p>
+				</font>
+			</c:if>
+
+			<c:if test = "${ seError == true || seError == true }"  >
+				<font color="red">
+					<p>終了日は開始日以降を選択してください。</p>
 				</font>
 			</c:if>
 
@@ -393,6 +399,8 @@ Career career = (Career) request.getAttribute("career");
             <input type="button" class="button"value="キャンセル" onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${ career.employeeNumber }'">
             <input type="button" class="button"value="削除" onclick="location.href='/SelfIntroduction/CareerDelete?businessNumber=${ career.businessNumber }'">
             <input type="submit" class="button update-button" value="更新">
+
+			<input type="hidden" name="employeeNumber" value="employee.employeeNumber">
 
 		</form>
 
