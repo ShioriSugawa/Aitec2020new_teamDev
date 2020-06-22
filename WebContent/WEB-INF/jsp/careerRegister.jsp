@@ -16,7 +16,7 @@ Employee employee = (Employee) request.getAttribute("employee");
 		<title>業務経歴登録</title>
 		<link href="./css/common.css" rel="stylesheet">
 		<link href="./css/career.css" rel="stylesheet">
-		<link href="./css/register.css" rel="stylesheet">
+		<link href="./css/lib/bootstrap.min.css" rel="stylesheet">
 	</head>
 
 	<body class="container-fluid">

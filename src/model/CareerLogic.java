@@ -60,9 +60,8 @@ public class CareerLogic {
 		int situationNum = Integer.parseInt(situation);
 
 		if(endYear=="" || endMonth=="") {
-			businessEnd = endYear +"/"+ endMonth;
 		}else {
-
+			businessEnd = endYear +"/"+ endMonth;
 		}
 
 		try {
@@ -95,6 +94,7 @@ public class CareerLogic {
 		int businessNum = Integer.parseInt(businessNumber);
 
 		if(endYear=="" || endMonth=="") {
+		}else {
 			businessEnd = endYear +"/"+ endMonth;
 		}
 

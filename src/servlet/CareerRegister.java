@@ -95,6 +95,24 @@ public class CareerRegister extends HttpServlet {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
 				dispatcher.forward(request, response);
 			}
+
+			//開始日より終了日が前になっている場合、再度登録画面にフォワード
+			int a = Integer.parseInt(startYear);
+			int b = Integer.parseInt(startMonth);
+			int x = Integer.parseInt(endYear);
+			int y = Integer.parseInt(endMonth);
+			a *= 12;
+			x *= 12;
+			int start = a + b;
+			int end = x + y;
+			Boolean seError = false;
+			if(start > end) {
+				seError = true;
+				request.setAttribute("seError", seError);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
+				dispatcher.forward(request, response);
+			}
+
 		//現在の業務を選択した場合
 		}else {
 			//終了日が選択済みなら再度登録画面にフォワード
@@ -116,28 +134,11 @@ public class CareerRegister extends HttpServlet {
 			}
 		}
 
-		//開始日より終了日が前になっている場合、再度登録画面にフォワード
-		int a = Integer.parseInt(startYear);
-		int b = Integer.parseInt(startMonth);
-		int x = Integer.parseInt(endYear);
-		int y = Integer.parseInt(endMonth);
-		a *= 12;
-		x *= 12;
-		int start = a + b;
-		int end = x + y;
-		Boolean seError = false;
-		if(start > end) {
-			seError = true;
-			request.setAttribute("seError", seError);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
-			dispatcher.forward(request, response);
-		}
-
 		try (Connection connection = ConnectionManager.getConnection()){
 			CareerLogic careerLogic = new CareerLogic(connection);
 			careerLogic.registerCareer(employeeNumber, startYear, startMonth, endYear, endMonth, businessName, situation);
 			// 従業員詳細画面へフォワード
-			//RequestDispatcher dispatcher = request.getRequestDispatcher("/SelfIntroduction/EmployeeDetail?employeeNumber");
+			//RequestDispatcher dispatcher = request.getRequestDispatcher("/SelfIntroduction/EmployeeDetail");
 			//dispatcher.forward(request, response);
 			//従業員一覧画面へリダイレクト
 			connection.commit();

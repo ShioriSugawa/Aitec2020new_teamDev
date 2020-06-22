@@ -77,22 +77,40 @@ public class CareerUpdate extends HttpServlet {
 		}
 
 		//以前の業務を選択した場合
-		if(situation =="0") {
+		if(situation.equals("0")) {
 			//終了日が未選択なら再度登録画面にフォワード
 			Boolean endYError0 = false;
 			Boolean endMError0 = false;
 			if(endYear.equals("")) {
 				endYError0 = true;
 				request.setAttribute("endYError", endYError0);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerUpdate.jsp");
 				dispatcher.forward(request, response);
 			}
 			if(endMonth.equals("")) {
 				endMError0 = true;
 				request.setAttribute("endMError0", endMError0);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerUpdate.jsp");
 				dispatcher.forward(request, response);
 			}
+
+			//開始日より終了日が前になっている場合、再度登録画面にフォワード
+			int a = Integer.parseInt(startYear);
+			int b = Integer.parseInt(startMonth);
+			int x = Integer.parseInt(endYear);
+			int y = Integer.parseInt(endMonth);
+			a *= 12;
+			x *= 12;
+			int start = a + b;
+			int end = x + y;
+			Boolean seError = false;
+			if(start > end) {
+				seError = true;
+				request.setAttribute("seError", seError);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerUpdate.jsp");
+				dispatcher.forward(request, response);
+			}
+
 		//現在の業務を選択した場合
 		}else {
 			//終了日が選択済みなら再度登録画面にフォワード
@@ -102,41 +120,24 @@ public class CareerUpdate extends HttpServlet {
 			}else {
 				endYError1 = true;
 				request.setAttribute("endYError1", endYError1);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerUpdate.jsp");
 				dispatcher.forward(request, response);
 			}
 			if(endMonth.equals("")) {
 			}else {
 				endMError1 = true;
 				request.setAttribute("endMError1", endMError1);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerUpdate.jsp");
 				dispatcher.forward(request, response);
 			}
-		}
-
-		//開始日より終了日が前になっている場合、再度登録画面にフォワード
-		int a = Integer.parseInt(startYear);
-		int b = Integer.parseInt(startMonth);
-		int x = Integer.parseInt(endYear);
-		int y = Integer.parseInt(endMonth);
-		a *= 12;
-		x *= 12;
-		int start = a + b;
-		int end = x + y;
-		Boolean seError = false;
-		if(start > end) {
-			seError = true;
-			request.setAttribute("seError", seError);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
-			dispatcher.forward(request, response);
 		}
 
 		try (Connection connection = ConnectionManager.getConnection()){
 			//該当の業務経歴を更新
 			CareerLogic careerLogic = new CareerLogic(connection);
 			careerLogic.updateCareer(request.getParameter("businessNumber"), startYear, startMonth, endYear, endMonth, businessName, situation);
-			connection.commit();
 			//従業員一覧画面へリダイレクト
+			connection.commit();
 			response.sendRedirect("/SelfIntroduction/EmployeeList?result=careerUpdate");
 		}catch (SQLException e) {
 			throw new ServletException(e);
