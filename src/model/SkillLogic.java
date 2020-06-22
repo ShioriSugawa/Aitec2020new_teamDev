@@ -22,13 +22,14 @@ public class SkillLogic {
 	}
 
 	//IDで保有スキルデータ1件を取得
-	public Skill getOwnedSkill(int ownedId) {
+	public Skill getOwnedSkill(int ownedId)throws ServletException {
 		SkillsDAO sDAO=new SkillsDAO(connection);
 		Skill ownedSkill=null;
-
-		//中身！！！
-
-
+		try {
+			ownedSkill=sDAO.getOwnedSkill(ownedId);
+		}catch(SQLException e) {
+			throw new ServletException(e);
+		}
 		return ownedSkill;
 	}
 

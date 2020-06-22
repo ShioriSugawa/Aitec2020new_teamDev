@@ -48,7 +48,7 @@ public class CertificationLogic {
 		List<Certification>names=null;
 		try {
 			//DB処理実行
-			names = sDAO.getCertiGenre();
+			names = sDAO.getCertiName();
 		}catch(SQLException e) {
 			throw new ServletException(e);
 	}
