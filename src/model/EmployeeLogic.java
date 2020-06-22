@@ -85,6 +85,7 @@ public class EmployeeLogic {
 	 * @param employeeNumber 従業員番号
 	 * @param employeeName 氏名
 	 * @param employeeProfile プロフィール
+	 * @param employeeDeployment 所属
 	 * @return 登録エラー有無（true：登録失敗（既に同じ従業員番号のデータが存在）, false：登録成功）
 	 * @throws ServletException
 	 */
@@ -147,6 +148,7 @@ public class EmployeeLogic {
 	 * @param employeeNumber 従業員番号
 	 * @param employeeName 氏名
 	 * @param employeeProfile プロフィール
+	 * @param employeeDeployment 所属
 	 * @throws ServletException
 	 */
 	public void updateEmployee(String employeeNumber, String employeeName, String employeeProfile, String employeeDeployment) throws ServletException {
@@ -255,27 +257,6 @@ public class EmployeeLogic {
 		return list;
 	}
 
-	//資格ジャンル一覧
-	public ArrayList<String> getGenreList() throws ServletException{
-		EmployeeDAO empDAO = new EmployeeDAO(connection);
-		ArrayList<String> list = null;
-
-		try {
-			//DB処理実行
-			list = empDAO.getGenreList();
-		}catch(SQLException e) {
-			throw new ServletException(e);
-	}
-		return list;
-	}
-
-	//資格名一覧
-	public ArrayList<String> getCertificationName(){
-
-
-		return null;
-	}
-
 	/**
 	 * 該当従業員の所持スキル一覧を取得するメソッド
 	 * @param employeeNumber　所持スキル一覧を取得したい従業員番号
@@ -346,6 +327,7 @@ public class EmployeeLogic {
 		//資格ジャンル/資格名入力欄に資格ジャンルが入力された場合（コードが3桁)
 		if(masterCertification != null && masterCertification.length() == 3) {
 			certificationGenre = masterCertification;
+			masterCertification = null;
 		}
 
 

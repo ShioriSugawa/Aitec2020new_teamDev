@@ -129,6 +129,7 @@ public class EmployeeDAO {
 	 * @param employeeNumber 従業員番号
 	 * @param employeeName 氏名
 	 * @param employeeProfile プロフィール
+	 * @param employeeDeployment 所属
 	 * @throws SQLException
 	 */
 	public void registerOneEmployee(String employeeNumber, String employeeName, String employeeProfile, String employeeDeployment) throws SQLException {
@@ -152,6 +153,7 @@ public class EmployeeDAO {
 	 * @param employeeNumber 従業員番号
 	 * @param employeeName 氏名
 	 * @param employeeProfie プロフィール
+	 * @param employeeDeployment 所属
 	 * @throws SQLException
 	 */
 	public void updateOneEmployee(String employeeNumber, String employeeName, String employeeProfie, String employeeDeployment) throws SQLException {
@@ -238,62 +240,11 @@ public class EmployeeDAO {
 		return count;
 	}
 
-	//資格ジャンル一覧取得
-	public ArrayList<String> getGenreList() throws SQLException{
-
-		ArrayList<String> list = new ArrayList<String>();
-		final String sql ="SELECT certification_genre_name FROM certification_genre";
-		// -------------------
-		// SQL発行
-		// -------------------
-		try(PreparedStatement pStmt = connection.prepareStatement(sql)){
-				ResultSet resultSet = pStmt.executeQuery();
-
-			// -------------------
-			// 値の取得
-			// -------------------
-			while(resultSet.next()) {
-
-				// ResultSetから各値を取得
-				String genreName = resultSet.getString("certification_genre_name");
-
-				// 結果リストに格納
-				list.add(genreName);
-			}
-		}
-		return list;
-	}
-
-	//資格名一覧取得
-		public ArrayList<String> getCertificationNameList() throws SQLException{
-
-			ArrayList<String> list = new ArrayList<String>();
-			final String sql ="";
-			// -------------------
-			// SQL発行
-			// -------------------
-			try(PreparedStatement pStmt = connection.prepareStatement(sql)){
-					ResultSet resultSet = pStmt.executeQuery();
-
-				// -------------------
-				// 値の取得
-				// -------------------
-				while(resultSet.next()) {
-
-					// ResultSetから各値を取得
-					String certificationName = resultSet.getString("certification_name");
-
-					// 結果リストに格納
-					list.add(certificationName);
-				}
-			}
-			return list;
-		}
-
 		/**
 		 * 入力された検索条件で従業員を検索するメソッド　条件が二項目以上ある場合全てに該当する従業員のみ表示
 		 * @param deployment　検索条件に入力された所属部署
-		 * @param masterCertification　検索条件に入力されたマスタ登録有資格or
+		 * @param certificationGenre 検索条件に入力された資格ジャンル
+		 * @param masterCertification　検索条件に入力されたマスタ登録有資格
 		 * @param otherCertification　検索条件に入力されたその他資格名
 		 * @param skillGenre　検索条件に入力されたスキルジャンル
 		 * @param skillName　検索条件に入力されたスキル名
@@ -341,12 +292,12 @@ public class EmployeeDAO {
 				buf.append("\'" + deployment + "\'");
 			}
 			//資格ジャンルの検索条件が入力されていた場合
-			if(!(masterCertification.equals("ジャンルもしくは資格を選択してください"))) {
+			if(certificationGenre != null) {
 				buf.append(whereCertificationGenre);
-				buf.append("\'" + masterCertification + "\'");
+				buf.append("\'" + certificationGenre + "\'");
 			}
 			//マスター登録有資格の検索条件が入力されていた場合
-			if(!(masterCertification.equals("ジャンルもしくは資格を選択してください"))) {
+			if(!(masterCertification == null || masterCertification.equals("ジャンルもしくは資格を選択してください"))) {
 				buf.append(whereMaster);
 				buf.append("\'" + masterCertification + "\'");
 			}

@@ -59,7 +59,7 @@ public class Employee implements Serializable {
 	 * @param employeeName 氏名
 	 * @param employeeProfile プロフィール
 	 * @param employeeDeployment 所属
-	 * @param countCertification 資格所持数
+	 * @param count 資格所持数
 	 * @param careerList 現在の業務一覧
 	 */
 	public Employee(String employeeNumber, String employeeName, String employeeProfile, String employeeDeployment, int count, List<String> careerList) {

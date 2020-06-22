@@ -39,10 +39,6 @@ public class EmployeeUpdate extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 *
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");

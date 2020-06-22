@@ -62,8 +62,8 @@ public class EmployeeList extends HttpServlet {
 
 			// 2020/6/18　追加
 			//検索項目をDBより取得
-			List<String> genreList = employeeLogic.getGenreList();
-			List<String> masterCertificationList = employeeLogic.getCertificationName();
+			List<Skill> genreList = null;
+			List<Skill> masterCertificationList = null;
 			List<Skill> skillGenreList = skillLogic.getGenre();
 
 
@@ -99,8 +99,8 @@ public class EmployeeList extends HttpServlet {
 			SkillLogic skillLogic = new SkillLogic(connection);
 
 			//検索項目をDBより取得
-			List<String> genreList = employeeLogic.getGenreList();
-			List<String> masterCertificationList = employeeLogic.getCertificationName();
+			List<Skill> genreList = null;
+			List<Skill> masterCertificationList = null;
 			List<Skill> skillGenreList = skillLogic.getGenre();
 
 			//検索ボタンが押下されていた場合条件に応じてリスト絞り込み
