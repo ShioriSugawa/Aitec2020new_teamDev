@@ -35,7 +35,7 @@ Career career = (Career) request.getAttribute("career");
 
 			<div class="career-start">
 				<% String start = career.getBusinessStart(); %>
-				<% String startYear = start.substring(0,3); %>
+				<% String startYear = start.substring(0,4); %>
 				<% String startMonth = start.substring(5); %>
 
 				<label>業務開始</label>
