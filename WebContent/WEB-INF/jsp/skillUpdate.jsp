@@ -30,6 +30,8 @@
 			</div>
 		</header>
 
+        <form class="register-form" action="/SelfIntroduction/SkillsUpdate" method="post" onSubmit="return confirmUpdate()">
+
 		<p>スキル編集のページです</p>
 
 		<label>ジャンル：</label>
@@ -40,9 +42,37 @@
 				<%-- <c:if test="${ genre.getGenreName }">selected</c:if> --%>
 				</option>
 			</c:forEach>
-		</select><br>
+		</select>
+			<input type="button" class="button" value="削除" onclick="confirmDelete()"><br>
 
 		<input type="text" name="skillName" maxlength='100' placeholder="スキルの内容を具体的に記入してください">
+
+            <input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeList'">
+            <input type="submit" class="button register-button" value="登録">
+
+		</form>
+
+		<script type="text/javascript">
+			function confirmUpdate(){
+				// 確認ダイアログの表示
+				if(window.confirm('更新してよろしいでしょうか？')){
+					// 「OK」時の処理
+					return true; // 更新処理実行（post送信）
+				}
+				return false; // キャンセル時は何もしない
+			}
+
+			function confirmDelete(){
+				// 確認ダイアログの表示
+				if(window.confirm('このスキルを削除してよろしいでしょうか？')){
+					// 「OK」時の処理
+					location.href = '/SelfIntroduction/SkillsDelete?owned_skill_id=${ skl.ownedId }'; // 削除処理実行
+				}
+			// キャンセル時は何もしない
+			}
+		</script>
+		<script src="./js/jquery-3.3.1.min.js"></script>
+		<script src="./js/bootstrap.bundle.min.js"></script>
 
 	</body>
 
