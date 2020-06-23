@@ -527,9 +527,108 @@ public class EmployeeDAOTest {
         }
         ;
     }
+
+    /**
+     * 従業員一覧検索（所属）テスト（正常）
+     *
+     * @throws SQLException
+     */
+    @Test
+    public void test10_searchEmployeeDeploymentSearch() throws SQLException {
+    	Connection connection = null;
+
+    	//テスト実行
+    	try {
+
+    		connection = ConnectionManagerTest.getConnection();
+    		EmployeeDAO empDAO = new EmployeeDAO(connection);
+    		List<Employee> empList = null;
+    		empList = empDAO.searchEmployee("部署1",null,null,"","ジャンルを選択してください",null);
+
+    		//-----------------
+    		// 結果チェック
+    		//-----------------
+
+    		final String excepted = "部署1";
+    		for(Employee emp : empList) {
+    			final String actual = emp.getEmployeeDeployment();
+    			assertEquals(excepted, actual);
+    		}
+
+    	}catch(SQLException e) {
+    		e.printStackTrace();
+    		throw e;
+    	}finally {
+    		try {
+    			if(connection != null) {
+    				connection.close();
+    			}
+    		}catch(SQLException e) {
+    			e.printStackTrace();
+    		}
+    	}
+    }
+
+    @Test
+    public void test11_searchEmployeeCertificationGenreSearch() throws SQLException {
+    	Connection connection = null;
+		List<Employee> empList = null;
+
+    	//テスト実行
+    	try {
+
+    		connection = ConnectionManagerTest.getConnection();
+    		EmployeeDAO empDAO = new EmployeeDAO(connection);
+    		empList = empDAO.searchEmployee("所属を選択してください","SAM", null,"","ジャンルを選択してください",null);
+
+    	}catch(SQLException e) {
+    		e.printStackTrace();
+    		throw e;
+    	}finally {
+    		try {
+    			if(connection != null) {
+    				connection.close();
+    			}
+    		}catch(SQLException e) {
+    			e.printStackTrace();
+    		}
+    	}
+
+    	//-----------------
+		// 結果チェック
+		//-----------------
+    	for(Employee emp : empList) {
+    		String number = emp.getEmployeeNumber();
+
+    	}
+
+    }
+
+    @Test
+    public void test12_searchEmployeeCertificationNameSearch() {
+
+    }
+
+    @Test
+    public void test13_searchEmployeeOtherCertificationNameSearch() {
+
+    }
+
+    @Test
+    public void test14_searchEmployeeSkillGenreSearch() {
+
+    }
+
+    @Test
+    public void test15_searchEmployeeSkillNameSearch() {
+
+    }
+
+    @Test
+    public void test16_searchEmployeeALLItemSearch() {
+
+    }
 }
-
-
 
 /**
  * テスト用の従業員情報取得クラス(1人)

@@ -202,4 +202,18 @@ public class DetailDAO {
 		}
 		return skillList;
 	}
+	/**
+	 * 資格所持数取得メソッド
+	 * @param employeeNumber　資格所持数を取得したい従業員番号
+	 * @return 該当従業員の資格所持数
+	 * @throws SQLException
+	 */
+	public int countCertification(String employeeNumber) throws SQLException {
+		int countMaster = getAllMasterCertification(employeeNumber).size();
+		int countOther =  getAllOthers(employeeNumber).size();
+
+		int count = countMaster + countOther;
+
+		return count;
+	}
 }

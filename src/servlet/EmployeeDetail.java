@@ -38,6 +38,10 @@ public class EmployeeDetail extends HttpServlet {
 			// 該当の従業員を取得
 			EmployeeLogic employeeLogic = new EmployeeLogic(connection);
 			String employeeNumber = request.getParameter("employeeNumber");
+			//
+			if(employeeNumber == null) {
+				employeeNumber = (String)request.getAttribute("employeeNumber");
+			}
 			Employee emp = employeeLogic.getEmployee(employeeNumber);
 			List<Career> careerList = employeeLogic.getCareerList(employeeNumber);
 			List<Employee> masterCertificationList = employeeLogic.getMasterCertificationList(employeeNumber);

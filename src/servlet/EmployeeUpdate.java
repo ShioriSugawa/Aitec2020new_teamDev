@@ -93,7 +93,7 @@ public class EmployeeUpdate extends HttpServlet {
 			throw new ServletException(e);
 		}
 
-		// 自己紹介一覧画面へリダイレクト
+		// 詳細画面へリダイレクト
 		response.sendRedirect("/SelfIntroduction/EmployeeList?result=update");
 	}
 

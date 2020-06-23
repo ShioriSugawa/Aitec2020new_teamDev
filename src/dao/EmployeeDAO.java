@@ -75,7 +75,7 @@ public class EmployeeDAO {
 				// 2020/6/15 所属追加
 				// 2020/6/16 現在の業務経歴リスト追加
 				List<String>careerList = getCareerList(employee_number);
-				int count = countCertification(employee_number);
+				int count = new DetailDAO(connection).countCertification(employee_number);
 				Employee emp = new Employee(employee_number, employee_name, employee_profile, employee_deployment, count, careerList);
 				empList.add(emp);
 			}
@@ -224,22 +224,6 @@ public class EmployeeDAO {
 		return careerList;
 	}
 
-	/**
-	 * 資格所持数取得メソッド
-	 * @param employeeNumber　資格所持数を取得したい従業員番号
-	 * @return 該当従業員の資格所持数
-	 * @throws SQLException
-	 */
-	private int countCertification(String employeeNumber) throws SQLException {
-		DetailDAO dtlDAO = new DetailDAO(connection);
-		int countMaster = dtlDAO.getAllMasterCertification(employeeNumber).size();
-		int countOther =  dtlDAO.getAllOthers(employeeNumber).size();
-
-		int count = countMaster + countOther;
-
-		return count;
-	}
-
 		/**
 		 * 入力された検索条件で従業員を検索するメソッド　条件が二項目以上ある場合全てに該当する従業員のみ表示
 		 * @param deployment　検索条件に入力された所属部署
@@ -352,7 +336,7 @@ public class EmployeeDAO {
 
 					// 結果リストに格納
 					List<String>careerList = getCareerList(employee_number);
-					int count = countCertification(employee_number);
+					int count = new DetailDAO(connection).countCertification(employee_number);
 					Employee emp = new Employee(employee_number, employee_name, employee_profile, employee_deployment, count, careerList);
 					list.add(emp);
 				}
