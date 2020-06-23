@@ -137,12 +137,20 @@ public class CareerRegister extends HttpServlet {
 		try (Connection connection = ConnectionManager.getConnection()){
 			CareerLogic careerLogic = new CareerLogic(connection);
 			careerLogic.registerCareer(employeeNumber, startYear, startMonth, endYear, endMonth, businessName, situation);
-			// 従業員詳細画面へフォワード
-			//RequestDispatcher dispatcher = request.getRequestDispatcher("/SelfIntroduction/EmployeeDetail");
-			//dispatcher.forward(request, response);
+
+			// 従業員詳細画面へリダイレクト
+			String url1 = "EmployeeDetail?employeeNumber=";
+			String url2 = employeeNumber;
+			StringBuffer buf = new StringBuffer();
+			buf.append(url1);
+			buf.append(url2);
+			String url = buf.toString();
+			response.sendRedirect(url);
+
 			//従業員一覧画面へリダイレクト
-			connection.commit();
-			response.sendRedirect("/SelfIntroduction/EmployeeList?result=careerRegister");
+			//connection.commit();
+			//response.sendRedirect("/SelfIntroduction/EmployeeList?result=careerRegister");
+
 		}catch (SQLException e) {
 			throw new ServletException(e);
 		}
