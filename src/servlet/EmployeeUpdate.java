@@ -65,6 +65,7 @@ public class EmployeeUpdate extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// リクエストパラメータを取得
 		request.setCharacterEncoding("UTF-8");
+		String employeeNumber = request.getParameter("employeeNumber");
 		String employeeName = request.getParameter("employeeName");
 		String employeeProfile = request.getParameter("employeeProfile");
 		//2020/6/16　追加
@@ -94,7 +95,15 @@ public class EmployeeUpdate extends HttpServlet {
 		}
 
 		// 詳細画面へリダイレクト
-		response.sendRedirect("/SelfIntroduction/EmployeeList?result=update");
+		String url1 = "EmployeeDetail?employeeNumber=";
+		String url2 = employeeNumber;
+		StringBuffer buf = new StringBuffer();
+
+		buf.append(url1);
+		buf.append(url2);
+
+		String url = buf.toString();
+		response.sendRedirect(url);
 	}
 
 }

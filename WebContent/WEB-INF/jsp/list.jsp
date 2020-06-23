@@ -41,9 +41,6 @@ List<Skill> skillGenreList = (List<Skill>)session.getAttribute("skillGenre");
           <c:if test = "${ result == 'register' }"  >
               <label>登録完了しました。</label>
           </c:if>
-          <c:if test = "${ result == 'update' }"  >
-              <label>更新完了しました。</label>
-          </c:if>
           <c:if test = "${ result == 'delete' }"  >
               <label>削除完了しました。</label>
           </c:if>
