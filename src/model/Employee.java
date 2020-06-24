@@ -147,8 +147,8 @@ public class Employee implements Serializable {
 		return genreName;
 	}
 	/**
-	 * マスター登録資格名を取得
-	 * @return マスター登録資格名
+	 * 資格名orスキル名を取得
+	 * @return 資格名orスキル名
 	 */
 	public String getCertificationOrSkillName() {
 		return certificationOrSkillName;
@@ -161,8 +161,8 @@ public class Employee implements Serializable {
 		return ownedId;
 	}
 	/**
-	 * マスター登録資格認定日を取得
-	 * @return マスター登録資格認定日
+	 * 資格認定日を取得
+	 * @return 登録資格認定日
 	 */
 	public String getCertificationDate() {
 		return certificationDate;

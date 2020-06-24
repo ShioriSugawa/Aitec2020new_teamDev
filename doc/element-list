@@ -1,5 +1,6 @@
 ConnectionManagerForTest
 dao
+DetailDAOTest
 EmployeeDaoTest
 EmployeeLogicTest
 model

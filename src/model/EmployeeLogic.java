@@ -276,13 +276,6 @@ public class EmployeeLogic {
 		return list;
 	}
 
-	//スキルジャンル一覧
-	public ArrayList<String> getSkillGenreList(){
-
-
-
-		return null;
-	}
 
 	/**
 	 * 該当従業員の所持資格数を取得するメソッド
@@ -300,7 +293,7 @@ public class EmployeeLogic {
 	}
 
 	/**
-	 * 従業員一覧ソート　従業員番号でソートor資格所持数でソート
+	 * 従業員一覧をソートするメソッド　従業員番号でソートor資格所持数でソート
 	 * @param item　押下されたボタン　資格所持ランキング or 従業員番号でソート
 	 * @param list　従業員一覧
 	 */
@@ -317,7 +310,16 @@ public class EmployeeLogic {
 		}
 	}
 
-	//検索
+	/**
+	 * 特定の条件で従業員を検索するメソッド
+	 * @param deployment　所属部署
+	 * @param masterCertification　資格ジャンル or マスター登録有資格名
+	 * @param otherCertification　その他資格名
+	 * @param skillGenre　スキルジャンル
+	 * @param skill　スキル名
+	 * @return　特定の条件に該当する従業員一覧
+	 * @throws SQLException
+	 */
 	public ArrayList<Employee> searchEmployee(String deployment, String masterCertification, String otherCertification, String skillGenre, String skill) throws SQLException{
 
 		EmployeeDAO empDAO = new EmployeeDAO(connection);
