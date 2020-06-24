@@ -26,6 +26,7 @@ import model.Employee;
  * 2020/6/18 ソート機能追加に伴い従業員リストArrayListに変更
  * 2020/6/18 資格ジャンル、資格名、スキルジャンル一覧取得メソッド追加
  * 2020/6/18 各種検索メソッド追加
+ * 2020/6/24 各種メソッドcommit()追加
  *
  */
 public class EmployeeDAO {
@@ -145,6 +146,7 @@ public class EmployeeDAO {
 			pStmt.setString(3, employeeProfile);
 			pStmt.setString(4, employeeDeployment);
 			pStmt.executeUpdate();
+			connection.commit();
 		}
 	}
 
@@ -168,6 +170,7 @@ public class EmployeeDAO {
 			pStmt.setString(3, employeeDeployment);
 			pStmt.setString(4, employeeNumber);
 			pStmt.executeUpdate();
+			connection.commit();
 		}
 	}
 
@@ -186,6 +189,7 @@ public class EmployeeDAO {
 		try(PreparedStatement pStmt = connection.prepareStatement(sql)) {
 			pStmt.setString(1, employeeNumber);
 			pStmt.executeUpdate();
+			connection.commit();
 
 		}
 	}

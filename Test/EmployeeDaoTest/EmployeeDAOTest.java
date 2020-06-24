@@ -32,12 +32,13 @@ import model.Employee;
  * 修正内容まとめ
  * 2020/6/15 既存テスト所属追加対応
  * 2020/6/15 資格所持数取得テスト追加
+ * 2020/6/23 検索テスト追加
  *
  */
 public class EmployeeDAOTest {
 
 	@Rule
-	 public Timeout globalTimeout = Timeout.seconds(30);
+	 public Timeout globalTimeout = Timeout.seconds(5);
 
     /**
      * 従業員一覧の登録テスト(正常)
@@ -533,13 +534,13 @@ public class EmployeeDAOTest {
                 if (connection_findEmployment != null) {
                     connection_findEmployment.close();
                 }
+                //テストデータ削除
+                new DeleteTestData().deleteTestData();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
 
-        //テストデータ（従業員番号:666666）の削除
-        deleteTestData();
+        }
     }
 
     /**
@@ -999,17 +1000,6 @@ public class EmployeeDAOTest {
 
 
     }
-
-
-    private void deleteTestData() throws SQLException {
-
-    	Connection connection = ConnectionManagerTest.getConnection();
-    	final String sql = "DELETE FROM employee WHERE employee_number = '666666'";
-
-    	 PreparedStatement pStmt = connection.prepareStatement(sql);
-    	 pStmt.executeUpdate();
-
-    }
 }
 
 /**
@@ -1077,6 +1067,7 @@ class FindOneEmployee {
     	try(PreparedStatement pStmt = connection.prepareStatement(masterSql)){
 
     		pStmt.executeUpdate();
+    		connection.commit();
     	}
 
     	//------------------------------------------------
@@ -1087,6 +1078,7 @@ class FindOneEmployee {
     	try(PreparedStatement pStmt = connection.prepareStatement(otherSql)){
 
     		pStmt.executeUpdate();
+    		connection.commit();
     	}
 
     	//-------------------------------------------------
@@ -1097,6 +1089,7 @@ class FindOneEmployee {
     	try(PreparedStatement pStmt = connection.prepareStatement(skillSql)){
 
     		pStmt.executeUpdate();
+    		connection.commit();
     	}
     }
 
@@ -1296,5 +1289,22 @@ class FindOneEmployee {
     		}
     	}
     	return skillNameList;
+    }
+}
+
+//テストデータ削除
+class DeleteTestData{
+    void deleteTestData() {
+
+    	Connection conn;
+		try {
+			conn = ConnectionManagerTest.getConnection();
+			final String sql = "DELETE FROM employee WHERE employee_number = '666666'";
+    		PreparedStatement ps = conn.prepareStatement(sql);
+    		ps.executeUpdate();
+    		conn.commit();
+    	}catch(SQLException e) {
+    		e.printStackTrace();
+    	}
     }
 }

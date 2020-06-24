@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,9 +13,11 @@ import javax.servlet.ServletException;
 import org.junit.Test;
 
 import ConnectionManagerForTest.ConnectionManagerTest;
+import dao.DetailDAO;
 import dao.EmployeeDAO;
 import mockit.Expectations;
 import mockit.Mocked;
+import model.Career;
 import model.Employee;
 import model.EmployeeLogic;
 
@@ -29,11 +32,14 @@ import model.EmployeeLogic;
  * 2020/6/15 登録関係既存テスト所属追加対応
  * 2020/6/16 登録異常系所属未選択テスト追加
  * 2020/6/16 更新関係既存テスト所属追加対応
+ * 2020/6/24 所持資格数取得、業務経歴一覧取得、マスター登録有資格一覧取得、その他資格一覧取得、スキル一覧取得、検索、ソートのテスト追加
  *
  */
 public class EmployeeLogicTest {
     @Mocked
     EmployeeDAO employeeDAO;
+    @Mocked
+    DetailDAO detailDAO;
 
     /**
      * 従業員の登録テスト(正常)
@@ -966,4 +972,377 @@ public class EmployeeLogicTest {
     }
 
 
+    /**
+     * 業務経歴一覧取得テスト（正常）
+     *
+     * @throws SQLException
+     */
+    @Test
+    public void getCareerList() throws SQLException {
+
+    	Connection connection = null;
+
+    	//DAOのJmockit
+    	new Expectations() {
+    		{
+    			detailDAO.getAllCareer("666666");
+    		}
+    	};
+
+    	//テスト実行
+    	try {
+    		connection = ConnectionManagerTest.getConnection();
+    		EmployeeLogic employeeLogic = new EmployeeLogic(connection);
+    		List<Career> careerList = employeeLogic.getCareerList("666666");
+
+    		//------------------
+    		// 結果チェック
+    		//------------------
+
+    		assertNotNull(careerList);
+
+    	}catch(ServletException e) {
+    		e.printStackTrace();
+    	}finally {
+    		 try {
+                 if (connection != null) {
+                     connection.close();
+                 }
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+    	}
+    }
+
+    /**
+     * マスター登録有資格一覧取得テスト（正常）
+     *
+     * @throws SQLException
+     */
+    @Test
+    public void getMasterCertificationList() throws SQLException {
+
+    	Connection connection = null;
+
+    	//DAOのJmockit
+    	new Expectations() {
+    		{
+    			detailDAO.getAllMasterCertification("666666");
+    		}
+    	};
+
+    	//テスト実行
+    	try {
+      		connection = ConnectionManagerTest.getConnection();
+    		EmployeeLogic employeeLogic = new EmployeeLogic(connection);
+    		List<Employee> masterCertificationList = employeeLogic.getMasterCertificationList("666666");
+
+    		//------------------
+    		// 結果チェック
+    		//------------------
+
+    		assertNotNull(masterCertificationList);
+
+    	}catch(ServletException e) {
+    		e.printStackTrace();
+    	}finally {
+    		 try {
+                 if (connection != null) {
+                     connection.close();
+                 }
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+    	}
+    }
+
+
+    /**
+     * その他資格一覧取得テスト（正常）
+     *
+     * @throws SQLException
+     */
+    @Test
+    public void getOtherCertificationList() throws SQLException {
+
+    	Connection connection = null;
+
+    	//DAOのJmockit
+    	new Expectations() {
+    		{
+    			detailDAO.getAllOthers("666666");
+    		}
+    	};
+
+    	//テスト実行
+    	try {
+      		connection = ConnectionManagerTest.getConnection();
+    		EmployeeLogic employeeLogic = new EmployeeLogic(connection);
+    		List<Employee> otherList = employeeLogic.getOtherCertificationList("666666");
+
+    		//------------------
+    		// 結果チェック
+    		//------------------
+
+    		assertNotNull(otherList);
+
+    	}catch(ServletException e) {
+    		e.printStackTrace();
+    	}finally {
+    		 try {
+                 if (connection != null) {
+                     connection.close();
+                 }
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+    	}
+    }
+
+    /**
+     * スキル一覧取得テスト（正常）
+     * @throws SQLException
+     */
+    @Test
+    public void getSkillList() throws SQLException {
+
+    	Connection connection = null;
+
+    	//DAOのJmockit
+    	new Expectations() {
+    		{
+    			detailDAO.getAllSkill("666666");
+    		}
+    	};
+
+    	//テスト実行
+    	try {
+      		connection = ConnectionManagerTest.getConnection();
+    		EmployeeLogic employeeLogic = new EmployeeLogic(connection);
+    		List<Employee> skillList = employeeLogic.getSkillList("666666");
+
+    		//------------------
+    		// 結果チェック
+    		//------------------
+
+    		assertNotNull(skillList);
+
+    	}catch(ServletException e) {
+    		e.printStackTrace();
+    	}finally {
+    		 try {
+                 if (connection != null) {
+                     connection.close();
+                 }
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+    	}
+    }
+
+    /**
+     * 所持資格数取得テスト（正常）
+     *
+     * @throws SQLException
+     */
+    @Test
+    public void countCertification() throws SQLException {
+
+    	Connection connection = null;
+
+		List<String> careerList = null;
+    	Employee emp = new Employee("666666", "テスト", "テストプロフィール", "部署テスト", 10, careerList);
+
+    	//DAOのJmockit
+    	new Expectations() {
+    		{
+    			//マスター登録有資格5つ、その他資格5つ合計10個の資格を持つ従業員のケースでテスト
+    			Employee certification1 = null;
+    			Employee certification2 = null;
+    			Employee certification3 = null;
+    			Employee certification4 = null;
+    			Employee certification5 = null;
+    			List<Employee> list = new ArrayList<>();
+    			Collections.addAll(list,certification1,certification2,certification3,certification4,certification5);
+    			detailDAO.getAllMasterCertification("666666");
+    			result = list;
+    			detailDAO.getAllOthers("666666");
+    			result = list;
+
+    		}
+    	};
+
+    	//テスト実行
+    	try {
+      		connection = ConnectionManagerTest.getConnection();
+    		EmployeeLogic employeeLogic = new EmployeeLogic(connection);
+    		int result = employeeLogic.countCertification("666666");
+
+    		//------------------
+    		// 結果チェック
+    		//------------------
+
+    		assertEquals(10, result);
+
+    	}catch(ServletException e) {
+    		e.printStackTrace();
+    	}finally {
+    		 try {
+                 if (connection != null) {
+                     connection.close();
+                 }
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+    	}
+    }
+
+    /**
+     * 従業員番号でソートテスト（正常）
+     * @throws SQLException
+     */
+    @Test
+    public void employeeNumberSortArrayList() throws SQLException {
+
+    	Connection connection = null;
+
+    	 //DAOのJMockit
+        new Expectations() {{
+            List<Employee> empList = new ArrayList<>();
+            Employee emp1 = new Employee("666661", "氏名1", "プロフィール1","部署1");
+            Employee emp2 = new Employee("666662", "氏名2", "プロフィール2", "部署2");
+            empList.add(emp2);
+            empList.add(emp1);
+            employeeDAO.findAllEmployee();
+            result = empList;
+        }};
+
+    	//テスト実行
+    	try {
+      		connection = ConnectionManagerTest.getConnection();
+    		EmployeeLogic employeeLogic = new EmployeeLogic(connection);
+    		ArrayList<Employee> empList = employeeLogic.getEmployeeList();
+    		employeeLogic.sortArrayList("従業員番号", empList);
+
+    		//一覧の一番目の従業員と二番目の従業員の従業員番号取得
+    		String firstStr = empList.get(0).getEmployeeNumber();
+    		String secondStr = empList.get(1).getEmployeeNumber();
+
+    		//整数型に変換
+    		Integer firstEmployeeNumber = Integer.parseInt(firstStr);
+    		Integer secondEmployeeNumber = Integer.parseInt(secondStr);
+
+    		//二つの値を比較
+    		int result = secondEmployeeNumber.compareTo(firstEmployeeNumber);
+
+    		//一番目より二番目の従業員番号の方が大きいことを確認
+    		assertEquals(1,result);
+
+    	}catch(ServletException e) {
+    		e.printStackTrace();
+    	}finally {
+    		 try {
+                 if (connection != null) {
+                     connection.close();
+                 }
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+    	}
+    }
+
+    /**
+     * 資格所持数ソートテスト（正常）
+     *
+     * @throws SQLException
+     */
+    @Test
+    public void countSortArrayList() throws SQLException {
+
+    	Connection connection = null;
+
+    	//DAOのJMockit
+        new Expectations() {{
+            List<Employee> empList = new ArrayList<>();
+            Employee emp1 = new Employee("666661", "氏名1", "プロフィール1","部署1", 1, null);
+            Employee emp2 = new Employee("666662", "氏名2", "プロフィール2", "部署2", 2, null);
+            empList.add(emp1);
+            empList.add(emp2);
+            employeeDAO.findAllEmployee();
+            result = empList;
+
+        }};
+
+    	//テスト実行
+    	try {
+      		connection = ConnectionManagerTest.getConnection();
+    		EmployeeLogic employeeLogic = new EmployeeLogic(connection);
+    		ArrayList<Employee> empList = employeeLogic.getEmployeeList();
+    		employeeLogic.sortArrayList("資格所持数", empList);
+
+    		//一覧の一番目の従業員と二番目の従業員の資格所持数取得
+    		Integer firstEmployeeCount = empList.get(0).getCount();
+    		Integer secondEmployeeCount = empList.get(1).getCount();
+
+    		//二つの値を比較
+    		int result = firstEmployeeCount.compareTo(secondEmployeeCount);
+
+    		assertEquals(1, result);
+
+    	}catch(ServletException e) {
+    		e.printStackTrace();
+    	}finally {
+    		 try {
+                 if (connection != null) {
+                     connection.close();
+                 }
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+    	}
+    }
+
+    /**
+     * 従業員検索テスト（正常）
+     *
+     * @throws SQLException
+     */
+    @Test
+    public void searchEmployee() throws SQLException {
+
+    	Connection connection = null;
+
+    	//DAOのJMockit
+        new Expectations() {{
+            List<Employee> searchList = new ArrayList<>();
+            Employee emp1 = new Employee("666661", "氏名1", "プロフィール1","部署1");
+            Employee emp2 = new Employee("666662", "氏名2", "プロフィール2", "部署1");
+            searchList.add(emp1);
+            searchList.add(emp2);
+            employeeDAO.searchEmployee("部署1", null, null, "", "ジャンルを選択してください", null);
+            result = searchList;
+        }};
+
+        //テスト実行
+        try {
+        	connection = ConnectionManagerTest.getConnection();
+        	EmployeeLogic employeeLogic = new EmployeeLogic(connection);
+        	List<Employee> searchList = employeeLogic.searchEmployee("部署1", null, "", "ジャンルを選択してください", null);
+
+        	//------------------
+    		// 結果チェック
+    		//------------------
+
+        	assertNotNull(searchList);
+
+        }finally {
+   		 try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+   	}
+    }
 }
