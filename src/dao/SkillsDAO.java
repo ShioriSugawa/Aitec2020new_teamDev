@@ -60,8 +60,10 @@ public class SkillsDAO {
 	public Certification getOwnedOth(int ownedId)throws SQLException {
 		Certification ownedOth=null;
 		final String sql=	//要編集、まとめて取って来る
-				"SELECT employee_number,certification_genre_code,other_certification_date,other_certification_name"
-						+ "FROM owned_other_certification WHERE owned_other_certification_id=? ";
+				"SELECT o.employee_number,o.certification_genre_code,g.certification_genre_name,o.other_certification_date,o.other_certification_name"
+						+ " FROM owned_other_certification o INNER JOIN certification_genre g"
+						+ " ON o.certification_genre_code=g.certification_genre_code"
+						+ " WHERE o.owned_other_certification_id=? ";
 		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
 			pStmt.setInt(1, ownedId);
 			ResultSet resultSet = pStmt.executeQuery();

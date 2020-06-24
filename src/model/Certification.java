@@ -54,13 +54,13 @@ public class Certification implements Serializable {
 	 * @param certiName その他資格名
 	 */
 
-	public Certification(int ownedId,String employeeNumber,String certiCode,String certiGenre,String certiName,String certiDate) {
+	public Certification(int ownedId,String employeeNumber,String certiCode,String certiGenre,String certiDate,String certiName) {
 		this.ownedId=ownedId;
 		this.employeeNumber=employeeNumber;
 		this.certiCode=certiCode;
 		this.certiGenre=certiGenre;
-		this.certiName=certiName;
 		this.certiDate=certiDate;
+		this.certiName=certiName;
 	}
 
 	/**
@@ -112,6 +112,7 @@ public class Certification implements Serializable {
 	}
 
 	/**
+	 * 資格ジャンル名を取得
 	 * @return certiGenre
 	 */
 	public String getCertiGenre() {

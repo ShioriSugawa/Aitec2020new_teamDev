@@ -7,7 +7,7 @@
 
 
 <% List<Skill> skillGenre = (List<Skill>)request.getAttribute("skillGenre");%>
-<% Skill skl=(Skill)request.getAttribute("ownedSkill");%>
+<% Skill oSkl=(Skill)request.getAttribute("oSkl");%>
 
 <!DOCTYPE html>
 <html>
@@ -34,23 +34,27 @@
 
 		<p>スキル編集のページです</p>
 
+		<input type="hidden" name="SownedId" value="${oSkl.ownedId}">
+		<input type="hidden" name="employeeNumber" value="${oSkl.employeeNumber}">
+
 		<label>ジャンル：</label>
-		<select name="skillGenre">
-			<option>ジャンルを選択してください</option>
+		<select name="skillGenre" required>
+			<option disabled>ジャンルを選択してください</option>
 			<c:forEach var="skillGenre" items="${skillGenre}">
-				<option value="${skillGenre.getGenreCode() }"><c:out value="${skillGenre.getGenreName()}" />
-				<c:if test="${ skl.genreName.equals(skillGenre.getGenreName()) }">selected</c:if> <%-- --%>
+				<option value="${skillGenre.getGenreCode() }"
+					<c:if test="${ oSkl.genreName.equals(skillGenre.getGenreName()) }">selected</c:if> >
+					<c:out value="${skillGenre.getGenreName()}" />
 				</option>
 			</c:forEach>
 		</select>
 		<input type="button" class="button" value="削除" onclick="confirmDelete()"><br>
 
 			<label>スキルの内容（100文字以内）</label><br>
-		<textarea name="skillName" maxlength='100' placeholder="スキルの内容を具体的に記入してください">${ skl.skillName }</textarea>
+		<textarea name="skillName" maxlength='100' placeholder="スキルの内容を具体的に記入してください">${ oSkl.skillName }</textarea>
 		<br>
 
-            <input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeList'">
-            <input type="submit" class="button register-button" value="登録">
+            <input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${oSkl.employeeNumber}'">
+            <input type="submit" class="button register-button" value="更新">
 
 		</form>
 
