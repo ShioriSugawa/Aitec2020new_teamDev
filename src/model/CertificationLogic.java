@@ -1,6 +1,3 @@
-/**
- *
- */
 package model;
 
 import java.sql.Connection;
@@ -29,7 +26,7 @@ public class CertificationLogic {
 	}
 
 
-	//資格ジャンルのコードと名前の一覧を取って来るやつ
+	//資格ジャンルのコードと名前の一覧を取って来るやつ(マスタその他共用)
 	public List<Certification>getCertiGenre()throws ServletException{
 		SkillsDAO sDAO=new SkillsDAO(connection);
 		List<Certification>genre=null;
@@ -42,7 +39,7 @@ public class CertificationLogic {
 		return genre;
 	}
 
-	//資格のコードと名前（マスタその他共用）の一覧を取って来るやつ
+	//資格のコードと名前の一覧を取って来るやつ
 	public List<Certification>getCertiName()throws ServletException{
 		SkillsDAO sDAO=new SkillsDAO(connection);
 		List<Certification>names=null;
@@ -53,6 +50,50 @@ public class CertificationLogic {
 			throw new ServletException(e);
 	}
 		return names;
+	}
+
+	//その他資格の更新
+	public void updateOth(int ownedId, String genCode, String othDate, String othName)throws ServletException {
+		SkillsDAO sDAO=new SkillsDAO(connection);
+		try{
+			sDAO.updateOthCerti(ownedId,genCode,othDate,othName);
+		} catch (SQLException | IllegalArgumentException e) {
+			throw new ServletException(e);
+		}
+	}
+
+	//マスタ資格の更新
+	public void updateMst(int ownedId, String mcDate)throws ServletException {
+		SkillsDAO sDAO=new SkillsDAO(connection);
+		try{
+			sDAO.updateMstCerti(ownedId,mcDate);
+		} catch (SQLException | IllegalArgumentException e) {
+			throw new ServletException(e);
+		}
+	}
+
+	//その他資格内容取得
+	public Certification getOwnedOth(int ownedId)throws ServletException {
+		SkillsDAO sDAO=new SkillsDAO(connection);
+		Certification ownedOth=null;
+		try {
+			ownedOth=sDAO.getOwnedOth(ownedId);
+		}catch(SQLException e){
+			throw new ServletException(e);
+		}
+		return ownedOth;
+	}
+
+	//マスタ資格内容取得
+	public Certification getOwnedMst(int ownedId)throws ServletException {
+		SkillsDAO sDAO=new SkillsDAO(connection);
+		Certification ownedMst=null;
+		try {
+			ownedMst=sDAO.getOwnedMst(ownedId);
+		}catch(SQLException e){
+			throw new ServletException(e);
+		}
+		return ownedMst;
 	}
 
 }

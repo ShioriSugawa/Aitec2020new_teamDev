@@ -25,13 +25,13 @@ public class SkillsDAO {
 
 	//以下、保有IDによる検索
 	/**
-	 * 保有資格IDによる資格保有データ1件の取得
+	 * 保有マスタ資格IDによる資格保有データ1件の取得
 	 * @param 編集中
-	 */		/*	編集中
-	public Certification getOwnedCertification(int ownedId)throws SQLException {
+	 */		/*	編集中*/
+	public Certification getOwnedMst(int ownedId)throws SQLException {
 		Certification ownedCertification;
-		final String sql=
-				"SELECT employee_number,skill_genre_code,skill_genre_name,skill_name"
+		final String sql=	//要編集、全部まとめて取って来る
+				"SELECT employee_number,certification_code,certification_date"
 						+ "FROM owned_skill INNER JOIN skill_genre"
 						+ "ON owned_skill.skill_genre_code=skill_genre.skill_genre_code"
 						+ "WHERE owned_skill_id=? ";
@@ -41,11 +41,13 @@ public class SkillsDAO {
 		ResultSet resultSet = pStmt.executeQuery();
 
 		String employeeNumber=resultSet.getString("employee_number");
-		String genreCode=resultSet.getString("skill_genre_code");
-		String genreName=resultSet.getString("skill_genre_name");
-		String skillName=resultSet.getString("skill_name");
+		String certiCode=resultSet.getString("certification_genre_code");
+		String certiGenre=resultSet.getString("certification_genre_name");
+		String masterCode=resultSet.getString("certification_code");
+		String certiName=resultSet.getString("certification_name");
+		String certiDate=resultSet.getString("certification_date");
 
-		ownedCertification=new Certification(ownedId,employeeNumber,genreCode,genreName,skillName);
+		ownedCertification=new Certification(ownedId,employeeNumber,certiCode,certiGenre,masterCode,certiName,certiDate);
 	}
 		return ownedCertification;
 	}//*/
@@ -54,28 +56,28 @@ public class SkillsDAO {
 	/**
 	 * 保有その他資格IDによるその他資格保有データ1件の取得
 	 * @param 編集中
-	 */		/*	編集中
-	public Certification getOtherOwnedCertification(int ownedId)throws SQLException {
-		Certification ownedOtherCertification;
-		final String sql=
-				"SELECT employee_number,skill_genre_code,skill_genre_name,skill_name"
-						+ "FROM owned_skill INNER JOIN skill_genre"
-						+ "ON owned_skill.skill_genre_code=skill_genre.skill_genre_code"
-						+ "WHERE owned_skill_id=? ";
+	 */
+	public Certification getOwnedOth(int ownedId)throws SQLException {
+		Certification ownedOth=null;
+		final String sql=	//要編集、まとめて取って来る
+				"SELECT employee_number,certification_genre_code,other_certification_date,other_certification_name"
+						+ "FROM owned_other_certification WHERE owned_other_certification_id=? ";
+		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
+			pStmt.setInt(1, ownedId);
+			ResultSet resultSet = pStmt.executeQuery();
 
-	try(PreparedStatement pStmt = conn.prepareStatement(sql)){
-		pStmt.setInt(1, ownedId);
-		ResultSet resultSet = pStmt.executeQuery();
+			if(resultSet.next()) {
+				String employeeNumber=resultSet.getString("employee_number");
+				String genreCode=resultSet.getString("certification_genre_code");
+				String genreName=resultSet.getString("certification_genre_name");
+				String othDate=resultSet.getString("other_certification_date");
+				String othName=resultSet.getString("other_certification_name");
 
-		String employeeNumber=resultSet.getString("employee_number");
-		String genreCode=resultSet.getString("skill_genre_code");
-		String genreName=resultSet.getString("skill_genre_name");
-		String skillName=resultSet.getString("skill_name");
-
-		ownedOtherCertification=new Certification(ownedId,employeeNumber,genreCode,genreName,skillName);
+				ownedOth=new Certification(ownedId,employeeNumber,genreCode,genreName,othDate,othName);
+			}
+		}
+		return ownedOth;
 	}
-		return ownedOtherCertification;
-	}//*/
 
 	public List<Skill> getGenre()throws SQLException{
 		List<Skill> genreList=new ArrayList<>();
@@ -160,6 +162,40 @@ public class SkillsDAO {
 		return ownedSkill;
 	}
 
-	public void updateSkill(int ownedId) {}
+	//スキルアップデート
+	public void updateSkill(int ownedId,String skillGenre,String skillName)throws SQLException{
+		//String ownedIdS=String.valueOf( ownedId );
+		String sql="UPDATE owned_skill SET skill_genre_code=?,skill_name=? WHERE owned_skill_id=?";
+		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
+			pStmt.setString(1, skillGenre);
+			pStmt.setString(2, skillName);
+			pStmt.setInt(3, ownedId);
+			pStmt.executeUpdate();
+		}
+	}
+
+	//その他資格アップデート
+	public void updateOthCerti(int ownedId, String genCode, String othDate, String othName)throws SQLException {
+		String sql="UPDATE owned_other_certification "
+				+ "SET certification_genre_code=?,"
+				+ "other_certification_date=?,othre_certification_name=? WHERE owned_other_certification_id=?";
+		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
+			pStmt.setString(1, genCode);
+			pStmt.setString(2, othDate);
+			pStmt.setString(3, othName);
+			pStmt.setInt(4, ownedId);
+			pStmt.executeUpdate();
+		}
+	}
+
+	//マスタ資格アップデート
+	public void updateMstCerti(int ownedId, String mcDate)throws SQLException {
+		String sql="UPDATE owned_certification SET certification_date=? WHERE owned_certification_id=?";
+		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
+			pStmt.setString(1, mcDate);
+			pStmt.setInt(2, ownedId);
+			pStmt.executeUpdate();
+		}
+	}
 
 }

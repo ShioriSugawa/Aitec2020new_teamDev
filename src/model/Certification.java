@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-/**全体的にまだ途中です
+/**
  * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
  * システム名：自己紹介システム<br>
  * クラス概要：資格(マスタ・その他)のJavaBeansクラス<br>
@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 public class Certification implements Serializable {
 
-	private String employeeNumber,certiCode,certiGenre,certiName,certiDate;
+	private String employeeNumber,certiCode,certiGenre,masterCode,certiName,certiDate;
 	private int ownedId;
 
 
@@ -21,44 +21,53 @@ public class Certification implements Serializable {
 		this.certiName=certiName;
 	}
 
+		//登録用コンストラクタあとで追加！！
 
 	/**
-	 * コンストラクタ(マスタ資格用)
+	 * コンストラクタ(マスタ資格の表示/編集用)(7)
 	 * @param ownedId 保有資格ID
 	 * @param employeeNumber 従業員番号
-	 * @param certiCode 資格コード
+	 * @param certiCode 資格ジャンルコード
+	 * @param certiGenre 資格ジャンル名
+	 * @param masterCode 資格コード
+	 * @param certiName 資格名
 	 * @param certiDate 認定日
 	 */
 
-	public Certification(int ownedId,String employeeNumber,String certiCode,String certiDate) {
+	public Certification(int ownedId,String employeeNumber,String certiCode,String certiGenre,String masterCode,String certiName,String certiDate) {
 		this.ownedId=ownedId;
 		this.employeeNumber=employeeNumber;
 		this.certiCode=certiCode;
+		this.certiGenre=certiGenre;
+		this.masterCode=masterCode;
+		this.certiName=certiName;
 		this.certiDate=certiDate;
 	}
 
 	/**
-	 * コンストラクタ(その他資格用)
-	 * @param certiId 保有その他資格ID
+	 * コンストラクタ(その他資格の表示/編集用)(6)
+	 * @param ownedId 保有その他資格ID
 	 * @param employeeNumber 従業員番号
-	 * @param certiCode 資格コード
-	 * @param certiName その他資格名
+	 * @param certiCode 資格ジャンルコード
+	 * @param certiGenre 資格ジャンル名
 	 * @param certiDate 認定日
+	 * @param certiName その他資格名
 	 */
-	/*	いったん保留で。
-	public Certification(String certiId,String employeeNumber,String certiCode,String certiName,String certiDate) {
-		this.certiId=certiId;
+
+	public Certification(int ownedId,String employeeNumber,String certiCode,String certiGenre,String certiName,String certiDate) {
+		this.ownedId=ownedId;
 		this.employeeNumber=employeeNumber;
 		this.certiCode=certiCode;
+		this.certiGenre=certiGenre;
 		this.certiName=certiName;
 		this.certiDate=certiDate;
-	}//*/
+	}
 
 	/**
 	 * 保有資格(マスタ・その他)IDを取得
 	 * @return 保有資格(マスタ・その他)ID
 	 */
-	public int getCertiId() {
+	public int getOwnedId() {
 		return ownedId;
 	}
 
@@ -71,11 +80,19 @@ public class Certification implements Serializable {
 	}
 
 	/**
-	 * 資格(マスタ)コードを取得
-	 * @return 資格(マスタ)コード
+	 * コード(資格ジャンル/マスタ資格)を取得
+	 * @return （資格ジャンルかマスタ資格の）コード
 	 */
 	public String getCertiCode() {
 		return certiCode;
+	}
+
+	/**
+	 * マスタ資格コードを取得（IDによる1件表示専用）（後から追加した為）
+	 * @return マスタ資格コード
+	 */
+	public String getMasterCode() {
+		return masterCode;
 	}
 
 	/**
@@ -102,13 +119,6 @@ public class Certification implements Serializable {
 	}
 
 	/**
-	 * @return ownedId
-	 */
-	public int getOwnedId() {
-		return ownedId;
-	}
-
-	/**
 	 * @param employeeNumber セットする employeeNumber
 	 */
 	public void setEmployeeNumber(String employeeNumber) {
@@ -127,6 +137,14 @@ public class Certification implements Serializable {
 	 */
 	public void setCertiGenre(String certiGenre) {
 		this.certiGenre = certiGenre;
+	}
+
+
+	/**
+	 * @param masterCode セットする masterCode
+	 */
+	public void setMasterCode(String masterCode) {
+		this.masterCode = masterCode;
 	}
 
 	/**

@@ -13,6 +13,7 @@ public class Skill implements Serializable {
 
 	private String employeeNumber,genreCode,genreName,skillName;
 	private int ownedId;
+
 	//スキル登録(4)
 	public Skill(String employeeNumber,String genreCode,String genreName,String skillName) {
 		this.employeeNumber=employeeNumber;
@@ -21,7 +22,7 @@ public class Skill implements Serializable {
 		this.skillName=skillName;
 	}
 
-	//スキル表示/更新(5)（更新時はidは無視）
+	//スキル表示/更新(5)（更新時はnumberは無視）
 	public Skill(int ownedId,String employeeNumber,String genreCode,String genreName,String skillName) {
 		this.ownedId=ownedId;
 		this.employeeNumber=employeeNumber;

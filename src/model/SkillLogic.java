@@ -33,6 +33,17 @@ public class SkillLogic {
 		return ownedSkill;
 	}
 
+	//スキル更新
+	public void updateSkill(int ownedId,String skillGenre,String skillName)throws ServletException {
+		SkillsDAO sDAO=new SkillsDAO(connection);
+		//入力値チェックは後で
+		try{
+			sDAO.updateSkill(ownedId,skillGenre,skillName);
+		} catch (SQLException | IllegalArgumentException e) {
+			throw new ServletException(e);
+		}
+	}
+
 	//ジャンルのコードと名前の一覧を取って来るやつ
 	public List<Skill>getGenre()throws ServletException{
 		SkillsDAO sDAO=new SkillsDAO(connection);

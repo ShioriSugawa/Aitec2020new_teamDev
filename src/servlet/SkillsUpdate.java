@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.ConnectionManager;
+import model.Certification;
+import model.CertificationLogic;
 import model.Skill;
 import model.SkillLogic;
 
@@ -43,17 +45,18 @@ public class SkillsUpdate extends HttpServlet {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			// 編集IDのオーダーを取得
 			SkillLogic skillLogic = new SkillLogic(connection);
+			CertificationLogic cLogic=new CertificationLogic(connection);
 			mc=request.getParameter("owned_certification_id");
 			oth=request.getParameter("owned_other_certification_id");
 			skl=request.getParameter("owned_skill_id");
 
-			//skl="6";	//実験用固定IDショートカット
+			//skl="5";	//実験用固定IDショートカット
 
 			if(mc!=null) {
 				int mcI = Integer.parseInt(mc);
-				Skill ownedSkill=skillLogic.getOwnedSkill(mcI);
+				Certification ownedMst=cLogic.getOwnedMst(mcI);
 				// リクエストスコープに保存
-				request.setAttribute("ownedSkill", ownedSkill);
+				request.setAttribute("ownedMst", ownedMst);
 				// マスタ資格編集にフォワード
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/certificationUpdate.jsp");
 				dispatcher.forward(request, response);
@@ -61,9 +64,11 @@ public class SkillsUpdate extends HttpServlet {
 
 			if(oth!=null) {
 				int othI = Integer.parseInt(oth);
-				Skill ownedSkill=skillLogic.getOwnedSkill(othI);
+				Certification ownedOth=cLogic.getOwnedOth(othI);
+				List<Certification>certiGenre=cLogic.getCertiGenre();
 				// リクエストスコープに保存
-				request.setAttribute("ownedSkill", ownedSkill);
+				request.setAttribute("certiGenre", certiGenre);
+				request.setAttribute("ownedOth", ownedOth);
 				// その他資格編集にフォワード
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/otherCertificationUpdate.jsp");
 				dispatcher.forward(request, response);
@@ -71,11 +76,11 @@ public class SkillsUpdate extends HttpServlet {
 
 			if(skl!=null) {
 				int sklI = Integer.parseInt(skl);
-				Skill ownedSkill=skillLogic.getOwnedSkill(sklI);
+				Skill oSkl=skillLogic.getOwnedSkill(sklI);
 				List<Skill> skillGenre=skillLogic.getGenre();
 				// リクエストスコープに保存
 				request.setAttribute("skillGenre", skillGenre);
-				request.setAttribute("ownedSkill", ownedSkill);
+				request.setAttribute("oSkl", oSkl);
 
 				// スキル編集にフォワード
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillUpdate.jsp");
@@ -93,27 +98,92 @@ public class SkillsUpdate extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// リクエストパラメータを取得
 		request.setCharacterEncoding("UTF-8");
+		//保有ID 受け取り、それによって条件分岐？（getと同じく）、予定
+		//下の受け取り値、わからなければメンバーに聞け！！
 
-		request.setCharacterEncoding("UTF-8");
-		String sklGenCode=request.getParameter("skillGenre");
-		String sklName=request.getParameter("skillName");
+		String mcIdS=request.getParameter("MownedId");
+		String othIdS=request.getParameter("OownedId");
+		String sklIdS=request.getParameter("SownedId");
+		String employeeNumber=request.getParameter("employeeNumber");
 
-		//あとで未入力チェックもつけないといけない
+		//マスタ資格IDを受け取ったら
+		if(mcIdS!=null) {
+			String mcDate=request.getParameter("date");
 
-		try(Connection connection = ConnectionManager.getConnection()){
+			int mcId = Integer.parseInt(mcIdS);
 
-			try {
-				// 該当のスキル記述を更新
-				SkillLogic sLogic = new SkillLogic(connection);
-				sLogic.updateEmployee(request.getParameter("employeeNumber"), employeeName, employeeProfile,employeeDeployment);
-				connection.commit();
-			} catch (ServletException e) {
-				connection.rollback();
-				throw e;
+			try(Connection connection = ConnectionManager.getConnection()){
+				try {
+					// 該当のスキル記述を更新
+					CertificationLogic cLogic = new CertificationLogic(connection);
+					cLogic.updateMst(mcId,mcDate);
+					connection.commit();
+				} catch (ServletException e) {
+					connection.rollback();
+					throw e;
+				}
+			}catch(SQLException e){
+				throw new ServletException(e);
 			}
+		}
 
-		}catch(SQLException e){}
+		//その他資格IDを受け取ったら
+		if(othIdS!=null) {
+			String genCode=request.getParameter("genreCode");
+			String othDate=request.getParameter("date");
+			String othName=request.getParameter("certiName");
 
+			int othId = Integer.parseInt(othIdS);
+
+			try(Connection connection = ConnectionManager.getConnection()){
+				try {
+					// 該当のスキル記述を更新
+					CertificationLogic cLogic = new CertificationLogic(connection);
+					cLogic.updateOth(othId,genCode,othDate,othName);
+					connection.commit();
+				} catch (ServletException e) {
+					connection.rollback();
+					throw e;
+				}
+			}catch(SQLException e){
+				throw new ServletException(e);
+			}
+		}
+
+		//スキルIDを受け取ったら
+		if(sklIdS!=null) {
+			String sklGenCode=request.getParameter("skillGenre");
+			String sklName=request.getParameter("skillName");
+
+			int sklId = Integer.parseInt(sklIdS);
+
+			//あとで未入力チェックもつけないといけない
+
+			try(Connection connection = ConnectionManager.getConnection()){
+				try {
+					// 該当のスキル記述を更新
+					SkillLogic sLogic = new SkillLogic(connection);
+					sLogic.updateSkill(sklId,sklGenCode,sklName);
+					connection.commit();
+				} catch (ServletException e) {
+					connection.rollback();
+					throw e;
+				}
+			}catch(SQLException e){
+				throw new ServletException(e);
+			}
+		}
+
+		// 詳細画面へリダイレクト
+		String url1 = "EmployeeDetail?employeeNumber=";
+		String url2 = employeeNumber;
+		StringBuffer buf = new StringBuffer();
+
+		buf.append(url1);
+		buf.append(url2);
+
+		String url = buf.toString();
+		response.sendRedirect(url);
 	}
 
 
