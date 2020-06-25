@@ -28,7 +28,7 @@
 			</div>
 		</header>
 
-		<form action="/SelfIntroduction/SkillsUpdate" method="post" onSubmit="return confirmUpdate()">
+		<form class="register-form" action="/SelfIntroduction/SkillsUpdate" method="post" onSubmit="return confirmUpdate()">
 
 			<input type="hidden" name="OownedId" value="${oth.ownedId}">
 			<input type="hidden" name="employeeNumber" value="${oth.employeeNumber }">
@@ -43,14 +43,13 @@
 			<select name="genreCode" required>
 				<option disabled>ジャンルを選択してください</option>
 
-				<c:forEach var="cGenL" items="${cGenL}">
-					<option value="${cGenL.getCertiCode()}"
-						 <c:if test="${ oth.certiGenre.equals(cGenL.getCertiGenre()) }">selected</c:if>>
-						<c:out value="${cGenL.getCertiGenre()}" />
+				<c:forEach var="cGL" items="${cGenL}">
+					<option value="${cGL.getCertiCode()}"
+						 <c:if test="${ oth.certiGenre.equals(cGL.getCertiGenre()) }">selected</c:if>>
+						<c:out value="${cGL.getCertiGenre()}" />
 					</option>
 				</c:forEach>
 			</select><br>
-
 
 			<label>認定日：</label>
 				<select name="othYear" required>

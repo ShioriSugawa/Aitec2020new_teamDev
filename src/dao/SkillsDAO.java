@@ -185,7 +185,7 @@ public class SkillsDAO {
 	public void updateOthCerti(int ownedId, String genCode, String othDate, String othName)throws SQLException {
 		String sql="UPDATE owned_other_certification "
 				+ "SET certification_genre_code=?,"
-				+ "other_certification_date=?,othre_certification_name=? WHERE owned_other_certification_id=?";
+				+ "other_certification_date=?,other_certification_name=? WHERE owned_other_certification_id=?";
 		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
 			pStmt.setString(1, genCode);
 			pStmt.setString(2, othDate);
