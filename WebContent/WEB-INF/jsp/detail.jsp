@@ -32,7 +32,7 @@
 	<div class="skillList">
 	<%--資格とスキルを別テーブルに表示 --%>
 		<br><br><label>資格一覧</label>
-		<input type="button" class="button" value="新規" onclick="location.href='/SelfIntroduction/SkillsRegister?employeeNumber=${emp.employeeNumber}'"><br>
+		<input type="button" class="button" value="新規" onclick="location.href='/SelfIntroduction/SkillsRegister?employeeNumber=${emp.employeeNumber}&regi=c'"><br>
 		<br><table class="table table-bordered table-striped" >
 			<thead  class="thead-light">
 			<tr>
@@ -66,7 +66,7 @@
 
 
 		<br><br><label>スキル一覧</label>
-		<input type="button" class="button" value="新規" onclick="location.href='/SelfIntroduction/SkillsRegister?employeeNumber=${emp.employeeNumber}'"><br>
+		<input type="button" class="button" value="新規" onclick="location.href='/SelfIntroduction/SkillsRegister?employeeNumber=${emp.employeeNumber}&regi=s'"><br>
 		<br><table class="table table-bordered table-striped" >
 			<thead  class="thead-light">
 			<tr>

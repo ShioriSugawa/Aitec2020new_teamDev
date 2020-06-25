@@ -25,7 +25,7 @@ import model.EmployeeLogic;
  * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
  * システム名：自己紹介システム<br>
  * クラス概要：<br>
- * EmployeeLogicの一覧/登録/更新/削除の単体テストクラス<br>
+ * EmployeeLogicの一覧/登録/更新/削除/各種項目一覧取得/資格所持数取得/検索/ソートの単体テストクラス<br>
  */
 /*
  * 修正内容まとめ
@@ -1149,9 +1149,6 @@ public class EmployeeLogicTest {
     public void countCertification() throws SQLException {
 
     	Connection connection = null;
-
-		List<String> careerList = null;
-    	Employee emp = new Employee("666666", "テスト", "テストプロフィール", "部署テスト", 10, careerList);
 
     	//DAOのJmockit
     	new Expectations() {
