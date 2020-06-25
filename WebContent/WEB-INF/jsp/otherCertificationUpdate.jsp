@@ -45,8 +45,8 @@
 
 				<c:forEach var="cGL" items="${cGenL}">
 					<option value="${cGL.getCertiCode()}"
-						 <c:if test="${ oth.certiGenre.equals(cGL.getCertiGenre()) }">selected</c:if>>
-						<c:out value="${cGL.getCertiGenre()}" />
+						 <c:if test="${ oth.certiGenre.equals(cGL.getCertiName()) }">selected</c:if>>
+						<c:out value="${cGL.getCertiName()}" />
 					</option>
 				</c:forEach>
 			</select><br>
