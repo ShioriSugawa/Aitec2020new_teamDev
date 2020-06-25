@@ -32,8 +32,6 @@
 
         <form class="register-form" action="/SelfIntroduction/SkillsUpdate" method="post" onSubmit="return confirmUpdate()">
 
-		<p>スキル編集のページです</p>
-
 		<input type="hidden" name="SownedId" value="${oSkl.ownedId}">
 		<input type="hidden" name="employeeNumber" value="${oSkl.employeeNumber}">
 
@@ -48,11 +46,11 @@
 			</c:forEach>
 		</select>
 		<input type="button" class="button" value="削除" onclick="confirmDelete()"><br>
-
-			<label>スキルの内容（100文字以内）</label><br>
-		<textarea name="skillName" maxlength='100' placeholder="スキルの内容を具体的に記入してください">${ oSkl.skillName }</textarea>
 		<br>
 
+		<label>スキルの内容（100文字以内）</label><br>
+			<textarea name="skillName" maxlength='100' placeholder="スキルの内容を具体的に記入してください">${ oSkl.skillName }</textarea>
+			<br>
             <input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${oSkl.employeeNumber}'">
             <input type="submit" class="button register-button" value="更新">
 

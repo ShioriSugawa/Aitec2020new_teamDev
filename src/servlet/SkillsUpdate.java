@@ -42,7 +42,7 @@ public class SkillsUpdate extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		String mc,oId,skl;
+		String mc,oc,skl;
 		try (Connection connection = ConnectionManager.getConnection()) {
 			// 編集IDのオーダーを取得
 			SkillLogic skillLogic = new SkillLogic(connection);
@@ -50,35 +50,38 @@ public class SkillsUpdate extends HttpServlet {
 			Calendar cal = Calendar.getInstance();
 			int nowYear= cal.get(Calendar.YEAR);
 			mc=request.getParameter("owned_certification_id");
-			oId=request.getParameter("owned_other_certification_id");
+			oc=request.getParameter("owned_other_certification_id");
 			skl=request.getParameter("owned_skill_id");
 
 			//skl="5";	//実験用固定IDショートカット
 
 			if(mc!=null) {
 				int mcI = Integer.parseInt(mc);
-				Certification ownedMst=cLogic.getOwnedMst(mcI);
-				List<Certification>certiGenre=cLogic.getCertiGenre();
-				List<Certification>certiName=cLogic.getCertiName();
+				Certification mst=cLogic.getOwnedMst(mcI);
+				String sldYear=mst.getCertiDate().substring(0,4);
+				String sldMonth=mst.getCertiDate().substring(5);
+				int sYeI = Integer.parseInt(sldYear);
+				int sMonI = Integer.parseInt(sldMonth);
 				// リクエストスコープに保存
-				request.setAttribute("ownedMst", ownedMst);
-				request.setAttribute("certiGenre", certiGenre);
-				request.setAttribute("certiName", certiName);
+				request.setAttribute("mst", mst);
+				request.setAttribute("sYeI", sYeI);
+				request.setAttribute("sMonI", sMonI);
+				request.setAttribute("nowYear", nowYear);
 				// マスタ資格編集にフォワード
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/certificationUpdate.jsp");
 				dispatcher.forward(request, response);
 				}
 
-			if(oId!=null) {
-				int oIdI = Integer.parseInt(oId);
-				Certification oth=cLogic.getOwnedOth(oIdI);
-				List<Certification>certiGenre=cLogic.getCertiGenre();
+			if(oc!=null) {
+				int ocI = Integer.parseInt(oc);
+				Certification oth=cLogic.getOwnedOth(ocI);
+				List<Certification>cGenL=cLogic.getCertiGenre();
 				String sldYear=oth.getCertiDate().substring(0,4);
 				String sldMonth=oth.getCertiDate().substring(5);
 				int sYeI = Integer.parseInt(sldYear);
 				int sMonI = Integer.parseInt(sldMonth);
 				// リクエストスコープに保存
-				request.setAttribute("certiGenre", certiGenre);
+				request.setAttribute("cGenL", cGenL);
 				request.setAttribute("oth", oth);
 				request.setAttribute("sYeI", sYeI);
 				request.setAttribute("sMonI", sMonI);
@@ -123,17 +126,17 @@ public class SkillsUpdate extends HttpServlet {
 
 		//マスタ資格IDを受け取ったら
 		if(mcIdS!=null) {
-			String mcYear=request.getParameter("mcYear");
-			String mcMonth=request.getParameter("mcMonth");
+			String mstYear=request.getParameter("mstYear");
+			String mstMonth=request.getParameter("mstMonth");
 
 			int mcId = Integer.parseInt(mcIdS);
-			String mcDate=mcYear+"/"+mcMonth;
+			String mstDate=mstYear+"/"+mstMonth;
 
 			try(Connection connection = ConnectionManager.getConnection()){
 				try {
 					// 該当のスキル記述を更新
 					CertificationLogic cLogic = new CertificationLogic(connection);
-					cLogic.updateMst(mcId,mcDate);
+					cLogic.updateMst(mcId,mstDate);
 					connection.commit();
 				} catch (ServletException e) {
 					connection.rollback();

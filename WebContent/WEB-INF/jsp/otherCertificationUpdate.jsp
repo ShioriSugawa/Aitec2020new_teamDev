@@ -4,10 +4,8 @@
 
 <%@ page import="model.Certification"%>
 <%@ page import="java.util.List"%>
-<%@ page import="java.util.Calendar"%>
 
-
-<% List<Certification>certiGenre=(List<Certification>)request.getAttribute("certiGenre"); %>
+<% List<Certification> cGenL=(List<Certification>)request.getAttribute("cGenL");%>
 <% Certification oth=(Certification)request.getAttribute("oth");%>
 
 <!DOCTYPE html>
@@ -30,7 +28,7 @@
 			</div>
 		</header>
 
-        <form action="/SelfIntroduction/SkillsUpdate" method="post" onSubmit="return confirmUpdate()">
+		<form action="/SelfIntroduction/SkillsUpdate" method="post" onSubmit="return confirmUpdate()">
 
 			<input type="hidden" name="OownedId" value="${oth.ownedId}">
 			<input type="hidden" name="employeeNumber" value="${oth.employeeNumber }">
@@ -40,43 +38,44 @@
 				<input type="button" class="button" value="削除" onclick="confirmDelete()"><br>
 
 
+			<%-- なぜかジャンル一覧とselectedがでねえ！！後は頼んだ！ --%>
 			<label>ジャンル：</label>
-			<select name="genreCode">
-				<option>ジャンルを選択してください</option>
-				<c:forEach var="certiGenre" items="${certiGenre}">
-					<option value="${certiGenre.getCertiCode() }"
-						<c:if test="${ oth.certiGenre.equals(certiGenre.getCertiGenre()) }">selected</c:if> >
-						<c:out value="${certiGenre.getCertiGenre()}" />
+			<select name="genreCode" required>
+				<option disabled>ジャンルを選択してください</option>
+
+				<c:forEach var="cGenL" items="${cGenL}">
+					<option value="${cGenL.getCertiCode()}"
+						 <c:if test="${ oth.certiGenre.equals(cGenL.getCertiGenre()) }">selected</c:if>>
+						<c:out value="${cGenL.getCertiGenre()}" />
 					</option>
 				</c:forEach>
 			</select><br>
 
 
 			<label>認定日：</label>
-		<select name="othYear" required>
-			<option disabled>-</option>
-			<c:forEach begin="1950" end="${nowYear}" step="1" var="i">
-				<option value="${i}" <c:if test="${i == sYeI}">selected</c:if> >
-					<c:out value="${i}" />
-				</option>
-			</c:forEach>
-		</select>
+				<select name="othYear" required>
+					<option disabled>-</option>
+					<c:forEach begin="1950" end="${nowYear}" step="1" var="i">
+						<option value="${i}" <c:if test="${i == sYeI}">selected</c:if> >
+							<c:out value="${i}年" />
+						</option>
+					</c:forEach>
+				</select>
 
-		<select name="othMonth" required>
-			<option disabled>-</option>
-			<c:forEach begin="1" end="9" step="1" var="i">
-				<option value="0${i}" <c:if test="${ i == sMonI }">selected</c:if> >
-					<c:out value="${i}" />
-				</option>
-			</c:forEach>
-			<c:forEach begin="10" end="12" step="1" var="i">
-				<option value="${i}" <c:if test="${ i == sMonI }">selected</c:if> >
-					<c:out value="${i}" />
-				</option>
-			</c:forEach>
-		</select>
-
-		<br>
+				<select name="othMonth" required>
+					<option disabled>-</option>
+					<c:forEach begin="1" end="9" step="1" var="i">
+						<option value="0${i}" <c:if test="${ i == sMonI }">selected</c:if> >
+							<c:out value="${i}月" />
+						</option>
+					</c:forEach>
+					<c:forEach begin="10" end="12" step="1" var="i">
+						<option value="${i}" <c:if test="${ i == sMonI }">selected</c:if> >
+							<c:out value="${i}月" />
+						</option>
+					</c:forEach>
+				</select>
+			<br>
 
 			<input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${oth.employeeNumber}'">
 			<input type="submit" class="button register-button" value="更新">
