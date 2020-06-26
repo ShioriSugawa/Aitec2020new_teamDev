@@ -15,6 +15,11 @@ public class Certification implements Serializable {
 	private int ownedId;
 
 
+	/**
+	 * 2項目リスト用
+	 * @param certiCode コード
+	 * @param certiName 名
+	 */
 	//資格[コード&名]一覧用（ジャンル・資格名共用）（マスタその他共用）
 	public Certification(String certiCode,String certiName) {
 		this.certiCode=certiCode;

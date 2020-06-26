@@ -52,6 +52,26 @@ public class CertificationLogic {
 		return names;
 	}
 
+	//マスタ資格登録
+	public void registerMst(String eNum,String mstCode,String mstDate)throws ServletException {
+		SkillsDAO sDAO=new SkillsDAO(connection);
+		try {
+			sDAO.registerMaster(eNum,mstCode,mstDate);
+		}catch(SQLException | IllegalArgumentException e){
+			throw new ServletException(e);
+		}
+	}
+
+	//その他資格登録
+	public void registerOth(String eNum,String othGenre,String othName,String othDate)throws ServletException {
+		SkillsDAO sDAO=new SkillsDAO(connection);
+		try {
+			sDAO.registerOther(eNum,othGenre,othName,othDate);
+		}catch(SQLException | IllegalArgumentException e){
+			throw new ServletException(e);
+		}
+	}
+
 	//その他資格の更新
 	public void updateOth(int ownedId, String genCode, String othDate, String othName)throws ServletException {
 		SkillsDAO sDAO=new SkillsDAO(connection);

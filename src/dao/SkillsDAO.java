@@ -26,11 +26,11 @@ public class SkillsDAO {
 	//以下、保有IDによる検索
 	/**
 	 * 保有マスタ資格IDによる資格保有データ1件の取得
-	 * @param 編集中
-	 */		/*	編集中*/
+	 * @param ドキュメントは編集中
+	 */
 	public Certification getOwnedMst(int ownedId)throws SQLException {
 		Certification ownedCertification=null;
-		final String sql=	//要編集、全部まとめて取って来る
+		final String sql=
 				"SELECT o.employee_number,o.certification_code,o.certification_date,"
 				+ "m.certification_name,m.certification_genre_code,g.certification_genre_name"
 				+ " FROM owned_certification o INNER JOIN certification m"
@@ -60,7 +60,7 @@ public class SkillsDAO {
 
 	/**
 	 * 保有その他資格IDによるその他資格保有データ1件の取得
-	 * @param 編集中
+	 * @param ドキュメントは編集中
 	 */
 	public Certification getOwnedOth(int ownedId)throws SQLException {
 		Certification ownedOth=null;
@@ -86,6 +86,7 @@ public class SkillsDAO {
 		return ownedOth;
 	}
 
+	//スキルジャンルのリスト取得
 	public List<Skill>getGenre()throws SQLException{
 		List<Skill> genreList=new ArrayList<>();
 		final String sql="SELECT * FROM skill_genre";
@@ -201,6 +202,40 @@ public class SkillsDAO {
 		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
 			pStmt.setString(1, mcDate);
 			pStmt.setInt(2, ownedId);
+			pStmt.executeUpdate();
+		}
+	}
+
+	//マスタ資格登録
+	public void registerMaster(String eNum, String mstCode, String mstDate)throws SQLException {
+		String sql="INSERT INTO owned_certification(employee_number,certification_code,certification_date)VALUES(?,?,?)";
+		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
+			pStmt.setString(1, eNum);
+			pStmt.setString(2, mstCode);
+			pStmt.setString(3, mstDate);
+			pStmt.executeUpdate();
+		}
+	}
+
+	//その他資格登録
+	public void registerOther(String eNum, String othGenre, String othName, String othDate)throws SQLException {
+		String sql="INSERT INTO owned_other_certification(employee_number,certification_genre_code,other_certification_date,other_certification_name)VALUES(?,?,?,?)";
+		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
+			pStmt.setString(1, eNum);
+			pStmt.setString(2, othGenre);
+			pStmt.setString(3, othDate);
+			pStmt.setString(4, othName);
+			pStmt.executeUpdate();
+		}
+	}
+
+	//スキル登録
+	public void registerSkill(String eNum, String sklGenre, String sklName)throws SQLException {
+		String sql="INSERT INTO owned_skill(employee_number,skill_genre_code,skill_name)VALUES(?,?,?)";
+		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
+			pStmt.setString(1, eNum);
+			pStmt.setString(2, sklGenre);
+			pStmt.setString(3, sklName);
 			pStmt.executeUpdate();
 		}
 	}

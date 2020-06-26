@@ -33,14 +33,12 @@
 			<input type="hidden" name="OownedId" value="${oth.ownedId}">
 			<input type="hidden" name="employeeNumber" value="${oth.employeeNumber }">
 
-			<label>資格名：</label><%-- cssは時間があれば後で書き足す --%>
-				<input type="text" name="certiName" maxlength='100' placeholder='資格名を入力してください' value="${ oth.certiName }" required>
+			<label id="oN">資格名：</label><%-- cssは時間があれば後で書き足す --%>
+				<input type="text" name="certiName" id="oN" maxlength='100' placeholder='資格名を入力してください' value="${ oth.certiName }" required>
 				<input type="button" class="button" value="削除" onclick="confirmDelete()"><br>
 
-
-			<%-- なぜかジャンル一覧とselectedがでねえ！！後は頼んだ！ --%>
-			<label>ジャンル：</label>
-			<select name="genreCode" required>
+			<label id="oG">ジャンル：</label>
+			<select name="genreCode" id="oG" required>
 				<option disabled>ジャンルを選択してください</option>
 
 				<c:forEach var="cGL" items="${cGenL}">
