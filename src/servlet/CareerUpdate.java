@@ -16,8 +16,11 @@ import model.Career;
 import model.CareerLogic;
 
 /**
- * Servlet implementation class CareerUpdate
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
+ * システム名：自己紹介システム<br>
+ * クラス概要：業務経歴更新のコントローラクラス<br>
  */
+
 @WebServlet("/CareerUpdate")
 public class CareerUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -57,6 +60,7 @@ public class CareerUpdate extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// リクエストパラメータを取得
 		request.setCharacterEncoding("UTF-8");
+		String employeeNumber = request.getParameter("employeeNumber");
 		String startYear = request.getParameter("startYear");
 		String startMonth = request.getParameter("startMonth");
 		String endYear = request.getParameter("endYear");
@@ -133,19 +137,29 @@ public class CareerUpdate extends HttpServlet {
 		}
 
 		try (Connection connection = ConnectionManager.getConnection()){
-			//該当の業務経歴を更新
-			CareerLogic careerLogic = new CareerLogic(connection);
-			careerLogic.updateCareer(request.getParameter("businessNumber"), startYear, startMonth, endYear, endMonth, businessName, situation);
-			//従業員一覧画面へリダイレクト
-			connection.commit();
-			response.sendRedirect("/SelfIntroduction/EmployeeList?result=careerUpdate");
+			try {
+				//該当の業務経歴を更新
+				CareerLogic careerLogic = new CareerLogic(connection);
+				careerLogic.updateCareer(request.getParameter("businessNumber"), startYear, startMonth, endYear, endMonth, businessName, situation);
+
+				//従業員一覧画面へリダイレクト
+				connection.commit();
+				String url1 = "EmployeeDetail?employeeNumber=";
+				String url2 = employeeNumber;
+				StringBuffer buf = new StringBuffer();
+				buf.append(url1);
+				buf.append(url2);
+				String url = buf.toString();
+				response.sendRedirect(url);
+
+			}catch (ServletException e) {
+				connection.rollback();
+				throw e;
+			}
 		}catch (SQLException e) {
 			throw new ServletException(e);
 		}
 
-		// 従業員詳細画面へフォワード
-		//RequestDispatcher dispatcher = request.getRequestDispatcher("/SelfIntroduction/EmployeeDetail");
-		//dispatcher.forward(request, response);
 	}
 
 }

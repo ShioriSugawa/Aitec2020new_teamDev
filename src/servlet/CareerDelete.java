@@ -14,7 +14,9 @@ import dao.ConnectionManager;
 import model.CareerLogic;
 
 /**
- * Servlet implementation class CareerDelete
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
+ * システム名：自己紹介システム<br>
+ * クラス概要：業務経歴削除のコントローラクラス<br>
  */
 @WebServlet("/CareerDelete")
 public class CareerDelete extends HttpServlet {
@@ -32,22 +34,35 @@ public class CareerDelete extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//リクエストパラメータを取得
 		request.setCharacterEncoding("UTF-8");
+		String employeeNumber = request.getParameter("employeeNumber");
 
-		//該当の業務経歴を削除する
 		try (Connection connection = ConnectionManager.getConnection()){
-			CareerLogic careerLogic = new CareerLogic(connection);
-			careerLogic.deleteCareer(request.getParameter("businessNumber"));
-			//従業員一覧画面へリダイレクト
-			connection.commit();
-			response.sendRedirect("/SelfIntroduction/EmployeeList?result=careerdelete");
+			try {
+				//該当の業務経歴を削除する
+				CareerLogic careerLogic = new CareerLogic(connection);
+				careerLogic.deleteCareer(request.getParameter("businessNumber"));
+				//従業員一覧画面へリダイレクト
+				connection.commit();
+
+				String url1 = "EmployeeDetail?employeeNumber=";
+				String url2 = employeeNumber;
+				StringBuffer buf = new StringBuffer();
+				buf.append(url1);
+				buf.append(url2);
+				String url = buf.toString();
+				response.sendRedirect(url);
+
+				//response.sendRedirect("/SelfIntroduction/EmployeeList?result=delete");
+			}catch (ServletException e) {
+				connection.rollback();
+				throw e;
+			}
 		}catch (SQLException e) {
 			throw new ServletException(e);
 		}
 
-		// 従業員詳細画面へフォワード
-		//RequestDispatcher dispatcher = request.getRequestDispatcher("/SelfIntroduction/EmployeeDetail");
-		//dispatcher.forward(request, response);
 	}
 
 	/**

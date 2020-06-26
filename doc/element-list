@@ -1,3 +1,6 @@
+CareerDAOTest
+CareerLogicTest
+CertificationLogicTest
 ConnectionManagerForTest
 dao
 DetailDAOTest
@@ -5,3 +8,4 @@ EmployeeDaoTest
 EmployeeLogicTest
 model
 servlet
+SkillsDAOTest

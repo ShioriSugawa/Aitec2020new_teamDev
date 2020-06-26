@@ -17,7 +17,9 @@ import model.Employee;
 import model.EmployeeLogic;
 
 /**
- * Servlet implementation class CareerRegister
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
+ * システム名：自己紹介システム<br>
+ * クラス概要：業務経歴登録のコントローラクラス<br>
  */
 @WebServlet("/CareerRegister")
 public class CareerRegister extends HttpServlet {
@@ -135,22 +137,24 @@ public class CareerRegister extends HttpServlet {
 		}
 
 		try (Connection connection = ConnectionManager.getConnection()){
-			CareerLogic careerLogic = new CareerLogic(connection);
-			careerLogic.registerCareer(employeeNumber, startYear, startMonth, endYear, endMonth, businessName, situation);
+			try {
+				CareerLogic careerLogic = new CareerLogic(connection);
+				careerLogic.registerCareer(employeeNumber, startYear, startMonth, endYear, endMonth, businessName, situation);
 
-			// 従業員詳細画面へリダイレクト
-			String url1 = "EmployeeDetail?employeeNumber=";
-			String url2 = employeeNumber;
-			StringBuffer buf = new StringBuffer();
-			buf.append(url1);
-			buf.append(url2);
-			String url = buf.toString();
-			response.sendRedirect(url);
+				// 従業員詳細画面へリダイレクト
+				connection.commit();
+				String url1 = "EmployeeDetail?employeeNumber=";
+				String url2 = employeeNumber;
+				StringBuffer buf = new StringBuffer();
+				buf.append(url1);
+				buf.append(url2);
+				String url = buf.toString();
+				response.sendRedirect(url);
 
-			//従業員一覧画面へリダイレクト
-			//connection.commit();
-			//response.sendRedirect("/SelfIntroduction/EmployeeList?result=careerRegister");
-
+			}catch (ServletException e) {
+				connection.rollback();
+				throw e;
+			}
 		}catch (SQLException e) {
 			throw new ServletException(e);
 		}

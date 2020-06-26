@@ -399,8 +399,10 @@ Career career = (Career) request.getAttribute("career");
 			</div>
 
             <input type="button" class="button"value="キャンセル" onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${ career.employeeNumber }'">
-            <input type="button" class="button"value="削除" onclick="location.href='/SelfIntroduction/CareerDelete?businessNumber=${ career.businessNumber }'">
+            <input type="button" class="button"value="削除" onclick="location.href='/SelfIntroduction/CareerDelete?businessNumber=${ career.businessNumber }&employeeNumber=${career.employeeNumber }'">
             <input type="submit" class="button update-button" value="更新">
+
+            <input type="hidden" name="employeeNumber" value="${ career.getEmployeeNumber()}">
 
 		</form>
 
@@ -418,7 +420,7 @@ Career career = (Career) request.getAttribute("career");
 				// 確認ダイアログの表示
 				if(window.confirm('業務経歴を削除してよろしいでしょうか？')){
 					// 「OK」時の処理
-					location.href = '/SelfIntroduction/CareerDelete?businessNumber=${ career.businessNumber }'; // 削除処理実行
+					location.href = '/SelfIntroduction/CareerDelete?businessNumber=${ career.businessNumber },employeeNumber=${career.employeeNumber }'; // 削除処理実行
 				}
 				// キャンセル時は何もしない
 			}

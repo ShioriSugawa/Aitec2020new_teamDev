@@ -7,6 +7,12 @@ import javax.servlet.ServletException;
 
 import dao.CareerDAO;
 
+/**
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
+ * システム名：自己紹介システム<br>
+ * クラス概要：業務経歴に関するビジネスロジックを記述するクラス<br>
+ */
+
 public class CareerLogic {
 
 	/** データベースへの接続オブジェクト */

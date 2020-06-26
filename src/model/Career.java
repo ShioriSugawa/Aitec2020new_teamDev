@@ -5,8 +5,7 @@ import java.io.Serializable;
 /**
  * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
  * システム名：自己紹介システム<br>
- * クラス概要：<br>
- *  業務経歴のJavaBeansクラス<br>
+ * クラス概要： 業務経歴のJavaBeansクラス<br>
  */
 
 public class Career implements Serializable {
