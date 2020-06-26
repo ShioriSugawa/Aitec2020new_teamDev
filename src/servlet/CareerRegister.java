@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Calendar;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,8 +44,12 @@ public class CareerRegister extends HttpServlet {
 			EmployeeLogic employeeLogic = new EmployeeLogic(connection);
 			Employee employee = employeeLogic.getEmployee(request.getParameter("employeeNumber"));
 
+			Calendar cal = Calendar.getInstance();
+			int nowYear= cal.get(Calendar.YEAR);
+
 			// リクエストスコープに保存
 			request.setAttribute("employee", employee);
+			request.setAttribute("nowYear", nowYear);
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		}

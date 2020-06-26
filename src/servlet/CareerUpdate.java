@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Calendar;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,8 +44,24 @@ public class CareerUpdate extends HttpServlet {
 			CareerLogic careerLogic = new CareerLogic(connection);
 			Career career = careerLogic.getCareer(request.getParameter("businessNumber"));
 
+			Calendar cal = Calendar.getInstance();
+			int nowYear= cal.get(Calendar.YEAR);
+
+			String start = career.getBusinessStart();
+			String startYear = start.substring(0,4);
+			String startMonth = start.substring(5);
+
+			String end = career.getBusinessEnd();
+			String endYear = end.substring(0,4);
+			String endMonth = end.substring(5);
+
 			// リクエストスコープに保存
 			request.setAttribute("career", career);
+			request.setAttribute("nowYear", nowYear);
+			request.setAttribute("startYear", startYear);
+			request.setAttribute("startMonthr", startMonth);
+			request.setAttribute("endYear", endYear);
+			request.setAttribute("endMonthr", endMonth);
 		}catch (SQLException e) {
 			throw new ServletException(e);
 		}
