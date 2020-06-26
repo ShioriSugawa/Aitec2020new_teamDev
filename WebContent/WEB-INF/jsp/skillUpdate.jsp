@@ -70,7 +70,7 @@
 				// 確認ダイアログの表示
 				if(window.confirm('このスキルを削除してよろしいでしょうか？')){
 					// 「OK」時の処理
-					location.href = '/SelfIntroduction/SkillsDelete?owned_skill_id=${ skl.ownedId }'; // 削除処理実行
+					location.href = '/SelfIntroduction/SkillsDelete?owned_skill_id=${ skl.ownedId }&employeeNumber=${oSkl.employeeNumber}'; // 削除処理実行
 				}
 			// キャンセル時は何もしない
 			}
