@@ -1,10 +1,10 @@
 .emp-table {
  /*	2020/6/17　サイズ調整開始*/
   /*width : 750px;*/
-  width : 1300px;
+  width : 1500px;
 }
 /* 2020/6/18 追加*/
-.sortButton{
+.sortButton, .searchbutton, .resetbutton{
   cursor: pointer;
   background: #777;
   color: #fff;
@@ -19,25 +19,45 @@
   padding-right: 10px;
 }
 .empList-number {
-  width : 5%;
+  width : 10%;
   text-align: center;
+}
+/*2020/6/26追加*/
+.number{
+	text-align: center;
 }
 .empList-name {
   width : 15%;
   text-align: center;
 }
+/*2020/6/26追加*/
+.name{
+	text-align: center;
+}
 /* 2020/6/17 追加*/
 .empList-deployment{
-	width : 15%;
+	width : 10%;
+	text-align: center;
+}
+/*2020/6/26追加*/
+.deployment{
 	text-align: center;
 }
 .empList-profile {
   width : 30%;
   text-align: center;
 }
+/*2020/6/26追加*/
+/*.profile{
+	text-align: center;
+}*/
 /* 2020/6/17 追加*/
 .empList-count{
-	width : 3%;
+	width : 5%;
+	text-align: center;
+}
+/*2020/6/26追加*/
+.count{
 	text-align: center;
 }
 /* 2020/6/17 追加*/
@@ -45,9 +65,17 @@
 	width : 25%;
 	text-align: center;
 }
+/*2020/6/26追加*/
+/*.business{
+	text-align: center;
+}*/
 .empList-edit {
-  width : 7%;
+  width : 5%;
   text-align: center;
+}
+/*2020/6/26追加*/
+.edit{
+	text-align: center;
 }
 
 .number-of-list {

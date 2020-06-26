@@ -80,13 +80,14 @@ public class SkillsDAOTest {
 			connection = ConnectionManagerTest.getConnection();
 
 			SkillsDAO sklDAO = new SkillsDAO(connection);
-			sklDAO.registerMaster("666666", "SAM001", "2020/06");
+			sklDAO.registerMaster("666666", "IPA001", "2020/06");
+			connection.commit();
 
 
 
 			//登録テストで登録したマスター登録有資格情報の取得
 			Find find  = new Find();
-			int ownedId = find.findOwnedCertificationId(connection,"666666", "SAM001", "2020/06");
+			int ownedId = find.findOwnedCertificationId(connection,"666666", "IPA001", "2020/06");
 			ctf = find.findOneMasterCertification(ownedId, connection);
 			actualEmployeeNumber = ctf.getEmployeeNumber();
 			actualMstCode = ctf.getCertiCode();
@@ -111,7 +112,7 @@ public class SkillsDAOTest {
 		// 結果チェック
 		// ------------
 		final String expectedEmployeeNumber = "666666" ;
-		final String expectedMstCode = "SAM001" ;
+		final String expectedMstCode = "IPA001" ;
 		final String expectedDate = "2020/06";
 
 		assertEquals(expectedEmployeeNumber, actualEmployeeNumber);
@@ -139,7 +140,7 @@ public class SkillsDAOTest {
 			connection = ConnectionManagerTest.getConnection();
 
 			SkillsDAO sklDAO = new SkillsDAO(connection);
-			sklDAO.registerMaster("666665", "SAM001", "2020/06");
+			sklDAO.registerMaster("666665", "IPA001", "2020/06");
 			//Exceptionが発生しなければ失敗
 			fail();
 		}catch(SQLException e) {
@@ -221,7 +222,7 @@ public class SkillsDAOTest {
 			connection_register = ConnectionManagerTest.getConnection();
 
 			SkillsDAO sklDAO = new SkillsDAO(connection_register);
-			sklDAO.registerMaster("6666661", "SAM001", "2020/06");
+			sklDAO.registerMaster("6666661", "IPA001", "2020/06");
 			//Exceptionが発生しなければ失敗
 			fail();
 		}catch(SQLException e) {
@@ -262,7 +263,7 @@ public class SkillsDAOTest {
 			connection_register = ConnectionManagerTest.getConnection();
 
 			SkillsDAO sklDAO = new SkillsDAO(connection_register);
-			sklDAO.registerMaster("666666", "SAM0010", "2020/06");
+			sklDAO.registerMaster("666666", "IPA0010", "2020/06");
 			//Exceptionが発生しなければ失敗
 			fail();
 		}catch(SQLException e) {
@@ -303,7 +304,7 @@ public class SkillsDAOTest {
 			connection_register = ConnectionManagerTest.getConnection();
 
 			SkillsDAO sklDAO = new SkillsDAO(connection_register);
-			sklDAO.registerMaster("666666", "SAM001", "2020/060");
+			sklDAO.registerMaster("666666", "IPA001", "2020/060");
 			//Exceptionが発生しなければ失敗
 			fail();
 		}catch(SQLException e) {
@@ -346,13 +347,13 @@ public class SkillsDAOTest {
 			connection = ConnectionManagerTest.getConnection();
 
 			SkillsDAO sklDAO = new SkillsDAO(connection);
-			sklDAO.registerOther("666666", "SAM", "その他資格テスト", "2020/06");
+			sklDAO.registerOther("666666", "IPA", "その他資格テスト", "2020/06");
 
 
 
 			//登録テストで登録したその他資格情報の取得
 			Find find  = new Find();
-			int ownedId = find.findOwnedOtherCertificationId(connection,"666666", "SAM", "その他資格テスト", "2020/06");
+			int ownedId = find.findOwnedOtherCertificationId(connection,"666666", "IPA", "その他資格テスト", "2020/06");
 			octf = find.findOneOtherCertification(ownedId, connection);
 			actualEmployeeNumber = octf.getEmployeeNumber();
 			actualGenre = octf.getCertiCode();
@@ -378,7 +379,7 @@ public class SkillsDAOTest {
 		// 結果チェック
 		// ------------
 		final String expectedEmployeeNumber = "666666" ;
-		final String expectedGenre = "SAM" ;
+		final String expectedGenre = "IPA" ;
 		final String expectedOtherName = "その他資格テスト";
 		final String expectedDate = "2020/06";
 
@@ -397,31 +398,33 @@ public class SkillsDAOTest {
 	public void test02_getOwnedMst() throws SQLException {
 
 		Connection connection = null;
+		Find find = new Find();
 
 		//テスト情報
 		try {
 
 			connection = ConnectionManagerTest.getConnection();
 			SkillsDAO sklDAO = new SkillsDAO(connection);
-			//テストデータどうするか要検討
-			Certification ctf = sklDAO.getOwnedMst(5);
+			//テストデータ保有ID取得メソッド必要
+			int ownedId = find.findOwnedCertificationId(connection,"666666", "IPA001", "2020/06");
+			Certification ctf = sklDAO.getOwnedMst(ownedId);
 
 
 			//-------------------
 			// 結果チェック
 			//-------------------
 
-			final String exceptedEmployeeNumber = "100001";
+			final String exceptedEmployeeNumber = "666666";
 			final String actualEmployeeNumber = ctf.getEmployeeNumber();
-			final String exceptedCertiCode = "SAM";
+			final String exceptedCertiCode = "IPA";
 			final String actualCertiCode = ctf.getCertiCode();
-			final String exceptedCertiGenre = "サンプル1";
+			final String exceptedCertiGenre = "IPA";
 			final String actualCertiGenre = ctf.getCertiGenre();
-			final String exceptedMasterCode = "SAM001";
+			final String exceptedMasterCode = "IPA001";
 			final String actualMasterCode = ctf.getMasterCode();
-			final String exceptedCertiName = "資格1";
+			final String exceptedCertiName = "ITパスポート";
 			final String actualCertiName = ctf.getCertiName();
-			final String exceptedCertiDate = "2001/01";
+			final String exceptedCertiDate = "2020/06";
 			final String actualCertiDate = ctf.getCertiDate();
 
 			assertEquals(exceptedEmployeeNumber, actualEmployeeNumber);
@@ -461,7 +464,7 @@ public class SkillsDAOTest {
 
 			connection = ConnectionManagerTest.getConnection();
 			SkillsDAO sklDAO = new SkillsDAO(connection);
-			//テストデータどうするか要検討
+			//テストデータ取得メソッド必要
 			Certification othctf = sklDAO.getOwnedOth(1);
 
 
@@ -469,15 +472,15 @@ public class SkillsDAOTest {
 			// 結果チェック
 			//-------------------
 
-			final String exceptedEmployeeNumber = "100001";
+			final String exceptedEmployeeNumber = "666666";
 			final String actualEmployeeNumber = othctf.getEmployeeNumber();
-			final String exceptedCertiCode = "SAM";
+			final String exceptedCertiCode = "IPA";
 			final String actualCertiCode = othctf.getCertiCode();
-			final String exceptedCertiGenre = "サンプル1";
+			final String exceptedCertiGenre = "IPA";
 			final String actualCertiGenre = othctf.getCertiGenre();
-			final String exceptedOtherName = "その他1";
+			final String exceptedOtherName = "その他資格テスト";
 			final String actualOtherName = othctf.getCertiName();
-			final String exceptedOtherDate = "2011/11";
+			final String exceptedOtherDate = "2020/06";
 			final String actualOtherDate = othctf.getCertiDate();
 
 			assertEquals(exceptedEmployeeNumber, actualEmployeeNumber);

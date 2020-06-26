@@ -71,8 +71,10 @@ public class EmployeeList extends HttpServlet {
 			List<Skill> skillGenreList = skillLogic.getGenre();
 
 
+			//セッションスコープに保存
+			HttpSession session = request.getSession();
+			session.setAttribute("empList", empList);
 			// リクエストスコープに保存
-			request.setAttribute("empList", empList);
 			request.setAttribute("genreList", genreList);
 			request.setAttribute("masterCertificationList", masterCertificationList);
 			request.setAttribute("skillGenreList", skillGenreList);

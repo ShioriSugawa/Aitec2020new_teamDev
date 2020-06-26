@@ -23,6 +23,8 @@ import dao.EmployeeDAO;
  *  2020/6/18 ArrayListソートメソッド追加
  *  2020/6/18 ソート追加に伴い従業員リストArrayListに
  *  2020/6/18 資格ジャンル、資格名、スキルジャンルのリスト取得メソッド追加
+ *  2020/6/22 検索メソッド追加
+ *
  */
 public class EmployeeLogic {
 
@@ -313,7 +315,7 @@ public class EmployeeLogic {
 	/**
 	 * 特定の条件で従業員を検索するメソッド
 	 * @param deployment　所属部署
-	 * @param masterCertification　資格ジャンル or マスター登録有資格名
+	 * @param masterCertification　資格ジャンル または マスター登録有資格名
 	 * @param otherCertification　その他資格名
 	 * @param skillGenre　スキルジャンル
 	 * @param skill　スキル名

@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+label{
+	font-size: x-large;
+}
+.basicInfo label{
+	font-size: large;
+}
+
+.certificationList{
+	width: 900px;
+}
+.certificationList th{
+	text-align: center;
+}
+.certiGenre{
+	width: 250px;
+}
+.certiName{
+	width: 500px;
+}
+.certiDate{
+	width: 150px;
+}
+.certificationList td{
+	text-align: center;
+}
+
+.skillList{
+	width: 900px;
+}
+.skillList th{
+	text-align: center;
+}
+.skillGenre{
+	width: 300px;
+}
+.skillName{
+	width: 600px;
+}
+.skillList td{
+	text-align: center;
+}
+
+.careerList{
+	width: 900px;
+}
+.careerList th{
+	text-align: center;
+}
+.careerName{
+	width: 700px;
+}
+.careerTerm{
+	width: 200px;
+}
+.careerList td{
+	text-align: center;
+}
+.deletebutton{
+	margin-bottom: 20px;
+	cursor: pointer;
+  	background: #777;
+  	color: #fff;
+ 	border-radius: 4px;
+  	border: 1px solid var(--border-color);
+  	border-top: solid 1px #888;
+	border-left: solid 1px #888;
+  	border-bottom: solid 2px #666;
+	border-right: solid 2px #666;
+	height: 30px;
+	padding-left: 10px;
+	padding-right: 10px;
+
+}

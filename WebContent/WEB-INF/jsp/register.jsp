@@ -37,11 +37,12 @@
              <label>所属</label><br>
              <select name="deployment">
 				<option>所属を選択してください</option>
-				<option>部署1</option>
-				<option>部署2</option>
-				<option>部署3</option>
-				<option>部署4</option>
-				<option>部署5</option>
+				<option>本部</option>
+				<option>第1システム部</option>
+				<option>第2システム部</option>
+				<option>第3システム部</option>
+				<option>第4システム部</option>
+				<option>その他</option>
 			</select>
 
 			<%--2020/6/15 所属未選択で遷移されて来たらエラーメッセージ表示 --%>

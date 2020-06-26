@@ -48,7 +48,6 @@ List<Skill> skillGenreList = (List<Skill>)session.getAttribute("skillGenre");
 
         <div class="emp-table">
         <input type="button" class="button" value="新規登録"  onclick="location.href='/SelfIntroduction/EmployeeRegister'">
-        <label class="number-of-list">従業員数：${empList.size()}名</label>
         <%-- 2020/6/16　追加 --%>
         <%-- 2020/6/18　プルダウン項目データベース参照に変更 --%>
         <%-- 2020/6/19　検索実行後検索条件を検索欄に表示 --%>
@@ -56,21 +55,24 @@ List<Skill> skillGenreList = (List<Skill>)session.getAttribute("skillGenre");
 	        <br><br><label>所属</label>
 	        <select name="deployment">
 					<option>所属を選択してください</option>
-					<option <%if(searchedDeployment != null && searchedDeployment.equals("部署1")){%>
+					<option <%if(searchedDeployment != null && searchedDeployment.equals("本部")){%>
 					selected
-				<%}%>>部署1</option>
-					<option  <%if(searchedDeployment != null && searchedDeployment.equals("部署2")){%>
+				<%}%>>本部</option>
+					<option  <%if(searchedDeployment != null && searchedDeployment.equals("第1システム部")){%>
 					selected
-				<%}%>>部署2</option>
-					<option <%if(searchedDeployment != null && searchedDeployment.equals("部署3")){%>
+				<%}%>>第1システム部</option>
+					<option <%if(searchedDeployment != null && searchedDeployment.equals("第2システム部")){%>
 					selected
-				<%}%>>部署3</option>
-					<option <%if(searchedDeployment != null && searchedDeployment.equals("部署4")){%>
+				<%}%>>第2システム部</option>
+					<option <%if(searchedDeployment != null && searchedDeployment.equals("第3システム部")){%>
 					selected
-				<%}%>>部署4</option>
-					<option <%if(searchedDeployment != null && searchedDeployment.equals("部署5")){%>
+				<%}%>>第3システム部</option>
+					<option <%if(searchedDeployment != null && searchedDeployment.equals("第4システム部")){%>
 					selected
-				<%}%>>部署5</option>
+				<%}%>>第4システム部</option>
+				<option <%if(searchedDeployment != null && searchedDeployment.equals("その他")){%>
+					selected
+				<%}%>>その他</option>
 				</select>
 	        <br><br><label>資格</label>
 	        <select name="masterCertification">
@@ -118,6 +120,7 @@ List<Skill> skillGenreList = (List<Skill>)session.getAttribute("skillGenre");
           	<input type="hidden" name="searchedSkill" value="${searchedSkill}">
          	<button type="submit" class="sortButton" name="sort" value="資格所持数" >資格所持ランキング</button>
           	<button type="submit" class="sortButton" name="sort" value="従業員番号">従業員番号でソート</button>
+        	<label class="number-of-list">従業員数：${empList.size()}名</label>
           </form>
 
           <table class="table table-bordered table-striped" >
@@ -137,18 +140,18 @@ List<Skill> skillGenreList = (List<Skill>)session.getAttribute("skillGenre");
               <%-- 従業員一覧をデータの数だけ繰り返して表示 --%>
               <c:forEach var="employee" items="${empList}">
                   <tr>
-                      <td>${ employee.employeeNumber }</td>
-                      <td>${ employee.employeeName }</td>
-                      <td>${ employee.employeeDeployment }</td>
-                      <td>${ employee.employeeProfile }</td>
-                      <td>${ employee.count }</td>
-                      <td>
+                      <td class="number">${ employee.employeeNumber }</td>
+                      <td class="name">${ employee.employeeName }</td>
+                      <td class="deployment">${ employee.employeeDeployment }</td>
+                      <td class="profile">${ employee.employeeProfile }</td>
+                      <td class="count">${ employee.count }</td>
+                      <td class="business">
                <c:forEach var="career" items="${employee.careerList}">
                      	<c:out value="${career}" /><br>
                       </c:forEach>
                       </td>
                       <%--2020/6/16 編集ボタンから詳細ボタンに変更 --%>
-                      <td><input type="button" class="button" value="詳細"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${ employee.employeeNumber }'"></td>
+                      <td class="edit"><input type="button" class="button" value="詳細"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${ employee.employeeNumber }'"></td>
                   </tr>
               </c:forEach>
             </tbody>

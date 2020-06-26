@@ -42,22 +42,26 @@ Employee emp = (Employee) request.getAttribute("emp");
              <select name="deployment">
 				<option>所属を選択してください</option>
 				<%--部署nullの従業員を編集しようとするとJasperException --%>
-				<option <%if(emp.getEmployeeDeployment().equals("部署1")){%>
+				<option <%if(emp.getEmployeeDeployment() != null && emp.getEmployeeDeployment().equals("本部")){%>
 					selected
-				<%}%>>部署1</option>
-				<option <%if(emp.getEmployeeDeployment().equals("部署2")){%>
+				<%}%>>本部</option>
+					<option  <%if(emp.getEmployeeDeployment() != null && emp.getEmployeeDeployment().equals("第1システム部")){%>
 					selected
-				<%}%>>部署2</option>
-				<option <%if(emp.getEmployeeDeployment().equals("部署3")){%>
+				<%}%>>第1システム部</option>
+					<option <%if(emp.getEmployeeDeployment() != null && emp.getEmployeeDeployment().equals("第2システム部")){%>
 					selected
-				<%}%>>部署3</option>
-				<option <%if(emp.getEmployeeDeployment().equals("部署4")){%>
+				<%}%>>第2システム部</option>
+					<option <%if(emp.getEmployeeDeployment() != null && emp.getEmployeeDeployment().equals("第3システム部")){%>
 					selected
-				<%}%>>部署4</option>
-				<option <%if(emp.getEmployeeDeployment().equals("部署5")){%>
+				<%}%>>第3システム部</option>
+					<option <%if(emp.getEmployeeDeployment() != null && emp.getEmployeeDeployment().equals("第4システム部")){%>
 					selected
-				<%}%>>部署5</option>
-			</select>
+				<%}%>>第4システム部</option>
+				<option <%if(emp.getEmployeeDeployment() != null && emp.getEmployeeDeployment().equals("その他")){%>
+					selected
+				<%}%>>その他</option>
+				</select>
+
 
 			<%--2020/6/15 所属未選択で遷移されて来たらエラーメッセージ表示 --%>
 			<c:if test = "${ noInputError == true }"  >

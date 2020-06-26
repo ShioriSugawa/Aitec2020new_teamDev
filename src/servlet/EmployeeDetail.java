@@ -46,6 +46,15 @@ public class EmployeeDetail extends HttpServlet {
 			List<Career> careerList = employeeLogic.getCareerList(employeeNumber);
 			List<Employee> masterCertificationList = employeeLogic.getMasterCertificationList(employeeNumber);
 			List<Employee> othersList = employeeLogic.getOtherCertificationList(employeeNumber);
+			//2020/6/26追加
+			/*一端保留
+			 * List<Employee> allCertificationList = new ArrayList<>();
+			allCertificationList.addAll(masterCertificationList);
+			allCertificationList.addAll(othersList);
+			//取得日降順にソート
+			allCertificationList.sort((a,b)-> b.getCertificationDate().compareTo(a.getCertificationDate()) );
+			*/
+
 			List<Employee> skillList = employeeLogic.getSkillList(employeeNumber);
 
 			// リクエストスコープに保存
@@ -53,6 +62,9 @@ public class EmployeeDetail extends HttpServlet {
 			request.setAttribute("careerList", careerList);
 			request.setAttribute("masterCertificationList", masterCertificationList);
 			request.setAttribute("othersList", othersList);
+			//2020/6/26追加
+			//一端保留
+			//request.setAttribute("allCertificationList", allCertificationList);
 			request.setAttribute("skillList", skillList);
 
 		} catch (SQLException e) {
