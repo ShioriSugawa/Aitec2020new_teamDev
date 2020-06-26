@@ -91,6 +91,26 @@ public class SkillsRegister extends HttpServlet {
 			String mstYear =request.getParameter("mstYear");
 			String mstMonth =request.getParameter("mstMonth");
 			String mstDate=mstYear+"/"+mstMonth;
+			String emptyMessage=null;
+
+			if(mstCode.equals("empty")) {
+				emptyMessage += "「資格名」";
+			}
+			if(mstYear.equals("empty")||mstMonth.equals("empty")) {
+				emptyMessage+="「認定日」";
+			}
+			if(emptyMessage!=null) {
+				String regi="c";
+				request.setAttribute("eNum" , eNum);
+				request.setAttribute("sldMC", mstCode);
+				request.setAttribute("sldMY" , mstYear);
+				request.setAttribute("sldMM" , mstMonth);
+				request.setAttribute("emptyMessage", emptyMessage);
+				request.setAttribute("regi", regi);
+
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillsRegister.jsp");
+				dispatcher.forward(request, response);
+			}
 
 			try(Connection connection = ConnectionManager.getConnection()){
 				try {
@@ -113,6 +133,30 @@ public class SkillsRegister extends HttpServlet {
 			String othYear =request.getParameter("othYear");
 			String othMonth =request.getParameter("othMonth");
 			String othDate=othYear+"/"+othMonth;
+			String emptyMessage=null;
+
+			if(othGenre.equals("empty")) {
+				emptyMessage += "「資格ジャンル」";
+			}
+			if(othName.equals("empty")) {
+				emptyMessage += "「資格名」";
+			}
+			if(othYear.equals("empty")||othMonth.equals("empty")) {
+				emptyMessage += "「認定日」";
+			}
+			if(emptyMessage!=null) {
+				String regi="o";
+				request.setAttribute("eNum" , eNum);
+				request.setAttribute("sldOG", othGenre);
+				request.setAttribute("sldON" , othName);
+				request.setAttribute("sldOY" , othYear);
+				request.setAttribute("sldOM" , othMonth);
+				request.setAttribute("emptyMessage", emptyMessage);
+				request.setAttribute("regi", regi);
+
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillsRegister.jsp");
+				dispatcher.forward(request, response);
+			}
 
 			try(Connection connection = ConnectionManager.getConnection()){
 				try {
@@ -132,6 +176,24 @@ public class SkillsRegister extends HttpServlet {
 		if("skl".contentEquals(regiSel)) {
 			String sklGenre =request.getParameter("sklGenre");
 			String sklName =request.getParameter("sklName");
+			String emptyMessage=null;
+			if(sklGenre.equals("empty")) {
+				emptyMessage += "「スキルジャンル」";
+			}
+			if(sklName.equals("empty")) {
+				emptyMessage+="「スキル内容」";
+			}
+			if(emptyMessage!=null) {
+				String regi="s";
+				request.setAttribute("eNum" , eNum);
+				request.setAttribute("sldSG", sklGenre);
+				request.setAttribute("sldSN" , sklName);
+				request.setAttribute("emptyMessage", emptyMessage);
+				request.setAttribute("regi", regi);
+
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillsRegister.jsp");
+				dispatcher.forward(request, response);
+			}
 
 			try(Connection connection = ConnectionManager.getConnection()){
 				try {

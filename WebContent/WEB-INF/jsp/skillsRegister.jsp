@@ -9,6 +9,8 @@
 <% List<Certification> cNameL = (List<Certification>)request.getAttribute("cNameL");%>
 <% List<Skill> sGenL = (List<Skill>)request.getAttribute("sGenL");%>
 <% String regi=(String)request.getAttribute("regi");%>
+<%! String emptyMessage=null;%>
+<% emptyMessage=(String)request.getAttribute("emptyMessage");%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -34,63 +36,69 @@
 			<input type="radio" id="raM" name="regiSelect" value="mst"
 			<c:if test="${regi == 'c'}"> checked="checked"</c:if>>
 			<label for="raM">資格（一覧から選択）</label><br>
+		<c:if test="${emptyMessage!=null && regi.equals('c')}">
+		<font color="red"><c:out value="一覧の資格の登録には${emptyMessage}の入力が必須です" /></font><br></c:if>
 
 				<select name="mstCode" id="raMc" disabled >
-				<option disabled selected>登録する資格を選択してください</option>
+				<option disabled <c:if test="${ emptyMessage == null }" >selected</c:if> value="empty">登録する資格を選択してください</option>
 					<c:forEach var="slCerti" items="${cNameL}">
-						<option value="${slCerti.getCertiCode() }"><c:out value="${slCerti.getCertiName()}" /></option>
+						<option value="${slCerti.getCertiCode() }"
+						<c:if test="${ sldMC == slCerti.getCertiCode()}">selected</c:if>><c:out value="${slCerti.getCertiName()}" /></option>
 					</c:forEach>
 				</select><br>
 
 				<label>認定日：</label>
 					<select name="mstYear" id="raMy" disabled >
-					<option disabled selected>年</option>
+					<option disabled <c:if test="${ emptyMessage == null }">selected</c:if> value="empty">年</option>
 					<c:forEach begin="1950" end="${nowYear}" step="1" var="i">
-						<option value="${i}"><c:out value="${i}年" /></option>
+						<option value="${i}" <c:if test="${ regi==null}">selected</c:if>><c:out value="${i}年" /></option>
 					</c:forEach>
 				</select>
 
 				<select name="mstMonth" id="raMm" disabled >
-					<option disabled selected>月</option>
+					<option disabled <c:if test="${ emptyMessage == null }">selected</c:if> value="empty">月</option>
 					<c:forEach begin="1" end="9" step="1" var="i">
-						<option value="0${i}"><c:out value="${i}月" /></option>
+						<option value="0${i}" <c:if test="${regi==null }">selected</c:if>><c:out value="${i}月" /></option>
 					</c:forEach>
 					<c:forEach begin="10" end="12" step="1" var="i">
-						<option value="${i}"><c:out value="${i}月" /></option>
+						<option value="${i}" <c:if test="${ regi==null}">selected</c:if>><c:out value="${i}月" /></option>
 					</c:forEach>
 				</select><br>
 			<br>
 
 
-			<input type="radio" id="raO" name="regiSelect" value="oth">
+			<input type="radio" id="raO" name="regiSelect" value="oth"
+			<c:if test="${regi == 'o'}"> checked="checked"</c:if>>
 			<label for="raO">資格（一覧にない資格の登録）</label><br>
+		<c:if test="${emptyMessage!=null && regi.equals('o')}">
+		<font color="red"><c:out value="手入力資格の登録には${emptyMessage}の入力が必須です" /></font><br></c:if>
 
 				<select name="othGenre" id="raOg" disabled >
-				<option disabled selected>ジャンルを選択してください</option>
+				<option disabled <c:if test="${ emptyMessage == null }">selected</c:if> value="empty">ジャンルを選択してください</option>
 					<c:forEach var="slGenre" items="${cGenL}">
-						<option value="${slGenre.getCertiCode() }"><c:out value="${slGenre.getCertiName()}" /></option>
+						<option value="${slGenre.getCertiCode() }" <c:if test="${regi==null }">selected</c:if>><c:out value="${slGenre.getCertiName()}" /></option>
 					</c:forEach>
 				</select><br>
 
 				<label for="raOn">資格名（100文字以内）</label><br>
-					<input disabled type="text" name="othName" id="raOn" maxlength='100' placeholder='資格名を入力してください'>
+					<input disabled required type="text" name="othName" id="raOn" maxlength='100' placeholder='資格名を入力してください'>
 					<br>
 
 				<label>認定日：</label>
 					<select name="othYear" id="raOy" disabled >
-					<option disabled selected>年</option>
+					<option disabled <c:if test="${ emptyMessage == null }">selected</c:if>>年</option>
 					<c:forEach begin="1950" end="${nowYear}" step="1" var="i">
-						<option value="${i}"><c:out value="${i}年" /></option>
+						<option value="${i}" <c:if test="${ regi==null}">selected</c:if>><c:out value="${i}年" /></option>
 					</c:forEach>
 				</select>
 
 				<select name="othMonth" id="raOm" disabled >
-					<option disabled selected>月</option>
+					<option disabled <c:if test="${ emptyMessage == null }">selected</c:if>>月</option>
 					<c:forEach begin="1" end="9" step="1" var="i">
-						<option value="0${i}"><c:out value="${i}月" /></option>
+						<option value="0${i}" <c:if test="${ regi==null}">selected</c:if>><c:out value="${i}月" /></option>
 					</c:forEach>
 					<c:forEach begin="10" end="12" step="1" var="i">
-						<option value="${i}"><c:out value="${i}月" /></option>
+						<option value="${i}" <c:if test="${ regi==null}">selected</c:if>><c:out value="${i}月" /></option>
 					</c:forEach>
 				</select><br>
 			<br>
@@ -99,23 +107,25 @@
 			<input type="radio" id="raS" name="regiSelect" value="skl"
 			<c:if test="${regi=='s'}"> checked="checked"</c:if>>
 			<label for="raS">スキル（ジャンルを選択して内容を記入）</label><br>
+		<c:if test="${emptyMessage!=null && regi.equals('s')}">
+		<font color="red"><c:out value="スキルの登録には${emptyMessage}の入力が必須です" /></font><br></c:if>
 
 				<select name="sklGenre" id="raSg" disabled >
-				<option disabled selected>ジャンルを選択してください</option>
+				<option disabled value="empty" <c:if test="${ emptyMessage == null }">selected</c:if>>ジャンルを選択してください</option>
 					<c:forEach var="slGenre" items="${sGenL}">
-						<option value="${slGenre.getGenreCode() }"><c:out value="${slGenre.getGenreName()}" /></option>
+						<option value="${slGenre.getGenreCode() }" <c:if test="${regi==null }">selected</c:if>><c:out value="${slGenre.getGenreName()}" /></option>
 					</c:forEach>
 				</select><br>
 
 				<label for="raSn">スキルの内容（100文字以内）</label><br>
-					<textarea disabled name="sklName" id="raSn" maxlength='100' placeholder="スキルの内容を具体的に記入してください"></textarea>
+					<textarea disabled required name="sklName" id="raSn" maxlength='100' placeholder="スキルの内容を具体的に記入してください"></textarea>
 					<br>
 
 				<br>
 
 
 			<input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${ eNum }'">
-			<input type="submit" class="button career-button" value="登録">
+			<input type="button" onclick="submit();" class="button career-button" value="登録">
 
 		</form>
 
@@ -169,7 +179,8 @@
 				VraSg.disabled = true;
 				VraSn.disabled = true;
 
-
+				VraOn.required = false;
+				VraSn.required = false;
 			}
 		}
 
@@ -185,7 +196,8 @@
 				VraSg.disabled = true;
 				VraSn.disabled = true;
 
-
+				VraOn.required = true;
+				VraSn.required = false;
 			}
 		}
 
@@ -201,7 +213,8 @@
 				VraOm.disabled = true;
 				VraOn.disabled = true;
 
-
+				VraSn.required = true;
+				VraOn.required = false;
 			}
 		}
 
