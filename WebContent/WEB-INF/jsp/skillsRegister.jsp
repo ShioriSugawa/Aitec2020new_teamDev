@@ -11,6 +11,7 @@
 <% String regi=(String)request.getAttribute("regi");%>
 <%! String emptyMessage=null;%>
 <% emptyMessage=(String)request.getAttribute("emptyMessage");%>
+<% List<Integer> yearL=(List<Integer>)request.getAttribute("yearL");%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -47,12 +48,24 @@
 					</c:forEach>
 				</select><br>
 
-				<label>認定日：</label>
+				<label>取得日：</label>
 					<select name="mstYear" id="raMy" disabled >
 					<option disabled <c:if test="${ emptyMessage == null }">selected</c:if> value="empty">年</option>
-					<c:forEach begin="1950" end="${nowYear}" step="1" var="i">
-						<option value="${i}" <c:if test="${ regi==null}">selected</c:if>><c:out value="${i}年" /></option>
+
+					<c:forEach var="MyL" items="${yearL}">
+						<option value="${MyL}"
+						<c:if test="${ sldMY == MyL}">selected</c:if>><c:out value="${MyL}年" /></option>
 					</c:forEach>
+
+			<%--	<% int year=nowYear+1;%><%
+	for(int i=nowYear;i>=1970;i--){year=year-1;%>
+	<option value="${year}" <c:if test="${ regi==null}">selected</c:if>><c:out value="${year}年" /></option>
+	<%}%>		--%>
+
+
+				<%-- 	<c:forEach begin="${nowYear}" end="1970" step="-1" var="i">
+						<option value="${i}" <c:if test="${ regi==null}">selected</c:if>><c:out value="${i}年" /></option>
+					</c:forEach>	--%>
 				</select>
 
 				<select name="mstMonth" id="raMm" disabled >
@@ -84,10 +97,10 @@
 					<input disabled required type="text" name="othName" id="raOn" maxlength='100' placeholder='資格名を入力してください'>
 					<br>
 
-				<label>認定日：</label>
+				<label>取得日：</label>
 					<select name="othYear" id="raOy" disabled >
 					<option disabled <c:if test="${ emptyMessage == null }">selected</c:if>>年</option>
-					<c:forEach begin="1950" end="${nowYear}" step="1" var="i">
+					<c:forEach begin="${nowYear}" end="1950" var="i">
 						<option value="${i}" <c:if test="${ regi==null}">selected</c:if>><c:out value="${i}年" /></option>
 					</c:forEach>
 				</select>

@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -53,6 +54,11 @@ public class SkillsRegister extends HttpServlet {
 			SkillLogic sLogic=new SkillLogic(connection);
 			Calendar cal = Calendar.getInstance();
 			int nowYear= cal.get(Calendar.YEAR);
+			List<Integer> year=new ArrayList<>();
+			for(int i=nowYear;i>=1970;i--) {
+				year.add(nowYear);
+				nowYear--;
+			}
 
 			List<Certification>cGenL=cLogic.getCertiGenre();
 			List<Certification>cNameL=cLogic.getCertiName();
@@ -66,8 +72,9 @@ public class SkillsRegister extends HttpServlet {
 			request.setAttribute("cGenL", cGenL);
 			request.setAttribute("cNameL", cNameL);
 			request.setAttribute("sGenL", sGenL);
-			request.setAttribute("nowYear", nowYear);
+			//request.setAttribute("nowYear", nowYear);
 			request.setAttribute("regi", regi);
+			request.setAttribute("yearL", year);
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		}
