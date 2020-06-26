@@ -39,7 +39,10 @@ public class DetaiDAOTest {
 		try {
 
 			connection = ConnectionManagerTest.getConnection();
+
+			//テスト用データ追加
 			new RegisterInfo().registerInfo(connection);
+
 			DetailDAO dtlDAO = new DetailDAO(connection);
 			careerList = dtlDAO.getAllCareer("666666");
 
@@ -77,7 +80,10 @@ public class DetaiDAOTest {
 		try {
 
 			connection = ConnectionManagerTest.getConnection();
+
+			//テスト用データ追加
 			new RegisterInfo().registerInfo(connection);
+
 			DetailDAO dtlDAO = new DetailDAO(connection);
 			ownedCertificationList = dtlDAO.getAllMasterCertification("666666");
 
@@ -115,7 +121,10 @@ public class DetaiDAOTest {
 		try {
 
 			connection = ConnectionManagerTest.getConnection();
+
+			//テスト用データ追加
 			new RegisterInfo().registerInfo(connection);
+
 			DetailDAO dtlDAO = new DetailDAO(connection);
 			ownedOthersList = dtlDAO.getAllOthers("666666");
 
@@ -154,7 +163,10 @@ public class DetaiDAOTest {
 		try {
 
 			connection = ConnectionManagerTest.getConnection();
+
+			//テスト用データ追加
 			new RegisterInfo().registerInfo(connection);
+
 			DetailDAO dtlDAO = new DetailDAO(connection);
 			ownedSkillList = dtlDAO.getAllSkill("666666");
 
@@ -196,7 +208,10 @@ public class DetaiDAOTest {
 
 			connection = ConnectionManagerTest.getConnection();
 			DetailDAO dtlDAO = new DetailDAO(connection);
+
+			//テスト用データ追加
 			new RegisterInfo().registerInfo(connection);
+
 			result = dtlDAO.countCertification("666666");
 
 		}catch(SQLException e) {
