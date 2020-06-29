@@ -1664,91 +1664,164 @@ public class SkillsDAOTest {
 	/**
 	 * マスタ登録資格削除テスト（正常）
 	 *
+	 * @throws SQLException
+	 *
 	 */
 	@Test
-	public void test13_deleteMaster() {
+	public void test13_deleteMaster() throws SQLException {
 
-		Connection conn = null;
+		Connection connection = null;
+		int ownedId = 0;
+		Find find = new Find();
+
+		//テスト実行
 		try {
-			conn = ConnectionManagerTest.getConnection();
-			int ownedId = new Find().findOwnedCertificationId(conn, "666666", "IPA001", "2020/06");
-			final String sql = "DELETE FROM owned_certification WHERE owned_certification_id =?";
-    		PreparedStatement ps = conn.prepareStatement(sql);
-    		ps.setInt(1, ownedId);
-    		ps.executeUpdate();
-    		conn.commit();
-
+			connection = ConnectionManagerTest.getConnection();
+			SkillsDAO sklDAO = new SkillsDAO(connection);
+			ownedId = find.findOwnedCertificationId(connection, "666666", "IPA001", "2020/06");
+			sklDAO.masterDelete(ownedId);
+    		connection.commit();
 
     	}catch(SQLException e) {
+    		connection.rollback();
     		e.printStackTrace();
     	}finally {
-    		if(conn != null) {
+    		if(connection != null) {
     			try {
-					conn.close();
+					connection.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
     		}
     	}
+
+		//削除したデータを取得　nullなら成功
+		try {
+			connection = ConnectionManagerTest.getConnection();
+			Certification ctf = find.findOneMasterCertification(ownedId, connection);
+
+			assertNull(ctf);
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}finally {
+			try {
+				if(connection != null) {
+					connection.close();
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 
 	/**
 	 * その他資格削除テスト（正常）
 	 *
+	 * @throws SQLException
+	 *
 	 */
 	@Test
-	public void test14_deleteOther() {
+	public void test14_deleteOther() throws SQLException {
 
-		Connection conn = null;
+		Connection connection = null;
+		int ownedId = 0;
+		Find find = new Find();
+
+		//テスト実行
 		try {
-			conn = ConnectionManagerTest.getConnection();
-			int ownedId = new Find().findOwnedOtherCertificationId(conn, "666666", "IPA", "その他資格テスト", "2020/06");
-			final String sql = "DELETE FROM owned_other_certification WHERE owned_other_certification_id =?";
-    		PreparedStatement ps = conn.prepareStatement(sql);
-    		ps.setInt(1, ownedId);
-    		ps.executeUpdate();
-    		conn.commit();
+			connection = ConnectionManagerTest.getConnection();
+			SkillsDAO sklDAO = new SkillsDAO(connection);
+			ownedId = find.findOwnedOtherCertificationId(connection, "666666", "IPA", "その他資格テスト", "2020/06");
+			sklDAO.otherDelete(ownedId);
+    		connection.commit();
+
     	}catch(SQLException e) {
+    		connection.rollback();
     		e.printStackTrace();
     	}finally {
-    		if(conn != null) {
+    		if(connection != null) {
     			try {
-					conn.close();
+					connection.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
     		}
     	}
+
+		//削除したデータを取得　nullなら成功
+		try {
+			connection = ConnectionManagerTest.getConnection();
+			Certification octf = find.findOneOtherCertification(ownedId, connection);
+
+			assertNull(octf);
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}finally {
+			try {
+				if(connection != null) {
+					connection.close();
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 
 	/**
 	 * スキル削除テスト（正常）
 	 *
+	 * @throws SQLException
+	 *
 	 */
 	@Test
-	public void test15_deleteSkill() {
-		Connection conn = null;
+	public void test15_deleteSkill() throws SQLException {
+
+		Connection connection = null;
+		int ownedId = 0;
+		Find find = new Find();
 		try {
-			conn = ConnectionManagerTest.getConnection();
-			int ownedId = new Find().findOwnedSkillId(conn, "666666", "LNG", "スキルテスト");
-			final String sql = "DELETE FROM owned_skill WHERE owned_skill_id =?";
-    		PreparedStatement ps = conn.prepareStatement(sql);
-    		ps.setInt(1, ownedId);
-    		ps.executeUpdate();
-    		conn.commit();
+			connection = ConnectionManagerTest.getConnection();
+			SkillsDAO sklDAO = new SkillsDAO(connection);
+			ownedId = find.findOwnedSkillId(connection, "666666", "LNG", "スキルテスト");
+			sklDAO.skillDelete(ownedId);
+    		connection.commit();
+
     	}catch(SQLException e) {
+    		connection.rollback();
     		e.printStackTrace();
     	}finally {
-    		if(conn != null) {
+    		if(connection != null) {
     			try {
-					conn.close();
+					connection.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
     		}
     	}
+
+		try {
+			connection = ConnectionManagerTest.getConnection();
+			Skill skl = find.findOneSkill(ownedId, connection);
+
+			assertNull(skl);
+		}catch(SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}finally {
+			try {
+				if(connection != null) {
+					connection.close();
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 

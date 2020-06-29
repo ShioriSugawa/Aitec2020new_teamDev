@@ -46,7 +46,7 @@ public class EmployeeDAOTest {
      * @throws SQLException
      */
     @Test
-    public void test0_registerOneEmployee() throws SQLException {
+    public void test01_00_registerOneEmployee() throws SQLException {
         Connection connection_register = null;
 
         //登録テスト実行
@@ -121,7 +121,7 @@ public class EmployeeDAOTest {
      * @throws SQLException
      */
     @Test
-    public void test1_findAllEmployee() throws SQLException {
+    public void test02_findAllEmployee() throws SQLException {
         Connection connection = null;
 
         //テスト実行
@@ -156,7 +156,7 @@ public class EmployeeDAOTest {
      * @throws SQLException
      */
     @Test
-    public void test2_findOneEmployee() throws SQLException {
+    public void test03_findOneEmployee() throws SQLException {
         Connection connection = null;
         Employee emp = null;
 
@@ -193,7 +193,7 @@ public class EmployeeDAOTest {
      * @throws SQLException
      */
     @Test
-    public void test31_registerOneEmployeeIDNullError() throws SQLException {
+    public void test01_01_registerOneEmployeeIDNullError() throws SQLException {
         Connection connection = null;
         String actual = "";
         String expected = "ERROR: 列\"employee_number\"内のNULL値はNOT NULL制約違反です" +
@@ -234,7 +234,7 @@ public class EmployeeDAOTest {
      * @throws SQLException
      */
     @Test
-    public void test3_registerOneEmployeeIDOverError() throws SQLException {
+    public void test01_02_registerOneEmployeeIDOverError() throws SQLException {
         Connection connection = null;
         String actual = "";
         String expected = "ERROR: 値は型character varying(6)としては長すぎます";		//2020.05.27 エラーメッセージを日本語に修正
@@ -274,7 +274,7 @@ public class EmployeeDAOTest {
      * @throws SQLException
      */
     @Test
-    public void test4_registerOneEmployeeNameOverError() throws SQLException {
+    public void test01_03_registerOneEmployeeNameOverError() throws SQLException {
         Connection connection = null;
         String actual = "";
         String expected = "ERROR: 値は型character varying(30)としては長すぎます";			//2020.05.27 エラーメッセージを日本語に修正、varying(10)→varying(30)に変更
@@ -314,7 +314,7 @@ public class EmployeeDAOTest {
      * @throws SQLException
      */
     @Test
-    public void test5_registerOneEmployeeProfileOverError() throws SQLException {
+    public void test01_04_registerOneEmployeeProfileOverError() throws SQLException {
         Connection connection = null;
         String actual = "";
         String expected = "ERROR: 値は型character varying(100)としては長すぎます";			//2020.05.27 エラーメッセージを日本語に修正
@@ -353,7 +353,7 @@ public class EmployeeDAOTest {
      * @throws SQLException
      */
     @Test
-    public void test6_updateOneEmployee() throws SQLException {
+    public void test04_00_updateOneEmployee() throws SQLException {
         Connection connection_update = null;
 
         //更新テスト実行
@@ -420,7 +420,7 @@ public class EmployeeDAOTest {
      * @throws SQLException
      */
     @Test
-    public void test7_updateOneEmployeeNameOverError() throws SQLException {
+    public void test04_01_updateOneEmployeeNameOverError() throws SQLException {
         Connection connection = null;
         String actual = "";
         String expected = "ERROR: 値は型character varying(30)としては長すぎます";			//2020.05.27 エラーメッセージを日本語に修正、varying(10)→varying(30)に変更
@@ -458,7 +458,7 @@ public class EmployeeDAOTest {
      * @throws SQLException
      */
     @Test
-    public void test8_updateOneEmployeeProfileOverError() throws SQLException {
+    public void test04_02_updateOneEmployeeProfileOverError() throws SQLException {
         Connection connection = null;
         String actual = "";
         String expected = "ERROR: 値は型character varying(100)としては長すぎます";			//2020.05.27 エラーメッセージを日本語に修正
@@ -496,7 +496,7 @@ public class EmployeeDAOTest {
      * @throws SQLException
      */
     @Test
-    public void test9_deleteOneEmployee() throws SQLException {
+    public void test99_deleteOneEmployee() throws SQLException {
         Connection connection_delete = null;
         Connection connection_findEmployment = null;
 
@@ -535,7 +535,7 @@ public class EmployeeDAOTest {
                     connection_findEmployment.close();
                 }
                 //テストデータ削除
-                new DeleteTestData().deleteTestData();
+               new DeleteTestData().deleteTestData();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -549,7 +549,7 @@ public class EmployeeDAOTest {
      * @throws SQLException
      */
     @Test
-    public void test10_searchEmployeeDeploymentSearch() throws SQLException {
+    public void test06_searchEmployeeDeploymentSearch() throws SQLException {
     	Connection connection = null;
 
     	//テスト実行
@@ -591,7 +591,7 @@ public class EmployeeDAOTest {
      * @throws SQLException
      */
 	@Test
-    public void test11_searchEmployeeCertificationGenreSearch() throws SQLException {
+    public void test07_searchEmployeeCertificationGenreSearch() throws SQLException {
     	Connection connection = null;
 		List<Employee> empList = null;
 
@@ -649,7 +649,7 @@ public class EmployeeDAOTest {
 	 * @throws SQLException
 	 */
     @Test
-    public void test12_searchEmployeeCertificationNameSearch() throws SQLException {
+    public void test08_searchEmployeeCertificationNameSearch() throws SQLException {
     	Connection connection = null;
 		List<Employee> empList = null;
 
@@ -704,7 +704,7 @@ public class EmployeeDAOTest {
      * @throws SQLException
      */
     @Test
-    public void test13_searchEmployeeOtherCertificationNameSearch() throws SQLException {
+    public void test09_searchEmployeeOtherCertificationNameSearch() throws SQLException {
 
     	Connection connection = null;
 		List<Employee> empList = null;
@@ -760,7 +760,7 @@ public class EmployeeDAOTest {
      * @throws SQLException
      */
     @Test
-    public void test14_searchEmployeeSkillGenreSearch() throws SQLException {
+    public void test10_searchEmployeeSkillGenreSearch() throws SQLException {
 
     	Connection connection = null;
 		List<Employee> empList = null;
@@ -817,7 +817,7 @@ public class EmployeeDAOTest {
      * @throws SQLException
      */
     @Test
-    public void test15_searchEmployeeSkillNameSearch() throws SQLException {
+    public void test11_searchEmployeeSkillNameSearch() throws SQLException {
 
     	Connection connection = null;
 		List<Employee> empList = null;
@@ -873,7 +873,7 @@ public class EmployeeDAOTest {
      * @throws SQLException
      */
     @Test
-    public void test16_searchEmployeeALLItemSearch() throws SQLException {
+    public void test12_searchEmployeeALLItemSearch() throws SQLException {
 
     	Connection connection = null;
 
