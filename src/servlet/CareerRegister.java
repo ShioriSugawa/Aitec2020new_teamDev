@@ -3,7 +3,9 @@ package servlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -46,10 +48,15 @@ public class CareerRegister extends HttpServlet {
 
 			Calendar cal = Calendar.getInstance();
 			int nowYear= cal.get(Calendar.YEAR);
+			List<Integer> year=new ArrayList<>();
+			for(int i=nowYear;i>=1970;i--) {
+				year.add(nowYear);
+				nowYear--;
+			}
 
 			// リクエストスコープに保存
 			request.setAttribute("employee", employee);
-			request.setAttribute("nowYear", nowYear);
+			request.setAttribute("yearL", year);
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		}
@@ -79,8 +86,18 @@ public class CareerRegister extends HttpServlet {
 			EmployeeLogic employeeLogic = new EmployeeLogic(connection);
 			Employee employee = employeeLogic.getEmployee(request.getParameter("employeeNumber"));
 
+			Calendar cal = Calendar.getInstance();
+			int nowYear= cal.get(Calendar.YEAR);
+			List<Integer> year=new ArrayList<>();
+			for(int i=nowYear;i>=1970;i--) {
+				year.add(nowYear);
+				nowYear--;
+			}
+
 			// リクエストスコープに保存
 			request.setAttribute("employee", employee);
+			request.setAttribute("yearL", year);
+
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		}

@@ -21,20 +21,20 @@ import model.CertificationLogic;
  * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
  * システム名：自己紹介システム<br>
  * クラス概要：<br>
- * CertificationLogicの一覧/登録/更新/削除/各種項目一覧取得/資格所持数取得/検索/ソートの単体テストクラス<br>
+ * CertificationLogicの一覧/登録/更新/削除の単体テストクラス<br>
  */
 
 /*
- * 資格ジャンルとコードの名前の一覧の取得（正常）✔仮
- * 資格のコードと名前の一覧の取得（正常）✔仮
+ * 資格ジャンルとコードの名前の一覧の取得（正常）✔(仮)
+ * 資格のコードと名前の一覧の取得（正常）✔(仮)
  * 登録（正常：その他）✔
  * 登録（正常：マスタ）✔
  * 取得（正常：その他）✔
  * 取得（正常：マスタ）✔
  * 更新（正常：その他）✔
  * 更新（正常：マスタ）✔
- * 削除（正常：その他）
- * 削除（正常：マスタ）
+ * 削除（正常：その他）✔
+ * 削除（正常：マスタ）✔
  */
 
 public class CertificationLogicTest {
@@ -42,14 +42,15 @@ public class CertificationLogicTest {
 	SkillsDAO skillsDAO;
 
 	//テスト実行時毎度更新する
-	int x = 1;
-	int y = 2;
+	int x = 18;
+	int y = 19;
 
 	/**
 	 * 資格ジャンルとコードの名前の一覧の取得
 	 *
 	 * @throws SQLException
 	 */
+	@SuppressWarnings("null")
 	@Test
 	public void getCertiGenre() throws SQLException {
 		Connection connection = null;
@@ -94,6 +95,7 @@ public class CertificationLogicTest {
 	 *
 	 * @throws SQLException
 	 */
+	@SuppressWarnings("null")
 	@Test
 	public void getCertiName() throws SQLException {
 		Connection connection = null;
@@ -101,10 +103,10 @@ public class CertificationLogicTest {
 		//DAOのJMockit
 		new Expectations() {{
 			List<Certification>nameList = null;
-			Certification certi1 = new Certification("AAA001", "資格1");
-			Certification certi2 = new Certification("AAA002", "資格2");
-			nameList.add(certi1);
-			nameList.add(certi2);
+			Certification certi3 = new Certification("AAA001", "テスト資格1");
+			Certification certi4 = new Certification("AAA002", "テスト資格2");
+			nameList.add(certi3);
+			nameList.add(certi4);
 			skillsDAO.getCertiName();
 			result = nameList;
 		}};
@@ -231,6 +233,25 @@ public class CertificationLogicTest {
 				e.printStackTrace();
 			}
 		}
+		final String expectedEmployeeNumber = "222222";
+		final String actualEmployeeNumber = certi.getEmployeeNumber();
+		final String expectedCertiCode = "ジャンルコード";
+		final String actualCertiCode = certi.getCertiCode();
+		final String expectedCertiGenre = "ジャンル名";
+		final String actualCertiGenre = certi.getCertiGenre();
+		final String expectedCertiDate = "取得日";
+		final String actualCertiDate = certi.getCertiDate();
+		final String expectedCertiName = "その他資格名";
+		final String actualCertiName = certi.getCertiName();
+
+		// ------------
+		// 結果チェック
+		// ------------
+		assertEquals(expectedEmployeeNumber, actualEmployeeNumber);
+		assertEquals(expectedCertiCode, actualCertiCode);
+		assertEquals(expectedCertiGenre, actualCertiGenre);
+		assertEquals(expectedCertiDate, actualCertiDate);
+		assertEquals(expectedCertiName, actualCertiName);
 	}
 
 	/**
@@ -254,7 +275,7 @@ public class CertificationLogicTest {
 		try {
 			connection = ConnectionManagerTest.getConnection();
 			CertificationLogic certificationLogic = new CertificationLogic(connection);
-			certi = certificationLogic.getOwnedMst(x);
+			certi = certificationLogic.getOwnedMst(y);
 		}catch (SQLException | ServletException e) {
 			e.printStackTrace();
 		}finally {
@@ -266,6 +287,29 @@ public class CertificationLogicTest {
 				e.printStackTrace();
 			}
 		}
+		final String expectedEmployeeNumber = "222222";
+		final String actualEmployeeNumber = certi.getEmployeeNumber();
+		final String expectedCertiCode = "ジャンルコード";
+		final String actualCertiCode = certi.getCertiCode();
+		final String expectedCertiGenre = "ジャンル名";
+		final String actualCertiGenre = certi.getCertiGenre();
+		final String expectedMasterCode = "資格コード";
+		final String actualMasterCode = certi.getMasterCode();
+		final String expectedCertiName = "マスタ資格名";
+		final String actualCertiName = certi.getCertiName();
+		final String expectedCertiDate = "取得日";
+		final String actualCertiDate = certi.getCertiDate();
+
+
+		// ------------
+		// 結果チェック
+		// ------------
+		assertEquals(expectedEmployeeNumber, actualEmployeeNumber);
+		assertEquals(expectedCertiCode, actualCertiCode);
+		assertEquals(expectedCertiGenre, actualCertiGenre);
+		assertEquals(expectedMasterCode, actualMasterCode);
+		assertEquals(expectedCertiName, actualCertiName);
+		assertEquals(expectedCertiDate, actualCertiDate);
 	}
 
 	/**
@@ -342,8 +386,30 @@ public class CertificationLogicTest {
 	 * @throws SQLException
 	 */
 	@Test
-	public void deleteOth() throws Exception {
+	public void deleteOth() throws SQLException {
+		Connection connection = null;
 
+		//DAOのJMockit
+		new Expectations() {{
+			skillsDAO.otherDelete(x);
+		}};
+
+		//テスト実行
+		try {
+			connection = ConnectionManagerTest.getConnection();
+			CertificationLogic certificationLogic = new CertificationLogic(connection);
+			certificationLogic.othDelete(x);
+		}catch (ServletException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -352,7 +418,29 @@ public class CertificationLogicTest {
 	 * @throws SQLException
 	 */
 	@Test
-	public void deleteMst() throws Exception {
+	public void deleteMst() throws SQLException {
+		Connection connection = null;
 
+		//DAOのJMockit
+		new Expectations() {{
+			skillsDAO.masterDelete(y);
+		}};
+
+		//テスト実行
+		try {
+			connection = ConnectionManagerTest.getConnection();
+			CertificationLogic certificationLogic = new CertificationLogic(connection);
+			certificationLogic.mstDelete(y);
+		}catch (ServletException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

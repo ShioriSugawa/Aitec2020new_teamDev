@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
-
+<%@ page import ="java.util.List" %>
 <%@ page import="model.Career" %>
 <%@ page import="servlet.CareerUpdate" %>
 
 <%
 //リクエストスコープからインスタンスを取得
 Career career = (Career) request.getAttribute("career");
+List<Integer> yearL=(List<Integer>)request.getAttribute("yearL");
 %>
 
 <!DOCTYPE html>
@@ -35,13 +36,23 @@ Career career = (Career) request.getAttribute("career");
 
 			<div class="career-start">
 
+				<% String start = career.getBusinessStart(); %>
+				<% String startYear = start.substring(0,4); %>
+				<% int startNum = Integer.parseInt(startYear); %>
+				<% String m = start.substring(5); %>
+
+				<p><%=start %>start </p>
+				<p><%=startYear %>startYesr </p>
+				<p><%=startNum +1 %>startNum </p>
+				<p><%=m %>m </p>
 
 				<label>業務開始</label>
 				<select name="startYear" required>
 					<option value="">-</option>
-					<c:forEach begin="1980" end="${nowYear}" step="1" var="i">
-						<option value="${i}" <c:if test="${i == startYear}">selected</c:if> >
-							<c:out value="${i}" />
+					<c:forEach var="MyL" items="${yearL}">
+						<option value="${MyL}"
+							<c:if test="${ MyL == startNum}">selected</c:if>>
+							<c:out value="${MyL}" />
 						</option>
 					</c:forEach>
 				</select>
@@ -49,11 +60,18 @@ Career career = (Career) request.getAttribute("career");
 
 				<select name="startMonth" required>
 					<option value="">-</option>
-					<c:forEach begin="01" end="12" step="1" var="i">
-						<option value="0${i}" <c:if test="${ i == startMonth }">selected</c:if> >
-							<c:out value="${i}" />
-						</option>
-					</c:forEach>
+					<option <%if(m.equals("01")){ %> selected <%} %>>01</option>
+					<option <%if(m.equals("02")){ %> selected <%} %>>02</option>
+					<option <%if(m.equals("03")){ %> selected <%} %>>03</option>
+					<option <%if(m.equals("04")){ %> selected <%} %>>04</option>
+					<option <%if(m.equals("05")){ %> selected <%} %>>05</option>
+					<option <%if(m.equals("06")){ %> selected <%} %>>06</option>
+					<option <%if(m.equals("07")){ %> selected <%} %>>07</option>
+					<option <%if(m.equals("08")){ %> selected <%} %>>08</option>
+					<option <%if(m.equals("09")){ %> selected <%} %>>09</option>
+					<option <%if(m.equals("10")){ %> selected <%} %>>10</option>
+					<option <%if(m.equals("11")){ %> selected <%} %>>11</option>
+					<option <%if(m.equals("12")){ %> selected <%} %>>12</option>
 				</select>
 				<label>月</label>
 
@@ -66,9 +84,9 @@ Career career = (Career) request.getAttribute("career");
 				<label>業務終了</label>
 				<select name="endYear">
 					<option value="">-</option>
-					<c:forEach end="${nowYear}" begin="1980" step="1" var="i">
-						<option value="${i}" >
-							<c:out value="${i}" />
+					<c:forEach var="MyL" items="${yearL}">
+						<option value="${MyL}">
+							<c:out value="${MyL}" />
 						</option>
 					</c:forEach>
 				</select>
@@ -93,13 +111,17 @@ Career career = (Career) request.getAttribute("career");
 
 			<%}else{ %>
 
+				<% String end = career.getBusinessEnd(); %>
+				<% String endYear = end.substring(0,4); %>
+				<% String e = end.substring(5); %>
 
 				<label>業務終了</label>
 				<select name="endYear">
 					<option value="">-</option>
-					<c:forEach begin="1980" end="${nowYear}" step="1" var="i">
-						<option value="${i}" <c:if test="${i == endYear}">selected</c:if> >
-							<c:out value="${i}" />
+					<c:forEach var="MyL" items="${yearL}">
+						<option value="${MyL}"
+							<c:if test="${ endYear == MyL}"> selected </c:if>>
+							<c:out value="${MyL}" />
 						</option>
 					</c:forEach>
 				</select>
@@ -107,13 +129,21 @@ Career career = (Career) request.getAttribute("career");
 
 				<select name="endMonth">
 					<option value="">-</option>
-					<c:forEach begin="01" end="12" step="1" var="i">
-						<option value="0${i}" <c:if test="${ i == startMonth }">selected</c:if> >
-							<c:out value="${i}" />
-						</option>
-					</c:forEach>
+					<option <%if(e.equals("01")){ %> selected <%} %>>01</option>
+					<option <%if(e.equals("02")){ %> selected <%} %>>02</option>
+					<option <%if(e.equals("03")){ %> selected <%} %>>03</option>
+					<option <%if(e.equals("04")){ %> selected <%} %>>04</option>
+					<option <%if(e.equals("05")){ %> selected <%} %>>05</option>
+					<option <%if(e.equals("06")){ %> selected <%} %>>06</option>
+					<option <%if(e.equals("07")){ %> selected <%} %>>07</option>
+					<option <%if(e.equals("08")){ %> selected <%} %>>08</option>
+					<option <%if(e.equals("09")){ %> selected <%} %>>09</option>
+					<option <%if(e.equals("10")){ %> selected <%} %>>10</option>
+					<option <%if(e.equals("11")){ %> selected <%} %>>11</option>
+					<option <%if(e.equals("12")){ %> selected <%} %>>12</option>
 				</select>
 				<label>月</label>
+
 			<%} %>
 
 			</div>
