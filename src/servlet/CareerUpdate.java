@@ -3,7 +3,9 @@ package servlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -46,22 +48,36 @@ public class CareerUpdate extends HttpServlet {
 
 			Calendar cal = Calendar.getInstance();
 			int nowYear= cal.get(Calendar.YEAR);
+			List<Integer> year=new ArrayList<>();
+			for(int i=nowYear;i>=1970;i--) {
+				year.add(nowYear);
+				nowYear--;
+			}
 
+			/*
 			String start = career.getBusinessStart();
 			String startYear = start.substring(0,4);
 			String startMonth = start.substring(5);
+			int startNum = Integer.parseInt(startYear);
+			request.setAttribute("startNum", startNum);
+			request.setAttribute("startMonth", startMonth);
 
-			String end = career.getBusinessEnd();
-			String endYear = end.substring(0,4);
-			String endMonth = end.substring(5);
+			if(career.getBusinessEnd()==null) {
+			}else {
+				String end = career.getBusinessEnd();
+				String endYear = end.substring(0,4);
+				String endMonth = end.substring(5);
+				request.setAttribute("endYear", endYear);
+				request.setAttribute("endMonth", endMonth);
+			}
+			*/
+
 
 			// リクエストスコープに保存
 			request.setAttribute("career", career);
-			request.setAttribute("nowYear", nowYear);
-			request.setAttribute("startYear", startYear);
-			request.setAttribute("startMonthr", startMonth);
-			request.setAttribute("endYear", endYear);
-			request.setAttribute("endMonthr", endMonth);
+			request.setAttribute("yearL", year);
+
+
 		}catch (SQLException e) {
 			throw new ServletException(e);
 		}
@@ -91,8 +107,17 @@ public class CareerUpdate extends HttpServlet {
 			CareerLogic careerLogic = new CareerLogic(connection);
 			Career career = careerLogic.getCareer(request.getParameter("businessNumber"));
 
+			Calendar cal = Calendar.getInstance();
+			int nowYear= cal.get(Calendar.YEAR);
+			List<Integer> year=new ArrayList<>();
+			for(int i=nowYear;i>=1970;i--) {
+				year.add(nowYear);
+				nowYear--;
+			}
+
 			// リクエストスコープに保存
 			request.setAttribute("career", career);
+			request.setAttribute("yearL", year);
 		}catch (SQLException e) {
 			throw new ServletException(e);
 		}

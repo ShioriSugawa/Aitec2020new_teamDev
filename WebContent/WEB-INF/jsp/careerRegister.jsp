@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ page import ="java.util.List" %>
 
 <%@ page import="model.Employee" %>
 <%
 //リクエストスコープからインスタンスを取得
 Employee employee = (Employee) request.getAttribute("employee");
+List<Integer> yearL=(List<Integer>)request.getAttribute("yearL");
 %>
 
 <!DOCTYPE html>
@@ -36,9 +38,9 @@ Employee employee = (Employee) request.getAttribute("employee");
 				<label>業務開始</label>
 				<select name="startYear" required>
 					<option value="">-</option>
-					<c:forEach end="${nowYear}" begin="1980" step="1" var="i">
-						<option value="${i}">
-							<c:out value="${i}" />
+					<c:forEach var="MyL" items="${yearL}">
+						<option value="${MyL}">
+						<c:out value="${MyL}" />
 						</option>
 					</c:forEach>
 				</select>
@@ -68,9 +70,9 @@ Employee employee = (Employee) request.getAttribute("employee");
 				<label>業務終了</label>
 				<select name="endYear">
 					<option value="">-</option>
-					<c:forEach end="${nowYear}" begin="1980" step="1" var="i">
-						<option value="${i}" >
-							<c:out value="${i}" />
+					<c:forEach var="MyL" items="${yearL}">
+						<option value="${MyL}">
+						<c:out value="${MyL}" />
 						</option>
 					</c:forEach>
 				</select>

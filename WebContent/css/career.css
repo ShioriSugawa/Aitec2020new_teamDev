@@ -1,11 +1,13 @@
 @charset "UTF-8";
 
+//下記2項目400→600
+
 .careerRegister-form {
-  width : 400px;
+  width : 600px;
 }
 
 .careerUpdater-form {
-  width : 400px;
+  width : 600px;
 }
 
 
