@@ -240,4 +240,28 @@ public class SkillsDAO {
 		}
 	}
 
+	public void masterDelete(int mcId) throws SQLException{
+		String sql="DELETE FROM owned_certification WHERE owned_certification_id=?";
+		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
+			pStmt.setInt(1, mcId);
+			pStmt.executeUpdate();
+		}
+	}
+
+	public void otherDelete(int ocId) throws SQLException{
+		String sql="DELETE FROM owned_other_certification WHERE owned_other_certification_id=?";
+		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
+			pStmt.setInt(1, ocId);
+			pStmt.executeUpdate();
+		}
+	}
+
+	public void skillDelete(int sklId) throws SQLException{
+		String sql="DELETE FROM owned_skill WHERE owned_skill_id=?";
+		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
+			pStmt.setInt(1, sklId);
+			pStmt.executeUpdate();
+		}
+	}
+
 }

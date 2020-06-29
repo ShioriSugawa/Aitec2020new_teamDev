@@ -55,7 +55,7 @@ public class SkillsRegister extends HttpServlet {
 			Calendar cal = Calendar.getInstance();
 			int nowYear= cal.get(Calendar.YEAR);
 			List<Integer> year=new ArrayList<>();
-			for(int i=nowYear;i>=1970;i--) {
+			for(int i=nowYear;i>1970;i--) {
 				year.add(nowYear);
 				nowYear--;
 			}
@@ -72,7 +72,6 @@ public class SkillsRegister extends HttpServlet {
 			request.setAttribute("cGenL", cGenL);
 			request.setAttribute("cNameL", cNameL);
 			request.setAttribute("sGenL", sGenL);
-			//request.setAttribute("nowYear", nowYear);
 			request.setAttribute("regi", regi);
 			request.setAttribute("yearL", year);
 		} catch (SQLException e) {
@@ -93,7 +92,7 @@ public class SkillsRegister extends HttpServlet {
 		String eNum=request.getParameter("employeeNumber");
 		String regiSel=request.getParameter("regiSelect");
 
-		if("mst".contentEquals(regiSel)) {
+		if("mst".equals(regiSel)) {
 			String mstCode =request.getParameter("mstCode");
 			String mstYear =request.getParameter("mstYear");
 			String mstMonth =request.getParameter("mstMonth");
@@ -134,7 +133,7 @@ public class SkillsRegister extends HttpServlet {
 			}
 		}
 
-		if("oth".contentEquals(regiSel)) {
+		if("oth".equals(regiSel)) {
 			String othGenre =request.getParameter("othGenre");
 			String othName =request.getParameter("othName");
 			String othYear =request.getParameter("othYear");
@@ -180,7 +179,7 @@ public class SkillsRegister extends HttpServlet {
 			}
 		}
 
-		if("skl".contentEquals(regiSel)) {
+		if("skl".equals(regiSel)) {
 			String sklGenre =request.getParameter("sklGenre");
 			String sklName =request.getParameter("sklName");
 			String emptyMessage=null;

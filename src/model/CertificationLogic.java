@@ -35,7 +35,7 @@ public class CertificationLogic {
 			genre = sDAO.getCertiGenre();
 		}catch(SQLException e) {
 			throw new ServletException(e);
-	}
+		}
 		return genre;
 	}
 
@@ -114,6 +114,28 @@ public class CertificationLogic {
 			throw new ServletException(e);
 		}
 		return ownedMst;
+	}
+
+
+	public void mstDelete(int mcId) throws ServletException{
+		SkillsDAO sDAO=new SkillsDAO(connection);
+		try {
+			//DB処理実行
+			sDAO.masterDelete(mcId);
+		}catch(SQLException e) {
+			throw new ServletException(e);
+		}
+	}
+
+
+	public void othDelete(int ocId) throws ServletException{
+		SkillsDAO sDAO=new SkillsDAO(connection);
+		try {
+			//DB処理実行
+			sDAO.otherDelete(ocId);
+		}catch(SQLException e) {
+			throw new ServletException(e);
+		}
 	}
 
 }

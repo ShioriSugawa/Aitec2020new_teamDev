@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -49,6 +50,11 @@ public class SkillsUpdate extends HttpServlet {
 			CertificationLogic cLogic=new CertificationLogic(connection);
 			Calendar cal = Calendar.getInstance();
 			int nowYear= cal.get(Calendar.YEAR);
+			List<Integer> year=new ArrayList<>();
+			for(int i=nowYear;i>1970;i--) {
+				year.add(nowYear);
+				nowYear--;
+			}
 			mc=request.getParameter("owned_certification_id");
 			oc=request.getParameter("owned_other_certification_id");
 			skl=request.getParameter("owned_skill_id");
@@ -60,13 +66,16 @@ public class SkillsUpdate extends HttpServlet {
 				Certification mst=cLogic.getOwnedMst(mcI);
 				String sldYear=mst.getCertiDate().substring(0,4);
 				String sldMonth=mst.getCertiDate().substring(5);
-				int sYeI = Integer.parseInt(sldYear);
+				int sYeI=0;
+				if(!(sldYear.equals("70以前"))) {
+					sYeI = Integer.parseInt(sldYear);
+				}
 				int sMonI = Integer.parseInt(sldMonth);
 				// リクエストスコープに保存
 				request.setAttribute("mst", mst);
 				request.setAttribute("sYeI", sYeI);
 				request.setAttribute("sMonI", sMonI);
-				request.setAttribute("nowYear", nowYear);
+				request.setAttribute("yearL", year);
 				// マスタ資格編集にフォワード
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/certificationUpdate.jsp");
 				dispatcher.forward(request, response);
@@ -78,14 +87,17 @@ public class SkillsUpdate extends HttpServlet {
 				List<Certification>cGenL=cLogic.getCertiGenre();
 				String sldYear=oth.getCertiDate().substring(0,4);
 				String sldMonth=oth.getCertiDate().substring(5);
-				int sYeI = Integer.parseInt(sldYear);
+				int sYeI=0;
+				if(!(sldYear.equals("70以前"))) {
+					sYeI = Integer.parseInt(sldYear);
+				}
 				int sMonI = Integer.parseInt(sldMonth);
 				// リクエストスコープに保存
 				request.setAttribute("cGenL", cGenL);
 				request.setAttribute("oth", oth);
 				request.setAttribute("sYeI", sYeI);
 				request.setAttribute("sMonI", sMonI);
-				request.setAttribute("nowYear", nowYear);
+				request.setAttribute("yearL", year);
 				// その他資格編集にフォワード
 
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/otherCertificationUpdate.jsp");

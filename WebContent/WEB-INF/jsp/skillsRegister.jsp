@@ -31,7 +31,7 @@
 			</div>
 		</header>
 
-		<form class="register-form" action="/SelfIntroduction/SkillsRegister" method="post" onSubmit="return confirmRegister()">
+		<form name="mosDate" class="register-form" action="/SelfIntroduction/SkillsRegister" method="post" >
 			<input type="hidden" name="employeeNumber" value="${eNum}">
 
 			<input type="radio" id="raM" name="regiSelect" value="mst"
@@ -56,28 +56,19 @@
 						<option value="${MyL}"
 						<c:if test="${ sldMY == MyL}">selected</c:if>><c:out value="${MyL}年" /></option>
 					</c:forEach>
+					<option value="70以前">1970年～</option>
+					</select>
 
-			<%--	<% int year=nowYear+1;%><%
-	for(int i=nowYear;i>=1970;i--){year=year-1;%>
-	<option value="${year}" <c:if test="${ regi==null}">selected</c:if>><c:out value="${year}年" /></option>
-	<%}%>		--%>
-
-
-				<%-- 	<c:forEach begin="${nowYear}" end="1970" step="-1" var="i">
-						<option value="${i}" <c:if test="${ regi==null}">selected</c:if>><c:out value="${i}年" /></option>
-					</c:forEach>	--%>
-				</select>
-
-				<select name="mstMonth" id="raMm" disabled >
-					<option disabled <c:if test="${ emptyMessage == null }">selected</c:if> value="empty">月</option>
-					<c:forEach begin="1" end="9" step="1" var="i">
-						<option value="0${i}" <c:if test="${regi==null }">selected</c:if>><c:out value="${i}月" /></option>
-					</c:forEach>
-					<c:forEach begin="10" end="12" step="1" var="i">
-						<option value="${i}" <c:if test="${ regi==null}">selected</c:if>><c:out value="${i}月" /></option>
-					</c:forEach>
-				</select><br>
-			<br>
+					<select name="mstMonth" id="raMm" disabled >
+						<option disabled <c:if test="${ emptyMessage == null }">selected</c:if> value="empty">月</option>
+						<c:forEach begin="1" end="9" step="1" var="i">
+							<option value="0${i}" <c:if test="${regi==null }">selected</c:if>><c:out value="${i}月" /></option>
+						</c:forEach>
+						<c:forEach begin="10" end="12" step="1" var="i">
+							<option value="${i}" <c:if test="${ regi==null}">selected</c:if>><c:out value="${i}月" /></option>
+						</c:forEach>
+					</select><br>
+				<br>
 
 
 			<input type="radio" id="raO" name="regiSelect" value="oth"
@@ -98,12 +89,15 @@
 					<br>
 
 				<label>取得日：</label>
-					<select name="othYear" id="raOy" disabled >
-					<option disabled <c:if test="${ emptyMessage == null }">selected</c:if>>年</option>
-					<c:forEach begin="${nowYear}" end="1950" var="i">
-						<option value="${i}" <c:if test="${ regi==null}">selected</c:if>><c:out value="${i}年" /></option>
+					<select name="mstYear" id="raMy" disabled >
+					<option disabled <c:if test="${ emptyMessage == null }">selected</c:if> value="empty">年</option>
+
+					<c:forEach var="MyL" items="${yearL}">
+						<option value="${MyL}"
+						<c:if test="${ sldMY == MyL}">selected</c:if>><c:out value="${MyL}年" /></option>
 					</c:forEach>
-				</select>
+					<option value="70以前">1970年～</option>
+					</select>
 
 				<select name="othMonth" id="raOm" disabled >
 					<option disabled <c:if test="${ emptyMessage == null }">selected</c:if>>月</option>
@@ -138,7 +132,7 @@
 
 
 			<input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${ eNum }'">
-			<input type="button" onclick="submit();" class="button career-button" value="登録">
+			<input type="button" id="sklsRegi" class="button career-button" value="登録">
 
 		</form>
 
@@ -148,7 +142,8 @@
 				// 確認ダイアログの表示
 				if(window.confirm('登録してよろしいでしょうか？')){
 					// 「OK」時の処理
-					return true; // 更新処理実行（post送信）
+					document.mosDate.submit();
+					//return true; // 更新処理実行（post送信）
 				}
 				return false; // キャンセル時は何もしない
 			}
@@ -157,6 +152,9 @@
 		<script src="./js/bootstrap.bundle.min.js"></script>
 
 		<script>
+		var sklsRegi = document.getElementById("sklsRegi");
+		sklsRegi.addEventListener('click',confirmRegister,false)
+
 		var VraM = document.getElementById("raM");
 		var VraO = document.getElementById("raO");
 		var VraS = document.getElementById("raS");

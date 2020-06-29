@@ -27,26 +27,30 @@
 			</div>
 		</header>
 
-		<label>資格名：${mst.certiName}</label><br>
+		<label>資格名：${mst.certiName}</label>
+		<input type="button" class="button" value="削除" onclick="confirmDelete()">
+		<br>
+
 		<label>ジャンル：${mst.certiGenre}</label><br>
 
-		<form action="/SelfIntroduction/SkillsUpdate" method="post" onSubmit="return confirmUpdate()">
+		<form name="mUp" action="/SelfIntroduction/SkillsUpdate" method="post" >
 
 			<input type="hidden" name="MownedId" value="${mst.ownedId}">
 			<input type="hidden" name="employeeNumber" value="${mst.employeeNumber }">
 
-			<label>認定日：</label>
+			<label>取得日：</label>
 				<select name="mstYear" required>
-					<option disabled>-</option>
-					<c:forEach begin="1950" end="${nowYear}" step="1" var="i">
-						<option value="${i}" <c:if test="${i == sYeI}">selected</c:if> >
-							<c:out value="${i}年" />
+					<option disabled>　年　</option>
+					<c:forEach var="MyL" items="${yearL}">
+						<option value="${MyL}" <c:if test="${MyL == sYeI}">selected</c:if> >
+							<c:out value="${MyL}年" />
 						</option>
 					</c:forEach>
+					<option value="70以前" <c:if test="${0 == sYeI}">selected</c:if>>1970年～</option>
 				</select>
 
 				<select name="mstMonth" required>
-					<option disabled>-</option>
+					<option disabled> 月 </option>
 					<c:forEach begin="1" end="9" step="1" var="i">
 						<option value="0${i}" <c:if test="${ i == sMonI }">selected</c:if> >
 							<c:out value="${i}月" />
@@ -61,7 +65,7 @@
 			<br>
 
 			<input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${mst.employeeNumber}'">
-			<input type="submit" class="button register-button" value="更新">
+			<input type="button" class="button register-button" value="更新" onclick="confirmUpdate()">
 
 		</form>
 
@@ -70,7 +74,8 @@
 				// 確認ダイアログの表示
 				if(window.confirm('更新してよろしいでしょうか？')){
 					// 「OK」時の処理
-					return true; // 更新処理実行（post送信）
+					document.mUp.submit();
+					//return true; // 更新処理実行（post送信）
 				}
 				return false; // キャンセル時は何もしない
 			}
@@ -79,7 +84,7 @@
 				// 確認ダイアログの表示
 				if(window.confirm('この資格情報を削除してよろしいでしょうか？')){
 					// 「OK」時の処理
-					location.href = '/SelfIntroduction/SkillsDelete?owned_skill_id=${ skl.ownedId }'; // 削除処理実行
+					location.href = '/SelfIntroduction/SkillsDelete?owned_certification_id=${ mst.ownedId }&employeeNumber=${mst.employeeNumber}'; // 削除処理実行
 				}
 			// キャンセル時は何もしない
 			}

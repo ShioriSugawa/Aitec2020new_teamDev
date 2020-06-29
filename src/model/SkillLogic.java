@@ -68,4 +68,14 @@ public class SkillLogic {
 		return genre;
 	}
 
+	public void sklDelete(int sklId) throws ServletException{
+		SkillsDAO sDAO=new SkillsDAO(connection);
+		try {
+			//DB処理実行
+			sDAO.skillDelete(sklId);
+		}catch(SQLException e) {
+			throw new ServletException(e);
+		}
+	}
+
 }
