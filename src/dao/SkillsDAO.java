@@ -10,6 +10,11 @@ import java.util.List;
 import model.Certification;
 import model.Skill;
 
+	/**
+	 * システム名：自己紹介システム<br>
+	 * クラス概要：<br>
+	 * 資格スキルの登録・更新・削除のデータベース操作を行うクラス
+	 */
 public class SkillsDAO {
 
 	/** データベースへの接続オブジェクト*/
@@ -25,8 +30,10 @@ public class SkillsDAO {
 
 	//以下、保有IDによる検索
 	/**
-	 * 保有マスタ資格IDによる資格保有データ1件の取得
-	 * @param ドキュメントは編集中
+	 * マスタ資格保有IDによる資格保有データ1件の取得
+	 * @param ownedId 情報を取得したいマスタ資格保有ID
+	 * @return 該当のマスタ資格保有データ1件
+	 * @throws SQLException
 	 */
 	public Certification getOwnedMst(int ownedId)throws SQLException {
 		Certification ownedCertification=null;
@@ -55,7 +62,7 @@ public class SkillsDAO {
 		}
 	}
 	return ownedCertification;
-	}//*/
+	}
 
 
 	/**

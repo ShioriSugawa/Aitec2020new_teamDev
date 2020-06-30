@@ -46,7 +46,7 @@
 			</c:forEach>
 		</select>
 		<input type="button" class="button" value="削除" onclick="confirmDelete()"><br>
-		<br>
+
 		<c:if test="${!empty emptyMessage }">
 			<font color="red"><c:out value="${emptyMessage}は入力必須です" /></font><br></c:if>
 		<label id="sN">スキルの内容（100文字以内）</label><br>

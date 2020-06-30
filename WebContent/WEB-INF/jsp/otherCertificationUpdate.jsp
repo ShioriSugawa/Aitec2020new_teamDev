@@ -77,6 +77,8 @@
 				</select>
 			<br>
 
+			<input type="text" name="dummy" style="display:none;">
+
 			<input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${oth.employeeNumber}'">
 			<input type="button" class="button register-button" value="更新" onclick="confirmUpdate()">
 
