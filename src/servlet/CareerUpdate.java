@@ -138,7 +138,7 @@ public class CareerUpdate extends HttpServlet {
 			Boolean endError0 = false;
 			if(endYear.equals("") || endMonth.equals("")) {
 				endError0 = true;
-				request.setAttribute("endError", endError0);
+				request.setAttribute("endError0", endError0);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerUpdate.jsp");
 				dispatcher.forward(request, response);
 				return;
