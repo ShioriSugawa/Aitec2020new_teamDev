@@ -46,7 +46,7 @@
 				<option disabled <c:if test="${ reEmpty == true }" >selected</c:if> >登録する資格を選択してください</option>
 					<c:forEach var="slCerti" items="${cNameL}">
 						<option value="${slCerti.getCertiCode() += slCerti.getCertiName()}"
-						<c:if test="${ sldMC == slCerti.getCertiCode()}">selected</c:if>><c:out value="${slCerti.getCertiCode() += slCerti.getCertiName()}" /></option>
+						<c:if test="${ sldMC == slCerti.getCertiCode()}">selected</c:if>><c:out value="${slCerti.getCertiName()}" /></option>
 					</c:forEach>
 				</select><br>
 
