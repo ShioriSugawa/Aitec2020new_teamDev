@@ -9,10 +9,11 @@ import javax.servlet.ServletException;
 import dao.SkillsDAO;
 
 /**
- *  Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
+ * Copyright 2020 AitecTreasure＆Toraja Co.,Ltd<br>
  * システム名：自己紹介システム<br>
  * クラス概要：<br>
- *  資格情報に関するビジネスロジックを記述するクラス<br>
+ * 資格情報に関するビジネスロジックを記述するクラス<br>
  *
  */
 public class CertificationLogic {

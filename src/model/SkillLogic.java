@@ -8,6 +8,14 @@ import javax.servlet.ServletException;
 
 import dao.SkillsDAO;
 
+/**
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
+ * Copyright 2020 AitecTreasure＆Toraja Co.,Ltd<br>
+ * システム名：自己紹介システム<br>
+ * クラス概要：<br>
+ * スキル情報に関するビジネスロジックを記述するクラス<br>
+ *
+ */
 public class SkillLogic {
 
 	/** データベースへの接続オブジェクト */
