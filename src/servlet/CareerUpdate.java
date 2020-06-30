@@ -142,12 +142,14 @@ public class CareerUpdate extends HttpServlet {
 				request.setAttribute("endYError", endYError0);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerUpdate.jsp");
 				dispatcher.forward(request, response);
+				return;
 			}
 			if(endMonth.equals("")) {
 				endMError0 = true;
 				request.setAttribute("endMError0", endMError0);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerUpdate.jsp");
 				dispatcher.forward(request, response);
+				return;
 			}
 
 			//開始日より終了日が前になっている場合、再度登録画面にフォワード
@@ -165,12 +167,7 @@ public class CareerUpdate extends HttpServlet {
 				request.setAttribute("seError", seError);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerUpdate.jsp");
 				dispatcher.forward(request, response);
-			}
-			if(start > end) {
-				seError = true;
-				request.setAttribute("seError", seError);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerUpdate.jsp");
-				dispatcher.forward(request, response);
+				return;
 			}
 
 		//現在の業務を選択した場合
@@ -184,6 +181,7 @@ public class CareerUpdate extends HttpServlet {
 				request.setAttribute("endYError1", endYError1);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerUpdate.jsp");
 				dispatcher.forward(request, response);
+				return;
 			}
 			if(endMonth.equals("")) {
 			}else {
@@ -191,6 +189,7 @@ public class CareerUpdate extends HttpServlet {
 				request.setAttribute("endMError1", endMError1);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerUpdate.jsp");
 				dispatcher.forward(request, response);
+				return;
 			}
 		}
 
