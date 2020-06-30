@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED / AitecTresure＆Toraja Co.,Ltd<br>
  * システム名：自己紹介システム<br>
  * クラス概要：<br>
- *  従業員のJavaBeansクラス<br>
+ *  従業員のJavaBeansクラスです。<br>
  */
 
 /*

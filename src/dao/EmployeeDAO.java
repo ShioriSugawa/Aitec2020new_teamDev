@@ -10,10 +10,10 @@ import java.util.List;
 import model.Employee;
 
 /**
- * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED / AitecTresure＆Toraja Co.,Ltd<br>
  * システム名：自己紹介システム<br>
  * クラス概要：<br>
- *  更新、削除等、データベースの各種操作を行うクラス<br>
+ *  更新、削除等、データベースの各種操作を行うクラスです。<br>
  */
 /*
  * 修正内容まとめ

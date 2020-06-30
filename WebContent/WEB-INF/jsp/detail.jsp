@@ -24,10 +24,14 @@
 		<label>基本情報</label>
 		<input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/EmployeeUpdate?employeeNumber=${ emp.employeeNumber }'"><br><br>
 		<div class="basicInfo">
-			<label>従業員番号 : ${emp.employeeNumber }</label><br>
-			<label>氏名: ${emp.employeeName }</label><br>
-			<label>所属 : ${emp.employeeDeployment }</label><br>
-			<label>プロフィール : ${emp.employeeProfile }</label>
+			<label>従業員番号 </label><br>
+			<p> ${emp.employeeNumber }</p><br>
+			<label>氏名</label><br>
+			<p>${emp.employeeName }</p><br>
+			<label>所属 </label><br>
+			<p> ${emp.employeeDeployment }</p><br>
+			<label>プロフィール</label><br>
+			<p> ${emp.employeeProfile }</p>
 		</div>
 
 	<div class="certificationList">
@@ -43,7 +47,8 @@
 				<th></th>
 			<thead>
 		<tbody>
-		<%-- <c:forEach var="all" items="${allCertificationList}">
+		<%-- 今後実装　資格とその他資格合わせて一つのリストに
+		<c:forEach var="all" items="${allCertificationList}">
 		<tr>
 			<td>${ all.genreName }</td>
 			<td>${ all.certificationOrSkillName }</td>
@@ -53,8 +58,8 @@
 		</c:forEach>--%>
 		<c:forEach var="mc" items="${masterCertificationList}">
 		<tr>
-			<td>${ mc.genreName }</td>
-			<td>${ mc.certificationOrSkillName }</td>
+			<td class="mGenre">${ mc.genreName }</td>
+			<td class="mName">${ mc.certificationOrSkillName }</td>
 			<td>${ mc.certificationDate }</td>
 			<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/SkillsUpdate?owned_certification_id=${ mc.ownedId }'"></td>
 		</tr>
@@ -64,8 +69,8 @@
 		</c:forEach>
 		<c:forEach var="others" items="${othersList}">
 		<tr>
-			<td>${ others.genreName }</td>
-			<td>${ others.certificationOrSkillName }</td>
+			<td class="oGenre">${ others.genreName }</td>
+			<td class="oName">${ others.certificationOrSkillName }</td>
 			<td>${ others.certificationDate }</td>
 			<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/SkillsUpdate?owned_other_certification_id=${ others.ownedId }'"></td>
 		</tr>
@@ -88,8 +93,8 @@
 		<tbody>
 		<c:forEach var="skill" items="${skillList}">
 		<tr>
-			<td>${ skill.genreName }</td>
-			<td>${ skill.certificationOrSkillName }</td>
+			<td class="sGenre">${ skill.genreName }</td>
+			<td class="sName">${ skill.certificationOrSkillName }</td>
 			<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/SkillsUpdate?owned_skill_id=${ skill.ownedId }'"></td>
 		</tr>
 		</c:forEach>
@@ -111,8 +116,8 @@
 		<tbody>
 		<c:forEach var="career" items="${careerList}">
 			<tr>
-				<td>${career.businessName }</td>
-				<td>${career.businessStart }　～　${career.businessEnd }</td>
+				<td class="cName">${career.businessName }</td>
+				<td class="cTerm">${career.businessStart }　～　${career.businessEnd }</td>
 				<td><input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/CareerUpdate?businessNumber=${ career.businessNumber }'"></td>
 		</c:forEach>
 		</tbody>

@@ -18,7 +18,7 @@ import model.Certification;
 import model.Skill;
 
 /**
- * Copyright 2020 ????????????????????????????
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED / AitecTresure＆Toraja Co.,Ltd<br>
  * システム名：自己紹介システム<br>
  * クラス概要：<br>
  * SkillsDAOの一覧取得/登録/更新/削除の単体テスト

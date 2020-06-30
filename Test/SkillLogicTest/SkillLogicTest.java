@@ -19,7 +19,7 @@ import model.Skill;
 import model.SkillLogic;
 
 /**
- * Copyright 2020 ???????????????????????????????<br>
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED / AitecTresure＆Toraja Co.,Ltd<br>
  * システム名：自己紹介システム<br>
  * クラス概要：<br>
  * SkillLogicのデータ取得/登録/更新/削除の単体テストクラス<br>
@@ -37,7 +37,7 @@ public class SkillLogicTest {
 	 * IDで保有スキルデータ1件を取得（正常）
 	 *
 	 * @throws SQLException
-	 * @thorows ServletException
+	 * @throws ServletException
 	 */
 	@Test
 	public void test01_getOwnedSkill() throws SQLException,ServletException {

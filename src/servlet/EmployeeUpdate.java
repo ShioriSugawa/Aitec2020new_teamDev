@@ -16,6 +16,7 @@ import model.Employee;
 import model.EmployeeLogic;
 
 /**
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED / AitecTresure＆Toraja Co.,Ltd<br>
  * システム名：自己紹介システム<br>
  * クラス概要：<br>
  *  従業員更新のコントローラクラスです。<br>

@@ -23,10 +23,10 @@ import model.Skill;
 import model.SkillLogic;
 
 /**
- * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED / AitecTresure＆Toraja Co.,Ltd<br>
  * システム名：自己紹介システム<br>
  * クラス概要：<br>
- *  従業員一覧のコントローラクラス<br>
+ *  従業員一覧のコントローラクラスです。<br>
  */
 
 /*

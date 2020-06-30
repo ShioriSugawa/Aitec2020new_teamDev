@@ -17,6 +17,7 @@ import model.Career;
 import model.Employee;
 
 /**
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED / AitecTresure＆Toraja Co.,Ltd<br>
  * システム名：自己紹介システム<br>
  * クラス概要：<br>
  * DetailDAOの各項目一覧取得/資格所持数取得単体のテストクラス<br>

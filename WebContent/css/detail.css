@@ -1,9 +1,15 @@
 @charset "UTF-8";
 
 label{
-	font-size: x-large;
+	font-size: xx-large;
 }
 .basicInfo label{
+	font-size: x-large;
+}
+.basicInfo{
+	max-width: 900px;
+}
+p{
 	font-size: large;
 }
 
@@ -16,14 +22,27 @@ label{
 .certiGenre{
 	width: 250px;
 }
+.mGenre{
+	max-width: 250px;
+}
+.oGenre{
+	max-width: 250px;
+}
 .certiName{
 	width: 500px;
+}
+.mName{
+	max-width: 500px;
+}
+.oName{
+	max-width: 500px;
 }
 .certiDate{
 	width: 150px;
 }
 .certificationList td{
 	text-align: center;
+	word-break: break-all;
 }
 
 .skillList{
@@ -35,11 +54,18 @@ label{
 .skillGenre{
 	width: 300px;
 }
+.sGenre{
+	max-width: 300px;
+}
 .skillName{
 	width: 600px;
 }
+.sName{
+	max-width: 600px;
+}
 .skillList td{
 	text-align: center;
+	word-break: break-all;
 }
 
 .careerList{
@@ -49,13 +75,23 @@ label{
 	text-align: center;
 }
 .careerName{
-	width: 700px;
+	width: 650px;
+}
+.cName{
+	max-width: 650px;
 }
 .careerTerm{
-	width: 200px;
+	width: 250px;
+}
+.cTerm{
+	max-width: 250px;
 }
 .careerList td{
 	text-align: center;
+	word-break: break-all;
+}
+.button{
+	margin-left: 10px;
 }
 .deletebutton{
 	margin-bottom: 20px;

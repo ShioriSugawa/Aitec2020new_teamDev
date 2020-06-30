@@ -14,10 +14,10 @@ import dao.ConnectionManager;
 import model.EmployeeLogic;
 
 /**
- * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED / AitecTresure＆Toraja Co.,Ltd<br>
  * システム名：自己紹介システム<br>
  * クラス概要：<br>
- *  従業員削除のコントローラクラス<br>
+ *  従業員削除のコントローラクラスです。<br>
  */
 @WebServlet("/EmployeeDelete")
 public class EmployeeDelete extends HttpServlet {

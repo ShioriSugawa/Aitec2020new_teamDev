@@ -11,10 +11,10 @@ import dao.DetailDAO;
 import dao.EmployeeDAO;
 
 /**
- * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED / AitecTresure＆Toraja Co.,Ltd<br>
  * システム名：自己紹介システム<br>
  * クラス概要：<br>
- *  従業員に関するビジネスロジックを記述するクラス<br>
+ *  従業員に関するビジネスロジックを記述するクラスです。<br>
  */
 /*
  * 修正内容まとめ

@@ -11,9 +11,10 @@ import model.Career;
 import model.Employee;
 
 /**
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED / AitecTresur＆Toraja Co.,Ltd<br>
  * システム名:自己紹介システム<br>
  * クラス概要:<br>
- * 従業員詳細情報画面に表示する資格スキルや業務経歴の情報取得のためデータベースを操作するクラス<br>
+ * 従業員詳細情報画面に表示する資格スキルや業務経歴の情報取得のためデータベースを操作するクラスです。<br>
  *
  */
 public class DetailDAO {

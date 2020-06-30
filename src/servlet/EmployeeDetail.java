@@ -17,9 +17,10 @@ import model.Career;
 import model.Employee;
 import model.EmployeeLogic;
 /**
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED / AitecTresure＆Toraja Co.,Ltd<br>
  * システム名：自己紹介システム<br>
  * クラス概要：<br>
- *  従業員詳細情報のコントローラクラス<br>
+ *  従業員詳細情報のコントローラクラスです。<br>
  */
 @WebServlet("/EmployeeDetail")
 public class EmployeeDetail extends HttpServlet {

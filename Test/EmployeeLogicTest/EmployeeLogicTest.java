@@ -22,7 +22,7 @@ import model.Employee;
 import model.EmployeeLogic;
 
 /**
- * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED / AitecTresure＆Toraja Co.,Ltd<br>
  * システム名：自己紹介システム<br>
  * クラス概要：<br>
  * EmployeeLogicの一覧/登録/更新/削除/各種項目一覧取得/資格所持数取得/検索/ソートの単体テストクラス<br>

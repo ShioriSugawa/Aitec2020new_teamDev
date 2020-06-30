@@ -2,6 +2,10 @@
  /*	2020/6/17　サイズ調整開始*/
   /*width : 750px;*/
   width : 1500px;
+  max-width: 1500px;
+  display: inline-block;
+  table-layout: fixed;
+
 }
 /* 2020/6/18 追加*/
 .sortButton, .searchbutton, .resetbutton{
@@ -19,63 +23,85 @@
   padding-right: 10px;
 }
 .empList-number {
-  width : 10%;
+  /*width : 10%;*/
+  width : 150px;
+  max-width: 150px;
   text-align: center;
 }
 /*2020/6/26追加*/
 .number{
 	text-align: center;
+   max-width: 150px;
 }
 .empList-name {
-  width : 15%;
+  /*width : 15%;*/
+  width: 225px;
+  max-width: 225px;
   text-align: center;
 }
 /*2020/6/26追加*/
 .name{
 	text-align: center;
+   max-width: 225px;
+   word-break: break-all;
 }
 /* 2020/6/17 追加*/
 .empList-deployment{
-	width : 10%;
+	/*width : 10%;*/
+	width : 150px;
+	max-width: 150px;
 	text-align: center;
 }
 /*2020/6/26追加*/
 .deployment{
 	text-align: center;
+   max-width: 150px;
 }
 .empList-profile {
-  width : 30%;
+  /*width : 30%;*/
+  width: 450px;
+  max-width: 450px;
   text-align: center;
 }
 /*2020/6/26追加*/
-/*.profile{
-	text-align: center;
-}*/
+.profile{
+   max-width: 450px;
+   word-break: break-all;
+}
 /* 2020/6/17 追加*/
 .empList-count{
-	width : 5%;
+	/*width : 5%;*/
+	width: 75px;
+	max-width: 75px;
 	text-align: center;
 }
 /*2020/6/26追加*/
 .count{
 	text-align: center;
+	max-width: 75px;
 }
 /* 2020/6/17 追加*/
 .empList-business{
-	width : 25%;
+	/*width : 25%;*/
+	width: 375px;
+	max-width: 375px;
 	text-align: center;
 }
 /*2020/6/26追加*/
-/*.business{
-	text-align: center;
-}*/
+.business{
+   max-width: 375px;
+   word-break: break-all;
+}
 .empList-edit {
-  width : 5%;
+  /*width : 5%;*/
+  width : 75px;
+  max-width: 75px;
   text-align: center;
 }
 /*2020/6/26追加*/
 .edit{
 	text-align: center;
+	max-width: 75px;
 }
 
 .number-of-list {
