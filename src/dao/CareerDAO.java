@@ -28,7 +28,7 @@ public class CareerDAO {
 
 	/**
 	 * 業務経歴データを取得
-	 * @param employeeNumber 従業員番号
+	 * @param businessNumber 従業員番号
 	 * @return 業務経歴データ（対象が存在しない場合はnullを返却）
 	 * @throws SQLException
 	 */
