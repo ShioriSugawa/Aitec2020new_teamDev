@@ -105,18 +105,10 @@ public class CareerRegister extends HttpServlet {
 		//以前の業務を選択した場合
 		if(situation.equals("0")) {
 			//終了日が未選択なら再度登録画面にフォワード
-			Boolean endYError0 = false;
-			Boolean endMError0 = false;
-			if(endYear.equals("")) {
-				endYError0 = true;
-				request.setAttribute("endYError0", endYError0);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
-				dispatcher.forward(request, response);
-				return;
-			}
-			if(endMonth.equals("")) {
-				endMError0 = true;
-				request.setAttribute("endMError0", endMError0);
+			Boolean endError0 = false;
+			if(endYear.equals("") || endMonth.equals("")) {
+				endError0 = true;
+				request.setAttribute("endError0", endError0);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
 				dispatcher.forward(request, response);
 				return;
@@ -143,20 +135,11 @@ public class CareerRegister extends HttpServlet {
 		//現在の業務を選択した場合
 		}else {
 			//終了日が選択済みなら再度登録画面にフォワード
-			Boolean endYError1 = false;
-			Boolean endMError1 = false;
-			if(endYear.equals("")) {
+			Boolean endError1 = false;
+			if(endYear.equals("") || endMonth.equals("")) {
 			}else {
-				endYError1 = true;
-				request.setAttribute("endYError1", endYError1);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
-				dispatcher.forward(request, response);
-				return;
-			}
-			if(endMonth.equals("")) {
-			}else {
-				endMError1 = true;
-				request.setAttribute("endMError1", endMError1);
+				endError1 = true;
+				request.setAttribute("endError1", endError1);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
 				dispatcher.forward(request, response);
 				return;
