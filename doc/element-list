@@ -8,4 +8,5 @@ EmployeeDaoTest
 EmployeeLogicTest
 model
 servlet
+SkillLogicTest
 SkillsDAOTest
