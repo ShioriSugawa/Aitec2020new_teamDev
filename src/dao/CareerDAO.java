@@ -96,7 +96,6 @@ public class CareerDAO {
 	/**
 	 * 業務経歴を更新するメソッド
 	 * @param businessNumber 業務経歴番号
-	 * @param employeeNumber 従業員番号
 	 * @param businessStart 開始日
 	 * @param businessEnd 終了日
 	 * @param businessName 業務名
