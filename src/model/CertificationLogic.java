@@ -173,7 +173,7 @@ public class CertificationLogic {
 
 	/**
 	 * マスタ資格保有情報を削除するメソッド
-	 * @param ownedId
+	 * @param mcId
 	 * @throws ServletException
 	 */
 	public void mstDelete(int mcId) throws ServletException{
@@ -189,7 +189,7 @@ public class CertificationLogic {
 
 	/**
 	 * その他資格保有情報を削除するメソッド
-	 * @param ownedId
+	 * @param ocId
 	 * @throws ServletException
 	 */
 	public void othDelete(int ocId) throws ServletException{
