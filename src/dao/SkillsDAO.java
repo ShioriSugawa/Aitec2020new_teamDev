@@ -167,7 +167,7 @@ public class SkillsDAO {
 
 	/**
 	 * スキル保有IDによるスキル保有データ1件の取得
-	 * @param owned_skill_id 取得したいスキル保有データのID
+	 * @param ownedId 取得したいスキル保有データのID
 	 * @return スキル保有データ1件
 	 * @throws SQLException
 	 */
