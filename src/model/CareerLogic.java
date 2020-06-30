@@ -49,7 +49,6 @@ public class CareerLogic {
 
 	/**
 	 * 業務経歴を登録するメソッド
-	 * @param businessNumber 業務経歴番号
 	 * @param employeeNumber 従業員番号
 	 * @param startYear 開始年
 	 * @param startMonth 開始月
@@ -87,7 +86,6 @@ public class CareerLogic {
 	/**
 	 * 業務経歴を更新するメソッド
 	 * @param businessNumber 業務経歴番号
-	 * @param employeeNumber 従業員番号
 	 * @param startYear 開始年
 	 * @param startMonth 開始月
 	 * @param endYear 終了年
