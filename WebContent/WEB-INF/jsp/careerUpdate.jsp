@@ -216,7 +216,7 @@ List<Integer> yearL=(List<Integer>)request.getAttribute("yearL");
 				// 確認ダイアログの表示
 				if(window.confirm('業務経歴を削除してよろしいでしょうか？')){
 					// 「OK」時の処理
-					location.href = '/SelfIntroduction/CareerDelete?businessNumber=${ career.businessNumber },employeeNumber=${career.employeeNumber }'; // 削除処理実行
+					location.href = '/SelfIntroduction/CareerDelete?businessNumber=${ career.businessNumber }&employeeNumber=${career.employeeNumber }'; // 削除処理実行
 				}
 				// キャンセル時は何もしない
 			}
