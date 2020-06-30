@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -50,14 +51,13 @@ public class CertificationLogicTest {
 	 *
 	 * @throws SQLException
 	 */
-	@SuppressWarnings("null")
 	@Test
 	public void getCertiGenre() throws SQLException {
 		Connection connection = null;
 
 		//DAOのJMockit
 		new Expectations() {{
-			List<Certification>genreList = null;
+			List<Certification>genreList = new ArrayList<>();
 			Certification certi1 = new Certification("AAA", "ジャンル1");
 			Certification certi2 = new Certification("BBB", "ジャンル2");
 			genreList.add(certi1);
@@ -95,14 +95,13 @@ public class CertificationLogicTest {
 	 *
 	 * @throws SQLException
 	 */
-	@SuppressWarnings("null")
 	@Test
 	public void getCertiName() throws SQLException {
 		Connection connection = null;
 
 		//DAOのJMockit
 		new Expectations() {{
-			List<Certification>nameList = null;
+			List<Certification>nameList = new ArrayList<>();
 			Certification certi3 = new Certification("AAA001", "テスト資格1");
 			Certification certi4 = new Certification("AAA002", "テスト資格2");
 			nameList.add(certi3);
