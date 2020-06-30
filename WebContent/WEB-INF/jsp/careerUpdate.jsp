@@ -36,22 +36,27 @@ List<Integer> yearL=(List<Integer>)request.getAttribute("yearL");
 
 			<div class="career-start">
 
-				<% String start = career.getBusinessStart(); %>
+				<%--
 				<% String startYear = start.substring(0,4); %>
 				<% int startNum = Integer.parseInt(startYear); %>
+				 --%>
+
+				<% String start = career.getBusinessStart(); %>
 				<% String m = start.substring(5); %>
 
+				<%--
 				<p><%=start %>start </p>
 				<p><%=startYear %>startYesr </p>
 				<p><%=startNum +1 %>startNum </p>
 				<p><%=m %>m </p>
+				 --%>
+
 
 				<label>業務開始</label>
 				<select name="startYear" required>
 					<option value="">-</option>
 					<c:forEach var="MyL" items="${yearL}">
-						<option value="${MyL}"
-							<c:if test="${ MyL == startNum}">selected</c:if>>
+						<option value="${MyL}"<c:if test="${ MyL == startNum}">selected</c:if>>
 							<c:out value="${MyL}" />
 						</option>
 					</c:forEach>
@@ -111,16 +116,19 @@ List<Integer> yearL=(List<Integer>)request.getAttribute("yearL");
 
 			<%}else{ %>
 
-				<% String end = career.getBusinessEnd(); %>
+				<%--
 				<% String endYear = end.substring(0,4); %>
+				<% int endNum = Integer.parseInt(endYear); %>
+				 --%>
+
+				<% String end = career.getBusinessEnd(); %>
 				<% String e = end.substring(5); %>
 
 				<label>業務終了</label>
 				<select name="endYear">
 					<option value="">-</option>
 					<c:forEach var="MyL" items="${yearL}">
-						<option value="${MyL}"
-							<c:if test="${ endYear == MyL}"> selected </c:if>>
+						<option value="${MyL}"<c:if test="${ endNum == MyL}"> selected </c:if>>
 							<c:out value="${MyL}" />
 						</option>
 					</c:forEach>

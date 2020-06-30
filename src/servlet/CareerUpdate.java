@@ -54,29 +54,27 @@ public class CareerUpdate extends HttpServlet {
 				nowYear--;
 			}
 
-			/*
 			String start = career.getBusinessStart();
 			String startYear = start.substring(0,4);
-			String startMonth = start.substring(5);
+			//String startMonth = start.substring(5);
 			int startNum = Integer.parseInt(startYear);
 			request.setAttribute("startNum", startNum);
-			request.setAttribute("startMonth", startMonth);
+			//request.setAttribute("m", startMonth);
 
 			if(career.getBusinessEnd()==null) {
 			}else {
 				String end = career.getBusinessEnd();
 				String endYear = end.substring(0,4);
-				String endMonth = end.substring(5);
-				request.setAttribute("endYear", endYear);
-				request.setAttribute("endMonth", endMonth);
+				//String endMonth = end.substring(5);
+				int endNum = Integer.parseInt(endYear);
+				//request.setAttribute("endYear", endYear);
+				//request.setAttribute("e", endMonth);
+				request.setAttribute("endNum", endNum);
 			}
-			*/
-
 
 			// リクエストスコープに保存
 			request.setAttribute("career", career);
 			request.setAttribute("yearL", year);
-
 
 		}catch (SQLException e) {
 			throw new ServletException(e);
@@ -114,6 +112,18 @@ public class CareerUpdate extends HttpServlet {
 				year.add(nowYear);
 				nowYear--;
 			}
+			String start = career.getBusinessStart();
+			String startY = start.substring(0,4);
+			int startNum = Integer.parseInt(startY);
+			request.setAttribute("startNum", startNum);
+
+			if(career.getBusinessEnd()==null) {
+			}else {
+				String end = career.getBusinessEnd();
+				String endY = end.substring(0,4);
+				int endNum = Integer.parseInt(endY);
+				request.setAttribute("endNum", endNum);
+			}
 
 			// リクエストスコープに保存
 			request.setAttribute("career", career);
@@ -150,6 +160,12 @@ public class CareerUpdate extends HttpServlet {
 			int start = a + b;
 			int end = x + y;
 			Boolean seError = false;
+			if(start > end) {
+				seError = true;
+				request.setAttribute("seError", seError);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerUpdate.jsp");
+				dispatcher.forward(request, response);
+			}
 			if(start > end) {
 				seError = true;
 				request.setAttribute("seError", seError);

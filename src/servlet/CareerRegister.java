@@ -136,6 +136,12 @@ public class CareerRegister extends HttpServlet {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
 				dispatcher.forward(request, response);
 			}
+			if(start > end) {
+				seError = true;
+				request.setAttribute("seError", seError);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/careerRegister.jsp");
+				dispatcher.forward(request, response);
+			}
 
 		//現在の業務を選択した場合
 		}else {
