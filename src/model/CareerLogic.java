@@ -28,6 +28,7 @@ public class CareerLogic {
 
 	/**
 	 * 業務経歴データを取得するメソッド
+	 * @param businessNumber 業務経歴番号
 	 * @return 業務経歴データ
 	 * @throws ServletException
 	 */
@@ -50,8 +51,10 @@ public class CareerLogic {
 	 * 業務経歴を登録するメソッド
 	 * @param businessNumber 業務経歴番号
 	 * @param employeeNumber 従業員番号
-	 * @param businessStart 開始日
-	 * @param businessEnd 終了日
+	 * @param startYear 開始年
+	 * @param startMonth 開始月
+	 * @param endYear 終了年
+	 * @param endMonth 終了月
 	 * @param businessName 業務名
 	 * @param situation 状況
 	 * @throws ServletException
@@ -85,8 +88,10 @@ public class CareerLogic {
 	 * 業務経歴を更新するメソッド
 	 * @param businessNumber 業務経歴番号
 	 * @param employeeNumber 従業員番号
-	 * @param businessStart 開始日
-	 * @param businessEnd 終了日
+	 * @param startYear 開始年
+	 * @param startMonth 開始月
+	 * @param endYear 終了年
+	 * @param endMonth 終了月
 	 * @param businessName 業務名
 	 * @param situation 状況
 	 * @throws ServletException
