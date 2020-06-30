@@ -80,7 +80,6 @@ public class Career implements Serializable {
 	}
 
 
-
 	/**
 	 * 業務経歴番号を設定
 	 * @param businessNumber 業務名
