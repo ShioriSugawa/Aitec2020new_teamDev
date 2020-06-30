@@ -18,9 +18,8 @@ public class Career implements Serializable {
 	 * @param employeeNumber 従業員番号
 	 * @param businessStart 業務開始日
 	 * @param businessEnd 業務終了日
-	 * @param businessNname 業務名
+	 * @param businessName 業務名
 	 * @param situation 状況
-	 * @return
 	 */
 	public  Career(String businessNumber, String employeeNumber, String businessStart, String businessEnd, String businessName, String situation) {
 		this.businessNumber = businessNumber;
@@ -99,16 +98,16 @@ public class Career implements Serializable {
 	}
 
 	/**
-	 * 業務終了日を設定
-	 * @param businessName 業務名
+	 * 業務開始日を設定
+	 * @param businessStart 開始日
 	 */
 	public void setBusinessStart(String businessStart) {
 		this.businessStart = businessStart;
 	}
 
 	/**
-	 * 業務開始日を設定
-	 * @param businessName 業務名
+	 * 業務終了日を設定
+	 * @param businessEnd 終了日
 	 */
 	public void setBusinessEnd(String businessEnd) {
 		this.businessEnd = businessEnd;
