@@ -9,6 +9,7 @@ import model.Career;
 
 /**
  * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
+ * Copyright 2020 AitecTresur＆Toraja Co.,Ltd<br>
  * システム名：自己紹介システム<br>
  * クラス概要：業務経歴に関する更新、削除等、データベースの各種操作を行うクラス<br>
  */
