@@ -9,8 +9,10 @@
 <% List<Certification> cNameL = (List<Certification>)request.getAttribute("cNameL");%>
 <% List<Skill> sGenL = (List<Skill>)request.getAttribute("sGenL");%>
 <% String regi=(String)request.getAttribute("regi");%>
-<%! String emptyMessage=null;%>
-<% emptyMessage=(String)request.getAttribute("emptyMessage");%>
+<% String emptyMessage=(String)request.getAttribute("emptyMessage");%>
+<c:if test="${emptyMessage==''||emptyMessage==null}" var="reEmpty" />
+<% String doubleMessage=(String)request.getAttribute("doubleMessage");%>
+<c:if test="${empty doubeMessage}" var="reDouble" />
 <% List<Integer> yearL=(List<Integer>)request.getAttribute("yearL");%>
 <!DOCTYPE html>
 <html>
@@ -33,24 +35,24 @@
 
 		<form name="mosDate" class="register-form" action="/SelfIntroduction/SkillsRegister" method="post" >
 			<input type="hidden" name="employeeNumber" value="${eNum}">
-
 			<input type="radio" id="raM" name="regiSelect" value="mst"
 			<c:if test="${regi == 'c'}"> checked="checked"</c:if>>
 			<label for="raM">資格（一覧から選択）</label><br>
-		<c:if test="${emptyMessage!=null && regi.equals('c')}">
-		<font color="red"><c:out value="一覧の資格の登録には${emptyMessage}の入力が必須です" /></font><br></c:if>
-
-				<select name="mstCode" id="raMc" disabled >
-				<option disabled <c:if test="${ emptyMessage == null }" >selected</c:if> value="empty">登録する資格を選択してください</option>
+		<c:if test="${!empty doubleMessage && regi.equals('c')}">
+			<font color="red"><c:out value="${doubleMessage}" /></font><br></c:if>
+		<c:if test="${reEmpty==false && regi.equals('c')}">
+			<font color="red"><c:out value="一覧の資格の登録には${emptyMessage}の入力が必須です" /></font><br></c:if>
+				<select name="mstInfo" id="raMc" disabled >
+				<option disabled <c:if test="${ reEmpty == true }" >selected</c:if> >登録する資格を選択してください</option>
 					<c:forEach var="slCerti" items="${cNameL}">
-						<option value="${slCerti.getCertiCode() }"
-						<c:if test="${ sldMC == slCerti.getCertiCode()}">selected</c:if>><c:out value="${slCerti.getCertiName()}" /></option>
+						<option value="${slCerti.getCertiCode() += slCerti.getCertiName()}"
+						<c:if test="${ sldMC == slCerti.getCertiCode()}">selected</c:if>><c:out value="${slCerti.getCertiCode() += slCerti.getCertiName()}" /></option>
 					</c:forEach>
 				</select><br>
 
 				<label>取得日：</label>
 					<select name="mstYear" id="raMy" disabled >
-					<option disabled <c:if test="${ emptyMessage == null }">selected</c:if> value="empty">年</option>
+					<option disabled <c:if test="${ reEmpty == true }">selected</c:if> >年</option>
 
 					<c:forEach var="MyL" items="${yearL}">
 						<option value="${MyL}"
@@ -60,12 +62,12 @@
 					</select>
 
 					<select name="mstMonth" id="raMm" disabled >
-						<option disabled <c:if test="${ emptyMessage == null }">selected</c:if> value="empty">月</option>
+						<option disabled <c:if test="${ reEmpty == true }">selected</c:if> >月</option>
 						<c:forEach begin="1" end="9" step="1" var="i">
-							<option value="0${i}" <c:if test="${regi==null }">selected</c:if>><c:out value="${i}月" /></option>
+							<option value="0${i}" <c:if test="${i==sldMM }">selected</c:if> ><c:out value="${i}月" /></option>
 						</c:forEach>
 						<c:forEach begin="10" end="12" step="1" var="i">
-							<option value="${i}" <c:if test="${ regi==null}">selected</c:if>><c:out value="${i}月" /></option>
+							<option value="${i}" <c:if test="${ i==sldMM}">selected</c:if> ><c:out value="${i}月" /></option>
 						</c:forEach>
 					</select><br>
 				<br>
@@ -74,38 +76,38 @@
 			<input type="radio" id="raO" name="regiSelect" value="oth"
 			<c:if test="${regi == 'o'}"> checked="checked"</c:if>>
 			<label for="raO">資格（一覧にない資格の登録）</label><br>
-		<c:if test="${emptyMessage!=null && regi.equals('o')}">
+		<c:if test="${reEmpty==false && regi.equals('o')}">
 		<font color="red"><c:out value="手入力資格の登録には${emptyMessage}の入力が必須です" /></font><br></c:if>
 
 				<select name="othGenre" id="raOg" disabled >
-				<option disabled <c:if test="${ emptyMessage == null }">selected</c:if> value="empty">ジャンルを選択してください</option>
+				<option disabled <c:if test="${ reEmpty == true }">selected</c:if> >ジャンルを選択してください</option>
 					<c:forEach var="slGenre" items="${cGenL}">
-						<option value="${slGenre.getCertiCode() }" <c:if test="${regi==null }">selected</c:if>><c:out value="${slGenre.getCertiName()}" /></option>
+						<option value="${slGenre.getCertiCode() }" <c:if test="${sldOG== slGenre.getCertiCode()}">selected</c:if>><c:out value="${slGenre.getCertiName()}" /></option>
 					</c:forEach>
 				</select><br>
 
 				<label for="raOn">資格名（100文字以内）</label><br>
-					<input disabled required type="text" name="othName" id="raOn" maxlength='100' placeholder='資格名を入力してください'>
+					<input disabled type="text" name="othName" id="raOn" value="${sldON }" maxlength='100' placeholder='資格名を入力してください'>
 					<br>
 
 				<label>取得日：</label>
-					<select name="mstYear" id="raMy" disabled >
-					<option disabled <c:if test="${ emptyMessage == null }">selected</c:if> value="empty">年</option>
+					<select name="othYear" id="raOy" disabled >
+					<option disabled <c:if test="${ reEmpty == true }">selected</c:if> >年</option>
 
-					<c:forEach var="MyL" items="${yearL}">
-						<option value="${MyL}"
-						<c:if test="${ sldMY == MyL}">selected</c:if>><c:out value="${MyL}年" /></option>
+					<c:forEach var="OyL" items="${yearL}">
+						<option value="${OyL}"
+						<c:if test="${ sldOY == OyL}">selected</c:if>><c:out value="${OyL}年" /></option>
 					</c:forEach>
 					<option value="70以前">1970年～</option>
 					</select>
 
 				<select name="othMonth" id="raOm" disabled >
-					<option disabled <c:if test="${ emptyMessage == null }">selected</c:if>>月</option>
+					<option disabled <c:if test="${ reEmpty == true}">selected</c:if>>月</option>
 					<c:forEach begin="1" end="9" step="1" var="i">
-						<option value="0${i}" <c:if test="${ regi==null}">selected</c:if>><c:out value="${i}月" /></option>
+						<option value="0${i}" <c:if test="${ i==sldOM}">selected</c:if>><c:out value="${i}月" /></option>
 					</c:forEach>
 					<c:forEach begin="10" end="12" step="1" var="i">
-						<option value="${i}" <c:if test="${ regi==null}">selected</c:if>><c:out value="${i}月" /></option>
+						<option value="${i}" <c:if test="${ i==sldOM}">selected</c:if>><c:out value="${i}月" /></option>
 					</c:forEach>
 				</select><br>
 			<br>
@@ -114,25 +116,26 @@
 			<input type="radio" id="raS" name="regiSelect" value="skl"
 			<c:if test="${regi=='s'}"> checked="checked"</c:if>>
 			<label for="raS">スキル（ジャンルを選択して内容を記入）</label><br>
-		<c:if test="${emptyMessage!=null && regi.equals('s')}">
+		<c:if test="${reEmpty==false && regi.equals('s')}">
 		<font color="red"><c:out value="スキルの登録には${emptyMessage}の入力が必須です" /></font><br></c:if>
 
 				<select name="sklGenre" id="raSg" disabled >
-				<option disabled value="empty" <c:if test="${ emptyMessage == null }">selected</c:if>>ジャンルを選択してください</option>
+				<option disabled <c:if test="${ reEmpty == true }">selected</c:if>>ジャンルを選択してください</option>
 					<c:forEach var="slGenre" items="${sGenL}">
-						<option value="${slGenre.getGenreCode() }" <c:if test="${regi==null }">selected</c:if>><c:out value="${slGenre.getGenreName()}" /></option>
+						<option value="${slGenre.getGenreCode() }" <c:if test="${sldSG== slGenre.getGenreCode()}">selected</c:if>><c:out value="${slGenre.getGenreName()}" /></option>
 					</c:forEach>
 				</select><br>
 
 				<label for="raSn">スキルの内容（100文字以内）</label><br>
-					<textarea disabled required name="sklName" id="raSn" maxlength='100' placeholder="スキルの内容を具体的に記入してください"></textarea>
+					<textarea disabled name="sklName" id="raSn" maxlength='100' placeholder="スキルの内容を具体的に記入してください">${sldSN}</textarea>
 					<br>
 
 				<br>
 
+			<input type="text" name="dummy" style="display:none;">
 
 			<input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${ eNum }'">
-			<input type="button" id="sklsRegi" class="button career-button" value="登録">
+			<input type="button" onclick="confirmRegister()" id="sklsRegi" class="button career-button" value="登録">
 
 		</form>
 
@@ -152,14 +155,12 @@
 		<script src="./js/bootstrap.bundle.min.js"></script>
 
 		<script>
-		var sklsRegi = document.getElementById("sklsRegi");
-		sklsRegi.addEventListener('click',confirmRegister,false)
-
 		var VraM = document.getElementById("raM");
 		var VraO = document.getElementById("raO");
 		var VraS = document.getElementById("raS");
 
 		window.addEventListener('load',activM,false);
+		window.addEventListener('load',activO,false);
 		window.addEventListener('load',activS,false);
 
 		VraM.addEventListener('change', activM);
@@ -189,9 +190,6 @@
 				VraOn.disabled = true;
 				VraSg.disabled = true;
 				VraSn.disabled = true;
-
-				VraOn.required = false;
-				VraSn.required = false;
 			}
 		}
 
@@ -206,9 +204,6 @@
 				VraMm.disabled = true;
 				VraSg.disabled = true;
 				VraSn.disabled = true;
-
-				VraOn.required = true;
-				VraSn.required = false;
 			}
 		}
 
@@ -223,9 +218,6 @@
 				VraOy.disabled = true;
 				VraOm.disabled = true;
 				VraOn.disabled = true;
-
-				VraSn.required = true;
-				VraOn.required = false;
 			}
 		}
 

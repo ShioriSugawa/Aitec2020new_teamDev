@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import dao.ConnectionManager;
 import model.Certification;
 import model.CertificationLogic;
+import model.Employee;
+import model.EmployeeLogic;
 import model.Skill;
 import model.SkillLogic;
 
@@ -92,138 +94,168 @@ public class SkillsRegister extends HttpServlet {
 		String eNum=request.getParameter("employeeNumber");
 		String regiSel=request.getParameter("regiSelect");
 
-		if("mst".equals(regiSel)) {
-			String mstCode =request.getParameter("mstCode");
-			String mstYear =request.getParameter("mstYear");
-			String mstMonth =request.getParameter("mstMonth");
-			String mstDate=mstYear+"/"+mstMonth;
-			String emptyMessage=null;
+		try(Connection connection = ConnectionManager.getConnection()){
+			try {
+				CertificationLogic cLogic = new CertificationLogic(connection);
+				SkillLogic sLogic = new SkillLogic(connection);
+				EmployeeLogic eLogic = new EmployeeLogic(connection);
 
-			if(mstCode.equals("empty")) {
-				emptyMessage += "「資格名」";
-			}
-			if(mstYear.equals("empty")||mstMonth.equals("empty")) {
-				emptyMessage+="「認定日」";
-			}
-			if(emptyMessage!=null) {
-				String regi="c";
-				request.setAttribute("eNum" , eNum);
-				request.setAttribute("sldMC", mstCode);
-				request.setAttribute("sldMY" , mstYear);
-				request.setAttribute("sldMM" , mstMonth);
-				request.setAttribute("emptyMessage", emptyMessage);
-				request.setAttribute("regi", regi);
-
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillsRegister.jsp");
-				dispatcher.forward(request, response);
-			}
-
-			try(Connection connection = ConnectionManager.getConnection()){
-				try {
-					// マスタ資格保有情報を登録
-					CertificationLogic cLogic = new CertificationLogic(connection);
-					cLogic.registerMst(eNum,mstCode,mstDate);
-					connection.commit();
-				} catch (ServletException e) {
-					connection.rollback();
-					throw e;
+				Calendar cal = Calendar.getInstance();
+				int nowYear= cal.get(Calendar.YEAR);
+				List<Integer> year=new ArrayList<>();
+				for(int i=nowYear;i>1970;i--) {
+					year.add(nowYear);
+					nowYear--;
 				}
-			}catch(SQLException e){
-				throw new ServletException(e);
-			}
-		}
 
-		if("oth".equals(regiSel)) {
-			String othGenre =request.getParameter("othGenre");
-			String othName =request.getParameter("othName");
-			String othYear =request.getParameter("othYear");
-			String othMonth =request.getParameter("othMonth");
-			String othDate=othYear+"/"+othMonth;
-			String emptyMessage=null;
+				List<Certification>cGenL=cLogic.getCertiGenre();
+				List<Certification>cNameL=cLogic.getCertiName();
+				List<Skill>sGenL=sLogic.getGenre();
 
-			if(othGenre.equals("empty")) {
-				emptyMessage += "「資格ジャンル」";
-			}
-			if(othName.equals("empty")) {
-				emptyMessage += "「資格名」";
-			}
-			if(othYear.equals("empty")||othMonth.equals("empty")) {
-				emptyMessage += "「認定日」";
-			}
-			if(emptyMessage!=null) {
-				String regi="o";
-				request.setAttribute("eNum" , eNum);
-				request.setAttribute("sldOG", othGenre);
-				request.setAttribute("sldON" , othName);
-				request.setAttribute("sldOY" , othYear);
-				request.setAttribute("sldOM" , othMonth);
-				request.setAttribute("emptyMessage", emptyMessage);
-				request.setAttribute("regi", regi);
+				request.setAttribute("eNum", eNum);
+				request.setAttribute("cGenL", cGenL);
+				request.setAttribute("cNameL", cNameL);
+				request.setAttribute("sGenL", sGenL);
+				request.setAttribute("yearL", year);
 
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillsRegister.jsp");
-				dispatcher.forward(request, response);
-			}
+				String emptyMessage="";
+				String doubleMessage="";
 
-			try(Connection connection = ConnectionManager.getConnection()){
-				try {
-					// その他資格保有情報を登録
-					CertificationLogic cLogic = new CertificationLogic(connection);
+				if("mst".equals(regiSel)) {
+					String mstInfo =request.getParameter("mstInfo");
+					String mstYear =request.getParameter("mstYear");
+					String mstMonth =request.getParameter("mstMonth");
+					String mstDate=mstYear+"/"+mstMonth;
+
+					List<Employee> mstL=eLogic.getMasterCertificationList(eNum);
+					String mstCode="";
+					if(mstInfo!=null) {
+						String mstName=mstInfo.substring(6);
+						mstCode=mstInfo.substring(0, 6);
+						for ( Employee j : mstL ) {
+							if(mstName.equals(j.getCertificationOrSkillName())) {
+								doubleMessage+="この資格は既に登録されています";
+								String regi="c";
+								request.setAttribute("doubleMessage", doubleMessage);
+								request.setAttribute("regi", regi);
+								request.setAttribute("eNum" , eNum);
+								request.setAttribute("sldMC", mstCode);
+								request.setAttribute("sldMY" , mstYear);
+								request.setAttribute("sldMM" , mstMonth);
+
+								request.setAttribute("sldMN", mstName);
+								request.setAttribute("sldMI", mstInfo);
+
+								RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillsRegister.jsp");
+								dispatcher.forward(request, response);
+							}
+						}
+					}
+						if(mstInfo==null) {
+							emptyMessage += "「資格名」";
+						}
+
+						if(mstYear==null||mstMonth==null) {
+							emptyMessage+="「取得日」";
+						}
+						if(emptyMessage.equals("")&&doubleMessage.equals("")) {
+							// マスタ資格保有情報を登録
+							cLogic.registerMst(eNum,mstCode,mstDate);
+							connection.commit();
+						}else{
+							String regi="c";
+							request.setAttribute("eNum" , eNum);
+							request.setAttribute("sldMC", mstCode);
+							request.setAttribute("sldMY" , mstYear);
+							request.setAttribute("sldMM" , mstMonth);
+							request.setAttribute("emptyMessage", emptyMessage);
+							request.setAttribute("regi", regi);
+							RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillsRegister.jsp");
+							dispatcher.forward(request, response);
+						}
+
+				}
+
+				if("oth".equals(regiSel)) {
+					String othGenre =request.getParameter("othGenre");
+					String othName =request.getParameter("othName");
+					String othYear =request.getParameter("othYear");
+					String othMonth =request.getParameter("othMonth");
+					String othDate=othYear+"/"+othMonth;
+
+					if(othGenre==null) {
+						emptyMessage += "「資格ジャンル」";
+					}
+					if(othName==null) {
+						emptyMessage += "「資格名」";
+					}else {
+						if(othName.isBlank()) {
+							emptyMessage+="「資格名」";
+						}
+					}
+					if(othYear==null||othMonth==null) {
+						emptyMessage += "「取得日」";
+					}
+					if(emptyMessage.equals("")){
+						// その他資格保有情報を登録
 					cLogic.registerOth(eNum,othGenre,othName,othDate);
 					connection.commit();
-				} catch (ServletException e) {
-					connection.rollback();
-					throw e;
+					}else {
+						String regi="o";
+						request.setAttribute("eNum" , eNum);
+						request.setAttribute("sldOG", othGenre);
+						request.setAttribute("sldON" , othName);
+						request.setAttribute("sldOY" , othYear);
+						request.setAttribute("sldOM" , othMonth);
+						request.setAttribute("emptyMessage", emptyMessage);
+						request.setAttribute("regi", regi);
+						RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillsRegister.jsp");
+						dispatcher.forward(request, response);
+					}
 				}
-			}catch(SQLException e){
-				throw new ServletException(e);
-			}
-		}
 
-		if("skl".equals(regiSel)) {
-			String sklGenre =request.getParameter("sklGenre");
-			String sklName =request.getParameter("sklName");
-			String emptyMessage=null;
-			if(sklGenre.equals("empty")) {
-				emptyMessage += "「スキルジャンル」";
-			}
-			if(sklName.equals("empty")) {
-				emptyMessage+="「スキル内容」";
-			}
-			if(emptyMessage!=null) {
-				String regi="s";
-				request.setAttribute("eNum" , eNum);
-				request.setAttribute("sldSG", sklGenre);
-				request.setAttribute("sldSN" , sklName);
-				request.setAttribute("emptyMessage", emptyMessage);
-				request.setAttribute("regi", regi);
-
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillsRegister.jsp");
-				dispatcher.forward(request, response);
-			}
-
-			try(Connection connection = ConnectionManager.getConnection()){
-				try {
-					// スキル情報を登録
-					SkillLogic sLogic = new SkillLogic(connection);
-					sLogic.registerSkl(eNum,sklGenre,sklName);
-					connection.commit();
-				} catch (ServletException e) {
-					connection.rollback();
-					throw e;
+				if("skl".equals(regiSel)) {
+					String sklGenre =request.getParameter("sklGenre");
+					String sklName =request.getParameter("sklName");
+					if(sklGenre==null) {
+						emptyMessage += "「スキルジャンル」";
+					}
+					if(sklName==null) {
+						emptyMessage+="「スキル内容」";
+					}else {
+						if(sklName.isBlank()) {
+							emptyMessage+="「スキル内容」";
+						}
+					}
+					if(emptyMessage.equals("")) {
+						// スキル情報を登録
+						sLogic.registerSkl(eNum,sklGenre,sklName);
+						connection.commit();
+					}else{
+						String regi="s";
+						request.setAttribute("eNum" , eNum);
+						request.setAttribute("sldSG", sklGenre);
+						request.setAttribute("sldSN" , sklName);
+						request.setAttribute("emptyMessage", emptyMessage);
+						request.setAttribute("regi", regi);
+						RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillsRegister.jsp");
+						dispatcher.forward(request, response);
+					}
 				}
-			}catch(SQLException e){
-				throw new ServletException(e);
+
+			} catch (ServletException e) {
+				throw e;
 			}
+		}catch(SQLException e){
+			throw new ServletException(e);
 		}
 
 		// 詳細画面へリダイレクト
 				String url1 = "EmployeeDetail?employeeNumber=";
 				String url2 = eNum;
 				StringBuffer buf = new StringBuffer();
-
 				buf.append(url1);
 				buf.append(url2);
-
 				String url = buf.toString();
 				response.sendRedirect(url);
 	}

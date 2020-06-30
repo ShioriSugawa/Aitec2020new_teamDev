@@ -128,97 +128,129 @@ public class SkillsUpdate extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// リクエストパラメータを取得
 		request.setCharacterEncoding("UTF-8");
-		//保有ID 受け取り、それによって条件分岐？（getと同じく）、予定
-		//下の受け取り値、わからなければメンバーに聞け！！
-
+		//保有ID 受け取り、それによって条件分岐
 		String mcIdS=request.getParameter("MownedId");
 		String othIdS=request.getParameter("OownedId");
 		String sklIdS=request.getParameter("SownedId");
 		String employeeNumber=request.getParameter("employeeNumber");
 
-		//マスタ資格IDを受け取ったら
-		if(mcIdS!=null) {
-			String mstYear=request.getParameter("mstYear");
-			String mstMonth=request.getParameter("mstMonth");
+		String emptyMessage="";
 
-			int mcId = Integer.parseInt(mcIdS);
-			String mstDate=mstYear+"/"+mstMonth;
-
+			//empty差し戻しの準備
 			try(Connection connection = ConnectionManager.getConnection()){
 				try {
-					// 該当のスキル記述を更新
 					CertificationLogic cLogic = new CertificationLogic(connection);
-					cLogic.updateMst(mcId,mstDate);
-					connection.commit();
-				} catch (ServletException e) {
-					connection.rollback();
-					throw e;
-				}
-			}catch(SQLException e){
-				throw new ServletException(e);
-			}
-		}
-
-		//その他資格IDを受け取ったら
-		if(othIdS!=null) {
-			String genCode=request.getParameter("genreCode");
-			String othYear=request.getParameter("othYear");
-			String othMonth=request.getParameter("othMonth");
-			String othName=request.getParameter("certiName");
-
-			int othId = Integer.parseInt(othIdS);
-			String othDate=othYear+"/"+othMonth;
-
-			try(Connection connection = ConnectionManager.getConnection()){
-				try {
-					// 該当のスキル記述を更新
-					CertificationLogic cLogic = new CertificationLogic(connection);
-					cLogic.updateOth(othId,genCode,othDate,othName);
-					connection.commit();
-				} catch (ServletException e) {
-					connection.rollback();
-					throw e;
-				}
-			}catch(SQLException e){
-				throw new ServletException(e);
-			}
-		}
-
-		//スキルIDを受け取ったら
-		if(sklIdS!=null) {
-			String sklGenCode=request.getParameter("skillGenre");
-			String sklName=request.getParameter("skillName");
-
-			int sklId = Integer.parseInt(sklIdS);
-
-			//あとで未入力チェックもつけないといけない
-
-			try(Connection connection = ConnectionManager.getConnection()){
-				try {
-					// 該当のスキル記述を更新
 					SkillLogic sLogic = new SkillLogic(connection);
-					sLogic.updateSkill(sklId,sklGenCode,sklName);
-					connection.commit();
-				} catch (ServletException e) {
-					connection.rollback();
+
+					Calendar cal = Calendar.getInstance();
+					int nowYear= cal.get(Calendar.YEAR);
+					List<Integer> year=new ArrayList<>();
+					for(int i=nowYear;i>1970;i--) {
+						year.add(nowYear);
+						nowYear--;
+					}
+
+
+
+					//マスタ資格IDを受け取ったら
+					if(mcIdS!=null) {
+						String mstYear=request.getParameter("mstYear");
+						String mstMonth=request.getParameter("mstMonth");
+						int mcId= Integer.parseInt(mcIdS);
+						String mstDate;mstDate=mstYear+"/"+mstMonth;
+						// 該当のスキル記述を更新
+						try {
+							cLogic.updateMst(mcId,mstDate);
+							connection.commit();
+						} catch (ServletException e) {
+							connection.rollback();
+							throw e;
+						}
+					}
+
+					//その他資格IDを受け取ったら
+					if(othIdS!=null) {
+						String genCode=request.getParameter("genreCode");
+						String othYear=request.getParameter("othYear");
+						String othMonth=request.getParameter("othMonth");
+						String othName=request.getParameter("certiName");
+						int othId = Integer.parseInt(othIdS);
+						int sYeI=0;
+						int sMonI=0;
+						List<Certification>cGenL=cLogic.getCertiGenre();
+						if(othName.isBlank()) {
+							emptyMessage+="資格名";
+							if(!(othYear.equals("70以前"))) {
+								sYeI = Integer.parseInt(othYear);
+							}
+							sMonI = Integer.parseInt(othMonth);
+						}
+						if(emptyMessage.equals("")) {
+							String othDate=othYear+"/"+othMonth;
+							try {
+								// 該当のスキル記述を更新
+								cLogic.updateOth(othId,genCode,othDate,othName);
+								connection.commit();
+							} catch (ServletException e) {
+								connection.rollback();
+								throw e;
+							}
+						}else {
+							Certification oth=cLogic.getOwnedOth(othId);
+							request.setAttribute("emptyMessage", emptyMessage);
+							request.setAttribute("oth", oth);
+							request.setAttribute("sYeI", sYeI);
+							request.setAttribute("sMonI", sMonI);
+							request.setAttribute("yearL", year);
+							request.setAttribute("cGenL", cGenL);
+							RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/otherCertificationUpdate.jsp");
+							dispatcher.forward(request, response);
+						}
+					}
+
+					//スキルIDを受け取ったら
+					if(sklIdS!=null) {
+						String sklGenCode=request.getParameter("skillGenre");
+						String sklName=request.getParameter("skillName");
+						int sklId = Integer.parseInt(sklIdS);
+						Skill oSkl=sLogic.getOwnedSkill(sklId);
+							List<Skill> skillGenre=sLogic.getGenre();
+						if(sklName.isBlank()) {
+							emptyMessage+="スキル内容";
+						}
+						if(emptyMessage.equals("")) {
+							try {
+								// 該当のスキル記述を更新
+								sLogic.updateSkill(sklId,sklGenCode,sklName);
+								connection.commit();
+							} catch (ServletException e) {
+								connection.rollback();
+								throw e;
+							}
+						}else {
+							request.setAttribute("emptyMessage", emptyMessage);
+							request.setAttribute("skillGenre", skillGenre);
+							request.setAttribute("oSkl", oSkl);
+							RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillUpdate.jsp");
+							dispatcher.forward(request, response);
+						}
+					}
+				}catch (ServletException e) {
 					throw e;
 				}
 			}catch(SQLException e){
 				throw new ServletException(e);
 			}
-		}
 
-		// 詳細画面へリダイレクト
-		String url1 = "EmployeeDetail?employeeNumber=";
-		String url2 = employeeNumber;
-		StringBuffer buf = new StringBuffer();
+			// 詳細画面へリダイレクト
+			String url1 = "EmployeeDetail?employeeNumber=";
+			String url2 = employeeNumber;
+			StringBuffer buf = new StringBuffer();
+			buf.append(url1);
+			buf.append(url2);
+			String url = buf.toString();
+			response.sendRedirect(url);
 
-		buf.append(url1);
-		buf.append(url2);
 
-		String url = buf.toString();
-		response.sendRedirect(url);
 	}
-
-
 }

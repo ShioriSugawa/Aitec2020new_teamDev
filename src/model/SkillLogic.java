@@ -36,7 +36,7 @@ public class SkillLogic {
 	//スキル登録
 	public void registerSkl(String eNum,String sklGenre,String sklName)throws ServletException {
 		SkillsDAO sDAO=new SkillsDAO(connection);
-		//入力値チェックは後で
+		//入力値チェックはサーブレット
 		try{
 			sDAO.registerSkill(eNum,sklGenre,sklName);
 		} catch (SQLException | IllegalArgumentException e) {
@@ -47,7 +47,7 @@ public class SkillLogic {
 	//スキル更新
 	public void updateSkill(int ownedId,String skillGenre,String skillName)throws ServletException {
 		SkillsDAO sDAO=new SkillsDAO(connection);
-		//入力値チェックは後で
+		//入力値チェックはサーブレット
 		try{
 			sDAO.updateSkill(ownedId,skillGenre,skillName);
 		} catch (SQLException | IllegalArgumentException e) {
@@ -68,6 +68,7 @@ public class SkillLogic {
 		return genre;
 	}
 
+	//スキルデリート
 	public void sklDelete(int sklId) throws ServletException{
 		SkillsDAO sDAO=new SkillsDAO(connection);
 		try {
@@ -77,5 +78,6 @@ public class SkillLogic {
 			throw new ServletException(e);
 		}
 	}
+
 
 }

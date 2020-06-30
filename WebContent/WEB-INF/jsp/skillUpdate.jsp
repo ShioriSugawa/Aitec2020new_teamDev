@@ -47,12 +47,13 @@
 		</select>
 		<input type="button" class="button" value="削除" onclick="confirmDelete()"><br>
 		<br>
-
+		<c:if test="${!empty emptyMessage }">
+			<font color="red"><c:out value="${emptyMessage}は入力必須です" /></font><br></c:if>
 		<label id="sN">スキルの内容（100文字以内）</label><br>
-			<textarea name="skillName" id="sN" maxlength='100' placeholder="スキルの内容を具体的に記入してください">${ oSkl.skillName }</textarea>
+			<textarea name="skillName" id="sN" required maxlength='100' placeholder="スキルの内容を具体的に記入してください">${ oSkl.skillName }</textarea>
 			<br>
             <input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${oSkl.employeeNumber}'">
-            <input type="button" class="button register-button" value="更新">
+            <input type="button" onclick="confirmUpdate()" class="button register-button" value="更新">
 
 		</form>
 

@@ -33,6 +33,8 @@
 			<input type="hidden" name="OownedId" value="${oth.ownedId}">
 			<input type="hidden" name="employeeNumber" value="${oth.employeeNumber }">
 
+			<c:if test="${!empty emptyMessage }">
+			<font color="red"><c:out value="${emptyMessage}は入力必須です" /></font><br></c:if>
 			<label id="oN">資格名：</label><%-- cssは時間があれば後で書き足す --%>
 				<input type="text" name="certiName" id="oN" maxlength='100' placeholder='資格名を入力してください' value="${ oth.certiName }" required>
 				<input type="button" class="button" value="削除" onclick="confirmDelete()"><br>
@@ -51,7 +53,7 @@
 
 			<label>取得日：</label>
 				<select name="othYear" required>
-					<option disabled>　年　</option>
+					<option disabled>年</option>
 					<c:forEach var="MyL" items="${yearL}">
 						<option value="${MyL}" <c:if test="${ MyL == sYeI }">selected</c:if> >
 							<c:out value="${MyL}年" />
@@ -61,7 +63,7 @@
 				</select>
 
 				<select name="othMonth" required>
-					<option disabled> 月 </option>
+					<option disabled>月</option>
 					<c:forEach begin="1" end="9" step="1" var="i">
 						<option value="0${i}" <c:if test="${ i == sMonI }">selected</c:if> >
 							<c:out value="${i}月" />

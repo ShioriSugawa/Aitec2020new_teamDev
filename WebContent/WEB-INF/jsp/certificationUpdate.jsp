@@ -40,7 +40,7 @@
 
 			<label>取得日：</label>
 				<select name="mstYear" required>
-					<option disabled>　年　</option>
+					<option disabled>年</option>
 					<c:forEach var="MyL" items="${yearL}">
 						<option value="${MyL}" <c:if test="${MyL == sYeI}">selected</c:if> >
 							<c:out value="${MyL}年" />
