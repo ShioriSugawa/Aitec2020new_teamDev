@@ -15,7 +15,9 @@ import model.CertificationLogic;
 import model.SkillLogic;
 
 /**
- * Servlet implementation class SkillsDelete
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
+ * システム名：自己紹介システム
+ * クラス概要：スキル資格削除のコントローラクラス
  */
 @WebServlet("/SkillsDelete")
 public class SkillsDelete extends HttpServlet {

@@ -15,6 +15,13 @@ public class Skill implements Serializable {
 	private int ownedId;
 
 	//スキル登録(4)
+	/**
+	 * コンストラクタ(スキルの登録用)[4要素]
+	 * @param employeeNumber 従業員番号
+	 * @param genreCode スキルジャンルコード
+	 * @param genreName スキルジャンル名
+	 * @param skillName スキル名
+	 */
 	public Skill(String employeeNumber,String genreCode,String genreName,String skillName) {
 		this.employeeNumber=employeeNumber;
 		this.genreCode=genreCode;
@@ -22,7 +29,14 @@ public class Skill implements Serializable {
 		this.skillName=skillName;
 	}
 
-	//スキル表示/更新(5)（更新時はnumberは無視）
+	/**
+	 * コンストラクタ(スキルの表示/編集用)[5要素]
+	 * @param ownedId スキル保有ID
+	 * @param employeeNumber 従業員番号
+	 * @param genreCode スキルジャンルコード
+	 * @param genreName スキルジャンル名
+	 * @param skillName スキル名
+	 */
 	public Skill(int ownedId,String employeeNumber,String genreCode,String genreName,String skillName) {
 		this.ownedId=ownedId;
 		this.employeeNumber=employeeNumber;
@@ -32,6 +46,11 @@ public class Skill implements Serializable {
 	}
 
 	//スキルジャンル一覧取得用
+	/**
+	 * コンストラクタ(スキルジャンル一覧取得用)
+	 * @param genreCode スキルジャンルコード
+	 * @param genreName スキルジャンル名
+	 */
 	public Skill(String genreCode,String genreName) {
 		this.genreCode=genreCode;
 		this.genreName=genreName;
@@ -40,57 +59,82 @@ public class Skill implements Serializable {
 
 
 	//以下、getter
+	/**
+	 * スキル保有IDを取得
+	 * @return スキル保有ID
+	 */
 	public int getOwnedId() {
 		return ownedId;
 	}
 
+	/**
+	 * 従業員番号を取得
+	 * @return 従業員番号
+	 */
 	public String getEmployeeNumber() {
 		return employeeNumber;
 	}
 
+	/**
+	 * スキルジャンルコードを取得
+	 * @return スキルジャンルコード
+	 */
 	public String getGenreCode() {
 		return genreCode;
 	}
 
+	/**
+	 * スキルジャンル名を取得
+	 * @return スキルジャンル名
+	 */
 	public String getGenreName() {
 		return genreName;
 	}
 
+	/**
+	 * スキル名を取得
+	 * @return スキル名
+	 */
 	public String getSkillName() {
 		return skillName;
 	}
 
 	//以下、setter
 	/**
-	 * @param employeeNumber セットする employeeNumber
+	 * 従業員番号を設定
+	 * @param employeeNumber 従業員番号
 	 */
 	public void setEmployeeNumber(String employeeNumber) {
 		this.employeeNumber = employeeNumber;
 	}
 
 	/**
-	 * @param ownedId セットする ownedId
+	 * スキル保有IDを設定
+	 * @param ownedId スキル保有ID
 	 */
 	public void setOwnedId(int ownedId) {
 		this.ownedId = ownedId;
 	}
 
 	/**
-	 * @param genreCode セットする genreCode
+	 * スキルジャンルコードを設定
+	 * @param genreCode スキルジャンルコード
 	 */
 	public void setGenreCode(String genreCode) {
 		this.genreCode = genreCode;
 	}
 
 	/**
-	 * @param genreName セットする genreName
+	 * スキルジャンル名を設定
+	 * @param genreName スキルジャンル名
 	 */
 	public void setGenreName(String genreName) {
 		this.genreName = genreName;
 	}
 
 	/**
-	 * @param skillName セットする skillName
+	 * スキル名を設定
+	 * @param skillName スキル名
 	 */
 	public void setSkillName(String skillName) {
 		this.skillName = skillName;

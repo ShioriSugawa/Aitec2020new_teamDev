@@ -15,30 +15,28 @@ public class Certification implements Serializable {
 	private int ownedId;
 
 
-	/**
-	 * 2項目リスト用
-	 * @param certiCode コード
-	 * @param certiName 名
-	 */
 	//資格[コード&名]一覧用（ジャンル・資格名共用）（マスタその他共用）
+	/**
+	 * コンストラクタ(一覧取得/マスタ資格登録用){資格ジャンル/資格名で共用}
+	 * @param certiCode 資格ジャンルコード/資格コード
+	 * @param certiName 資格ジャンル名/資格名
+	 */
 	public Certification(String certiCode,String certiName) {
 		this.certiCode=certiCode;
 		this.certiName=certiName;
 	}
 
-		//登録用コンストラクタあとで追加！！
 
 	/**
-	 * コンストラクタ(マスタ資格の表示/編集用)(7)
+	 * コンストラクタ(マスタ資格の表示/編集用)[7要素]
 	 * @param ownedId 保有資格ID
 	 * @param employeeNumber 従業員番号
 	 * @param certiCode 資格ジャンルコード
 	 * @param certiGenre 資格ジャンル名
 	 * @param masterCode 資格コード
 	 * @param certiName 資格名
-	 * @param certiDate 認定日
+	 * @param certiDate 取得日
 	 */
-
 	public Certification(int ownedId,String employeeNumber,String certiCode,String certiGenre,String masterCode,String certiName,String certiDate) {
 		this.ownedId=ownedId;
 		this.employeeNumber=employeeNumber;
@@ -50,15 +48,14 @@ public class Certification implements Serializable {
 	}
 
 	/**
-	 * コンストラクタ(その他資格の表示/編集用)(6)
+	 * コンストラクタ(その他資格の表示/編集用)[6要素]
 	 * @param ownedId 保有その他資格ID
 	 * @param employeeNumber 従業員番号
 	 * @param certiCode 資格ジャンルコード
 	 * @param certiGenre 資格ジャンル名
-	 * @param certiDate 認定日
+	 * @param certiDate 取得日
 	 * @param certiName その他資格名
 	 */
-
 	public Certification(int ownedId,String employeeNumber,String certiCode,String certiGenre,String certiDate,String certiName) {
 		this.ownedId=ownedId;
 		this.employeeNumber=employeeNumber;
@@ -85,7 +82,7 @@ public class Certification implements Serializable {
 	}
 
 	/**
-	 * コード(資格ジャンル/マスタ資格)を取得
+	 * 資格ジャンルコード/マスタ資格コードを取得
 	 * @return （資格ジャンルかマスタ資格の）コード
 	 */
 	public String getCertiCode() {
@@ -93,7 +90,7 @@ public class Certification implements Serializable {
 	}
 
 	/**
-	 * マスタ資格コードを取得（IDによる1件表示専用）（後から追加した為）
+	 * マスタ資格コードを取得（IDによる表示・編集用）(後から追加)
 	 * @return マスタ資格コード
 	 */
 	public String getMasterCode() {
@@ -101,23 +98,23 @@ public class Certification implements Serializable {
 	}
 
 	/**
-	 * 資格名（その他のみ）を取得
-	 * @return その他資格名
+	 * 資格ジャンル名/資格名を取得
+	 * @return (資格ジャンルか資格の)名称
 	 */
 	public String getCertiName() {
 		return certiName;
 	}
 
 	/**
-	 * 認定日を取得
-	 * @return 認定日
+	 * 取得日を取得
+	 * @return 取得日
 	 */
 	public String getCertiDate() {
 		return certiDate;
 	}
 
 	/**
-	 * 資格ジャンル名を取得
+	 * 資格ジャンル名を取得(表示・編集時用)
 	 * @return certiGenre
 	 */
 	public String getCertiGenre() {
@@ -125,21 +122,24 @@ public class Certification implements Serializable {
 	}
 
 	/**
-	 * @param employeeNumber セットする employeeNumber
+	 * 従業員番号を設定
+	 * @param employeeNumber 従業員番号
 	 */
 	public void setEmployeeNumber(String employeeNumber) {
 		this.employeeNumber = employeeNumber;
 	}
 
 	/**
-	 * @param certiCode セットする certiCode
+	 * 資格ジャンルコード/マスタ資格コードを設定
+	 * @param certiCode 資格ジャンルコード/マスタ資格コード
 	 */
 	public void setCertiCode(String certiCode) {
 		this.certiCode = certiCode;
 	}
 
 	/**
-	 * @param certiGenre セットする certiGenre
+	 * 資格ジャンル名を設定(表示・編集時用)
+	 * @param certiGenre 資格ジャンル名
 	 */
 	public void setCertiGenre(String certiGenre) {
 		this.certiGenre = certiGenre;
@@ -147,28 +147,32 @@ public class Certification implements Serializable {
 
 
 	/**
-	 * @param masterCode セットする masterCode
+	 * マスタ資格コードを設定(表示・編集時用)
+	 * @param masterCode マスタ資格コード
 	 */
 	public void setMasterCode(String masterCode) {
 		this.masterCode = masterCode;
 	}
 
 	/**
-	 * @param certiName セットする certiName
+	 * 資格ジャンル名/資格名を設定
+	 * @param certiName 資格ジャンル名/資格名
 	 */
 	public void setCertiName(String certiName) {
 		this.certiName = certiName;
 	}
 
 	/**
-	 * @param certiDate セットする certiDate
+	 * 取得日を設定
+	 * @param certiDate 取得日
 	 */
 	public void setCertiDate(String certiDate) {
 		this.certiDate = certiDate;
 	}
 
 	/**
-	 * @param ownedId セットする ownedId
+	 * 保有IDを設定
+	 * @param ownedId 保有ID
 	 */
 	public void setOwnedId(int ownedId) {
 		this.ownedId = ownedId;

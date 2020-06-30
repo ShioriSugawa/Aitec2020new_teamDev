@@ -9,7 +9,10 @@ import javax.servlet.ServletException;
 import dao.SkillsDAO;
 
 /**
- * @author Aitec
+ *  Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
+ * システム名：自己紹介システム<br>
+ * クラス概要：<br>
+ *  資格情報に関するビジネスロジックを記述するクラス<br>
  *
  */
 public class CertificationLogic {
@@ -27,6 +30,11 @@ public class CertificationLogic {
 
 
 	//資格ジャンルのコードと名前の一覧を取って来るやつ(マスタその他共用)
+	/**
+	 * 資格ジャンル(code/name)一覧を取得するメソッド
+	 * @return 資格ジャンル一覧
+	 * @throws ServletException
+	 */
 	public List<Certification>getCertiGenre()throws ServletException{
 		SkillsDAO sDAO=new SkillsDAO(connection);
 		List<Certification>genre=null;
@@ -40,6 +48,11 @@ public class CertificationLogic {
 	}
 
 	//資格のコードと名前の一覧を取って来るやつ
+	/**
+	 * マスタ資格(code/name)一覧を取得するメソッド
+	 * @return マスタ資格一覧
+	 * @throws ServletException
+	 */
 	public List<Certification>getCertiName()throws ServletException{
 		SkillsDAO sDAO=new SkillsDAO(connection);
 		List<Certification>names=null;
@@ -53,6 +66,13 @@ public class CertificationLogic {
 	}
 
 	//マスタ資格登録
+	/**
+	 * マスタ資格保有情報を登録するメソッド
+	 * @param eNum 従業員番号
+	 * @param mstCode マスタ資格コード
+	 * @param mstDate 取得日
+	 * @throws ServletException
+	 */
 	public void registerMst(String eNum,String mstCode,String mstDate)throws ServletException {
 		SkillsDAO sDAO=new SkillsDAO(connection);
 		try {
@@ -63,6 +83,14 @@ public class CertificationLogic {
 	}
 
 	//その他資格登録
+	/**
+	 * その他資格保有情報を登録するメソッド
+	 * @param eNum 従業員番号
+	 * @param othGenre その他ジャンルコード
+	 * @param othName その他資格名
+	 * @param othDate 取得日
+	 * @throws ServletException
+	 */
 	public void registerOth(String eNum,String othGenre,String othName,String othDate)throws ServletException {
 		SkillsDAO sDAO=new SkillsDAO(connection);
 		try {
@@ -73,6 +101,14 @@ public class CertificationLogic {
 	}
 
 	//その他資格の更新
+	/**
+	 * その他資格保有情報を編集するメソッド
+	 * @param ownedId その他資格保有ID
+	 * @param genCode その他ジャンルコード
+	 * @param othDate 取得日
+	 * @param othName その他資格名
+	 * @throws ServletException
+	 */
 	public void updateOth(int ownedId, String genCode, String othDate, String othName)throws ServletException {
 		SkillsDAO sDAO=new SkillsDAO(connection);
 		try{
@@ -83,6 +119,12 @@ public class CertificationLogic {
 	}
 
 	//マスタ資格の更新
+	/**
+	 * マスタ資格保有情報を編集するメソッド
+	 * @param ownedId マスタ資格保有ID
+	 * @param mcDate 取得日
+	 * @throws ServletException
+	 */
 	public void updateMst(int ownedId, String mcDate)throws ServletException {
 		SkillsDAO sDAO=new SkillsDAO(connection);
 		try{
@@ -93,6 +135,12 @@ public class CertificationLogic {
 	}
 
 	//その他資格内容取得
+	/**
+	 * その他資格保有データを取得するメソッド
+	 * @param ownedId その他資格保有ID
+	 * @return その他資格保有データ
+	 * @throws ServletException
+	 */
 	public Certification getOwnedOth(int ownedId)throws ServletException {
 		SkillsDAO sDAO=new SkillsDAO(connection);
 		Certification ownedOth=null;
@@ -105,6 +153,12 @@ public class CertificationLogic {
 	}
 
 	//マスタ資格内容取得
+	/**
+	 * マスタ資格保有データを取得するメソッド
+	 * @param ownedId その他資格保有ID
+	 * @return マスタ資格保有データ
+	 * @throws ServletException
+	 */
 	public Certification getOwnedMst(int ownedId)throws ServletException {
 		SkillsDAO sDAO=new SkillsDAO(connection);
 		Certification ownedMst=null;
@@ -117,6 +171,11 @@ public class CertificationLogic {
 	}
 
 
+	/**
+	 * マスタ資格保有情報を削除するメソッド
+	 * @param ownedId
+	 * @throws ServletException
+	 */
 	public void mstDelete(int mcId) throws ServletException{
 		SkillsDAO sDAO=new SkillsDAO(connection);
 		try {
@@ -128,6 +187,11 @@ public class CertificationLogic {
 	}
 
 
+	/**
+	 * その他資格保有情報を削除するメソッド
+	 * @param ownedId
+	 * @throws ServletException
+	 */
 	public void othDelete(int ocId) throws ServletException{
 		SkillsDAO sDAO=new SkillsDAO(connection);
 		try {

@@ -11,6 +11,7 @@ import model.Certification;
 import model.Skill;
 
 	/**
+	 * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
 	 * システム名：自己紹介システム<br>
 	 * クラス概要：<br>
 	 * 資格スキルの登録・更新・削除のデータベース操作を行うクラス
@@ -66,8 +67,10 @@ public class SkillsDAO {
 
 
 	/**
-	 * 保有その他資格IDによるその他資格保有データ1件の取得
-	 * @param ドキュメントは編集中
+	 * その他資格保有IDによるその他資格保有データ1件の取得
+	 * @param ownedId 情報を取得したいその他資格保有ID
+	 * @return 該当のその他資格保有データ1件
+	 * @throws SQLException
 	 */
 	public Certification getOwnedOth(int ownedId)throws SQLException {
 		Certification ownedOth=null;
@@ -94,6 +97,11 @@ public class SkillsDAO {
 	}
 
 	//スキルジャンルのリスト取得
+	/**
+	 * スキルジャンルのcodeとnameの一覧を取得
+	 * @return スキルジャンルリスト
+	 * @throws SQLException
+	 */
 	public List<Skill>getGenre()throws SQLException{
 		List<Skill> genreList=new ArrayList<>();
 		final String sql="SELECT * FROM skill_genre";
@@ -112,6 +120,11 @@ public class SkillsDAO {
 	}
 
 	//資格ジャンル（コード＆名）一覧用（マスタその他共用）
+	/**
+	 * 資格ジャンルのcodeとnameの一覧を取得
+	 * @return 資格ジャンルリスト
+	 * @throws SQLException
+	 */
 	public List<Certification> getCertiGenre()throws SQLException{
 		List<Certification> certiGenreList=new ArrayList<>();
 		final String sql="SELECT * FROM certification_genre";
@@ -130,6 +143,11 @@ public class SkillsDAO {
 	}
 
 	//マスタ資格（コード＆名）一覧用
+	/**
+	 * マスタ資格のcodeとnameの一覧を取得
+	 * @return マスタ資格リスト
+	 * @throws SQLException
+	 */
 	public List<Certification> getCertiName()throws SQLException{
 		List<Certification> certiNameList=new ArrayList<>();
 		final String sql="SELECT * FROM certification";
@@ -148,7 +166,7 @@ public class SkillsDAO {
 	}
 
 	/**
-	 * 保有スキルIDによるスキル保有データ1件の取得
+	 * スキル保有IDによるスキル保有データ1件の取得
 	 * @param owned_skill_id 取得したいスキル保有データのID
 	 * @return スキル保有データ1件
 	 * @throws SQLException
@@ -178,6 +196,13 @@ public class SkillsDAO {
 	}
 
 	//スキルアップデート
+	/**
+	 * スキル保有情報を更新するメソッド
+	 * @param ownedId スキル保有ID
+	 * @param skillGenre スキルジャンル
+	 * @param skillName スキル名
+	 * @throws SQLException
+	 */
 	public void updateSkill(int ownedId,String skillGenre,String skillName)throws SQLException{
 		//String ownedIdS=String.valueOf( ownedId );
 		String sql="UPDATE owned_skill SET skill_genre_code=?,skill_name=? WHERE owned_skill_id=?";
@@ -190,6 +215,14 @@ public class SkillsDAO {
 	}
 
 	//その他資格アップデート
+	/**
+	 * その他資格保有情報を更新するメソッド
+	 * @param ownedId その他資格保有ID
+	 * @param genCode 資格ジャンルコード
+	 * @param othDate 取得日
+	 * @param othName その他資格名
+	 * @throws SQLException
+	 */
 	public void updateOthCerti(int ownedId, String genCode, String othDate, String othName)throws SQLException {
 		String sql="UPDATE owned_other_certification "
 				+ "SET certification_genre_code=?,"
@@ -204,6 +237,12 @@ public class SkillsDAO {
 	}
 
 	//マスタ資格アップデート
+	/**
+	 * マスタ資格保有情報を更新するメソッド
+	 * @param ownedId マスタ資格保有ID
+	 * @param mcDate 取得日
+	 * @throws SQLException
+	 */
 	public void updateMstCerti(int ownedId, String mcDate)throws SQLException {
 		String sql="UPDATE owned_certification SET certification_date=? WHERE owned_certification_id=?";
 		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
@@ -214,6 +253,13 @@ public class SkillsDAO {
 	}
 
 	//マスタ資格登録
+	/**
+	 * マスタ資格保有情報を登録するメソッド
+	 * @param eNum 従業員番号
+	 * @param mstCode マスタ資格コード
+	 * @param mstDate 取得日
+	 * @throws SQLException
+	 */
 	public void registerMaster(String eNum, String mstCode, String mstDate)throws SQLException {
 		String sql="INSERT INTO owned_certification(employee_number,certification_code,certification_date)VALUES(?,?,?)";
 		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
@@ -225,6 +271,14 @@ public class SkillsDAO {
 	}
 
 	//その他資格登録
+	/**
+	 * その他資格保有情報を登録するメソッド
+	 * @param eNum 従業員番号
+	 * @param othGenre 資格ジャンルコード
+	 * @param othDate 取得日
+	 * @param othName その他資格名
+	 * @throws SQLException
+	 */
 	public void registerOther(String eNum, String othGenre, String othName, String othDate)throws SQLException {
 		String sql="INSERT INTO owned_other_certification(employee_number,certification_genre_code,other_certification_date,other_certification_name)VALUES(?,?,?,?)";
 		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
@@ -237,6 +291,13 @@ public class SkillsDAO {
 	}
 
 	//スキル登録
+	/**
+	 * スキル保有情報を登録するメソッド
+	 * @param eNum 従業員番号
+	 * @param sklGenre スキルジャンルコード
+	 * @param sklName スキル名
+	 * @throws SQLException
+	 */
 	public void registerSkill(String eNum, String sklGenre, String sklName)throws SQLException {
 		String sql="INSERT INTO owned_skill(employee_number,skill_genre_code,skill_name)VALUES(?,?,?)";
 		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
@@ -247,6 +308,11 @@ public class SkillsDAO {
 		}
 	}
 
+	/**
+	 * マスタ資格保有情報を削除するメソッド
+	 * @param mcId マスタ資格保有ID
+	 * @throws SQLException
+	 */
 	public void masterDelete(int mcId) throws SQLException{
 		String sql="DELETE FROM owned_certification WHERE owned_certification_id=?";
 		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
@@ -255,6 +321,11 @@ public class SkillsDAO {
 		}
 	}
 
+	/**
+	 * その他資格保有情報を削除するメソッド
+	 * @param ocId その他資格保有ID
+	 * @throws SQLException
+	 */
 	public void otherDelete(int ocId) throws SQLException{
 		String sql="DELETE FROM owned_other_certification WHERE owned_other_certification_id=?";
 		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
@@ -263,6 +334,11 @@ public class SkillsDAO {
 		}
 	}
 
+	/**
+	 * スキル保有情報を削除するメソッド
+	 * @param sklId スキル保有ID
+	 * @throws SQLException
+	 */
 	public void skillDelete(int sklId) throws SQLException{
 		String sql="DELETE FROM owned_skill WHERE owned_skill_id=?";
 		try(PreparedStatement pStmt = conn.prepareStatement(sql)){
