@@ -98,21 +98,27 @@ List<Integer> yearL=(List<Integer>)request.getAttribute("yearL");
 			</div>
 
 			<c:if test = "${ endError0 == true}"  >
-				<font color="red">
-					<p>以前の業務を選択した場合は終了日を選択してください。</p>
-				</font>
+				<p>
+					<font color="red">
+						以前の業務を選択した場合は終了日を選択してください。
+					</font>
+				</p>
 			</c:if>
 
 			<c:if test = "${ endError1 == true}"  >
-				<font color="red">
-					<p>現在の業務を選択した場合は終了日を選択しないでください。</p>
-				</font>
+				<p>
+					<font color="red">
+						現在の業務を選択した場合は終了日を選択しないでください。
+					</font>
+				</p>
 			</c:if>
 
 			<c:if test = "${ seError == true}"  >
-				<font color="red">
-					<p>終了日は開始日以降を選択してください。</p>
-				</font>
+				<p>
+					<font color="red">
+						終了日は開始日以降を選択してください。
+					</font>
+				</p>
 			</c:if>
 
 			<div class="situation">
