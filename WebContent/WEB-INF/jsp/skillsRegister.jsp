@@ -43,7 +43,7 @@
 		<c:if test="${reEmpty==false && regi.equals('c')}">
 			<font color="red"><c:out value="一覧の資格の登録には${emptyMessage}の入力が必須です" /></font><br></c:if>
 				<select name="mstInfo" id="raMc" disabled >
-				<option disabled <c:if test="${ reEmpty == true|| regi != 'c'}" >selected</c:if> >登録する資格を選択してください</option>
+				<option disabled <c:if test="${ empty sldMC|| regi != 'c'}" >selected</c:if> >登録する資格を選択してください</option>
 					<c:forEach var="slCerti" items="${cNameL}">
 						<option value="${slCerti.getCertiCode() += slCerti.getCertiName()}"
 						<c:if test="${ sldMC == slCerti.getCertiCode()}">selected</c:if>><c:out value="${slCerti.getCertiName()}" /></option>
@@ -52,7 +52,7 @@
 
 				<label>取得日：</label>
 					<select name="mstYear" id="raMy" disabled >
-					<option disabled <c:if test="${ reEmpty == true|| regi != 'c'}">selected</c:if> >年</option>
+					<option disabled <c:if test="${ empty sldMY|| regi != 'c'}">selected</c:if> >年</option>
 
 					<c:forEach var="MyL" items="${yearL}">
 						<option value="${MyL}"
@@ -62,7 +62,7 @@
 					</select>
 
 					<select name="mstMonth" id="raMm" disabled >
-						<option disabled <c:if test="${ reEmpty == true ||regi != 'c'}">selected</c:if> >月</option>
+						<option disabled <c:if test="${ empty sldMM ||regi != 'c'}">selected</c:if> >月</option>
 						<c:forEach begin="1" end="9" step="1" var="i">
 							<option value="0${i}" <c:if test="${i==sldMM }">selected</c:if> ><c:out value="${i}月" /></option>
 						</c:forEach>
@@ -80,7 +80,7 @@
 		<font color="red"><c:out value="手入力資格の登録には${emptyMessage}の入力が必須です" /></font><br></c:if>
 
 				<select name="othGenre" id="raOg" disabled >
-				<option disabled <c:if test="${ reEmpty == true ||regi != 'o'}">selected</c:if> >ジャンルを選択してください</option>
+				<option disabled <c:if test="${ empty sldOG ||regi != 'o'}">selected</c:if> >ジャンルを選択してください</option>
 					<c:forEach var="slGenre" items="${cGenL}">
 						<option value="${slGenre.getCertiCode() }" <c:if test="${sldOG== slGenre.getCertiCode()}">selected</c:if>><c:out value="${slGenre.getCertiName()}" /></option>
 					</c:forEach>
@@ -92,7 +92,7 @@
 
 				<label>取得日：</label>
 					<select name="othYear" id="raOy" disabled >
-					<option disabled <c:if test="${ reEmpty == true||regi != 'o' }">selected</c:if> >年</option>
+					<option disabled <c:if test="${ empty sldOY||regi != 'o' }">selected</c:if> >年</option>
 
 					<c:forEach var="OyL" items="${yearL}">
 						<option value="${OyL}"
@@ -102,7 +102,7 @@
 					</select>
 
 				<select name="othMonth" id="raOm" disabled >
-					<option disabled <c:if test="${ reEmpty == true||regi != 'o'}">selected</c:if>>月</option>
+					<option disabled <c:if test="${ empty sldOM||regi != 'o'}">selected</c:if>>月</option>
 					<c:forEach begin="1" end="9" step="1" var="i">
 						<option value="0${i}" <c:if test="${ i==sldOM}">selected</c:if>><c:out value="${i}月" /></option>
 					</c:forEach>
@@ -120,7 +120,7 @@
 		<font color="red"><c:out value="スキルの登録には${emptyMessage}の入力が必須です" /></font><br></c:if>
 
 				<select name="sklGenre" id="raSg" disabled >
-				<option disabled <c:if test="${ reEmpty == true || regi != 's'}">selected</c:if>>ジャンルを選択してください</option>
+				<option disabled <c:if test="${ empty sldSG || regi != 's'}">selected</c:if>>ジャンルを選択してください</option>
 					<c:forEach var="slGenre" items="${sGenL}">
 						<option value="${slGenre.getGenreCode() }" <c:if test="${sldSG== slGenre.getGenreCode()}">selected</c:if>><c:out value="${slGenre.getGenreName()}" /></option>
 					</c:forEach>
