@@ -18,9 +18,9 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>資格・スキル登録</title>
+		<title>資格・スキル登録</title><%-- --%>
 		<link href="./css/common.css" rel="stylesheet">
-        <link href="./css/register.css" rel="stylesheet">
+        <link href="./css/skillsRegister.css" rel="stylesheet">
         <link href="./css/lib/bootstrap.min.css" rel="stylesheet">
 	</head>
 
@@ -35,13 +35,17 @@
 
 		<form name="mosDate" class="register-form" action="/SelfIntroduction/SkillsRegister" method="post" >
 			<input type="hidden" name="employeeNumber" value="${eNum}">
-			<input type="radio" id="raM" name="regiSelect" value="mst"
+
+		<fieldset>
+			<legend><input type="radio" id="raM" name="regiSelect" value="mst"
 			<c:if test="${regi == 'c'}"> checked="checked"</c:if>>
-			<label for="raM">資格（一覧から選択）</label><br>
+			<label for="raM">資格（一覧から選択）</label>	</legend>
 		<c:if test="${!empty doubleMessage && regi.equals('c')}">
 			<font color="red"><c:out value="${doubleMessage}" /></font><br></c:if>
 		<c:if test="${reEmpty==false && regi.equals('c')}">
 			<font color="red"><c:out value="一覧の資格の登録には${emptyMessage}の入力が必須です" /></font><br></c:if>
+
+				<label for="raMc">資格名（選択してください）：</label>
 				<select name="mstInfo" id="raMc" disabled >
 				<option disabled <c:if test="${ empty sldMC|| regi != 'c'}" >selected</c:if> >登録する資格を選択してください</option>
 					<c:forEach var="slCerti" items="${cNameL}">
@@ -70,15 +74,16 @@
 							<option value="${i}" <c:if test="${ i==sldMM}">selected</c:if> ><c:out value="${i}月" /></option>
 						</c:forEach>
 					</select><br>
-				<br>
-
-
+				</fieldset>
+<br>
+<fieldset><legend>
 			<input type="radio" id="raO" name="regiSelect" value="oth"
 			<c:if test="${regi == 'o'}"> checked="checked"</c:if>>
-			<label for="raO">資格（一覧にない資格の登録）</label><br>
+			<label for="raO">資格（一覧にない資格の登録）</label></legend>
 		<c:if test="${reEmpty==false && regi.equals('o')}">
 		<font color="red"><c:out value="手入力資格の登録には${emptyMessage}の入力が必須です" /></font><br></c:if>
 
+				<label for="raOg">ジャンル（選択してください）：</label>
 				<select name="othGenre" id="raOg" disabled >
 				<option disabled <c:if test="${ empty sldOG ||regi != 'o'}">selected</c:if> >ジャンルを選択してください</option>
 					<c:forEach var="slGenre" items="${cGenL}">
@@ -86,8 +91,8 @@
 					</c:forEach>
 				</select><br>
 
-				<label for="raOn">資格名（100文字以内）</label><br>
-					<input disabled type="text" name="othName" id="raOn" value="${sldON }" maxlength='100' placeholder='資格名を入力してください'>
+				<label for="raOn">資格名（100文字以内）：</label>
+					<input disabled type="text" name="othName" id="raOn" value="${sldON }" size="40" maxlength='100' placeholder='資格名を入力してください'>
 					<br>
 
 				<label>取得日：</label>
@@ -110,15 +115,16 @@
 						<option value="${i}" <c:if test="${ i==sldOM}">selected</c:if>><c:out value="${i}月" /></option>
 					</c:forEach>
 				</select><br>
-			<br>
-
-
+			</fieldset>
+<br>
+<fieldset><legend>
 			<input type="radio" id="raS" name="regiSelect" value="skl"
 			<c:if test="${regi=='s'}"> checked="checked"</c:if>>
-			<label for="raS">スキル（ジャンルを選択して内容を記入）</label><br>
+			<label for="raS">スキル（ジャンルを選択して内容を記入）</label></legend>
 		<c:if test="${reEmpty==false && regi.equals('s')}">
 		<font color="red"><c:out value="スキルの登録には${emptyMessage}の入力が必須です" /></font><br></c:if>
 
+				<label for="raSg">ジャンル（選択してください）：</label>
 				<select name="sklGenre" id="raSg" disabled >
 				<option disabled <c:if test="${ empty sldSG || regi != 's'}">selected</c:if>>ジャンルを選択してください</option>
 					<c:forEach var="slGenre" items="${sGenL}">
@@ -127,15 +133,15 @@
 				</select><br>
 
 				<label for="raSn">スキルの内容（100文字以内）</label><br>
-					<textarea disabled name="sklName" id="raSn" maxlength='100' placeholder="スキルの内容を具体的に記入してください">${sldSN}</textarea>
-					<br>
+					<textarea disabled name="sklName" id="raSn" rows="4" cols="40" maxlength='100' placeholder="スキルの内容を具体的に記入してください">${sldSN}</textarea>
 
+</fieldset>
 				<br>
 
 			<input type="text" name="dummy" style="display:none;">
 
 			<input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${ eNum }'">
-			<input type="button" onclick="confirmRegister()" id="sklsRegi" class="button career-button" value="登録">
+			<input type="button" onclick="confirmRegister()" class="button register-button" id="sklsRegi" class="button career-button" value="登録">
 
 		</form>
 

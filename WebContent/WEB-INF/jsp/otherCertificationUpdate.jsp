@@ -36,7 +36,7 @@
 			<c:if test="${!empty emptyMessage }">
 			<font color="red"><c:out value="${emptyMessage}は入力必須です" /></font><br></c:if>
 			<label id="oN">資格名：</label><%-- cssは時間があれば後で書き足す --%>
-				<input type="text" name="certiName" id="oN" maxlength='100' placeholder='資格名を入力してください' value="${ oth.certiName }" required>
+				<input type="text" name="certiName" id="oN" size="40" maxlength='100' placeholder='資格名を入力してください' value="${ oth.certiName }" required>
 				<input type="button" class="button" value="削除" onclick="confirmDelete()"><br>
 
 			<label id="oG">ジャンル：</label>

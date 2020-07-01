@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+.register-form {
+  width : 600px;
+}
+.register-number {
+  width : 250px;
+  padding-bottom: 20px;
+}
+.register-number-input {
+  width : 250px;
+}
+.register-name {
+  width : 400px;
+  padding-bottom: 20px;
+}
+.register-name-input {
+  width : 400px;
+}
+.register-profile {
+  width : 400px;
+  padding-bottom: 20px;
+}
+.register-profile-input {
+  resize: none;
+  width : 400px;
+}
+.register-button {
+  width : 100px;
+  float : right;
+}

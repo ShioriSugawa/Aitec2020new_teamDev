@@ -18,7 +18,7 @@
 		<title>スキル情報編集</title>
 		<link href="./css/common.css" rel="stylesheet">
         <link href="./css/lib/bootstrap.min.css" rel="stylesheet">
-        <link href="./css/update.css" rel="stylesheet">
+        <link href="./css/skillsRegister.css" rel="stylesheet">
 	</head>
 
 	<body>
@@ -50,7 +50,7 @@
 		<c:if test="${!empty emptyMessage }">
 			<font color="red"><c:out value="${emptyMessage}は入力必須です" /></font><br></c:if>
 		<label id="sN">スキルの内容（100文字以内）</label><br>
-			<textarea name="skillName" id="sN" required maxlength='100' placeholder="スキルの内容を具体的に記入してください">${ oSkl.skillName }</textarea>
+			<textarea name="skillName" id="sN" required rows="4" cols="40" maxlength='100' placeholder="スキルの内容を具体的に記入してください">${ oSkl.skillName }</textarea>
 			<br>
             <input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${oSkl.employeeNumber}'">
             <input type="button" onclick="confirmUpdate()" class="button register-button" value="更新">
