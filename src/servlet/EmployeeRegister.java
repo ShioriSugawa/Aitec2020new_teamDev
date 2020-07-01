@@ -63,6 +63,8 @@ public class EmployeeRegister extends HttpServlet {
 		if(employeeDeployment.equals("所属を選択してください")) {
 			noInputError = true;
 			request.setAttribute("noInputError", noInputError);
+			Employee emp = new Employee(employeeNumber, employeeName, employeeProfile,employeeDeployment);
+			request.setAttribute("emp", emp);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
 			dispatcher.forward(request, response);
 		}
