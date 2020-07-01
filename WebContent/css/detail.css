@@ -4,13 +4,13 @@ label{
 	font-size: xx-large;
 }
 .basicInfo label{
-	font-size: x-large;
+	font-size: large;
 }
 .basicInfo{
 	max-width: 900px;
 }
 p{
-	font-size: large;
+	font-size: x-large;
 }
 
 .certificationList{
