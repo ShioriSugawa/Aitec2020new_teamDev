@@ -149,6 +149,7 @@ public class SkillsRegister extends HttpServlet {
 
 								RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillsRegister.jsp");
 								dispatcher.forward(request, response);
+								return;
 							}
 						}
 					}
@@ -173,6 +174,7 @@ public class SkillsRegister extends HttpServlet {
 							request.setAttribute("regi", regi);
 							RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillsRegister.jsp");
 							dispatcher.forward(request, response);
+							return;
 						}
 
 				}
@@ -212,6 +214,7 @@ public class SkillsRegister extends HttpServlet {
 						request.setAttribute("regi", regi);
 						RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillsRegister.jsp");
 						dispatcher.forward(request, response);
+						return;
 					}
 				}
 
@@ -241,6 +244,7 @@ public class SkillsRegister extends HttpServlet {
 						request.setAttribute("regi", regi);
 						RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/skillsRegister.jsp");
 						dispatcher.forward(request, response);
+						return;
 					}
 				}
 
