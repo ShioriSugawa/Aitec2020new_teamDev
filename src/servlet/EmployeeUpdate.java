@@ -48,9 +48,16 @@ public class EmployeeUpdate extends HttpServlet {
 			// 該当の従業員を取得
 			EmployeeLogic employeeLogic = new EmployeeLogic(connection);
 			Employee emp = employeeLogic.getEmployee(request.getParameter("employeeNumber"));
+			//2020/07/01 追加
+			String deployment = emp.getEmployeeDeployment();
+			if(deployment == null) {
+				deployment = "所属を選択してください";		//jspでのnullエラー対策
+			}
 
 			// リクエストスコープに保存
 			request.setAttribute("emp", emp);
+			// 2020/07/01 追加
+			request.setAttribute("deployment", deployment);
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		}
@@ -72,11 +79,19 @@ public class EmployeeUpdate extends HttpServlet {
 		//2020/6/16　追加
 		String employeeDeployment = request.getParameter("deployment");
 
+		//2020/07/01 追加
+		Employee emp = new Employee(employeeNumber, employeeName, employeeProfile, employeeDeployment);
+
 		// 2020/6/16 追加　 所属が未選択なら再度更新画面にフォワード
 		Boolean noInputError = false;
 		if(employeeDeployment.equals("所属を選択してください")) {
 			noInputError = true;
 			request.setAttribute("noInputError", noInputError);
+
+			// 2020/07/01 追加
+			request.setAttribute("emp", emp);
+			request.setAttribute("deployment", employeeDeployment);
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/update.jsp");
 			dispatcher.forward(request, response);
 		}

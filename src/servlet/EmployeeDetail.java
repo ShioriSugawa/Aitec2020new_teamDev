@@ -44,6 +44,7 @@ public class EmployeeDetail extends HttpServlet {
 				employeeNumber = (String)request.getAttribute("employeeNumber");
 			}
 			Employee emp = employeeLogic.getEmployee(employeeNumber);
+
 			List<Career> careerList = employeeLogic.getCareerList(employeeNumber);
 			List<Employee> masterCertificationList = employeeLogic.getMasterCertificationList(employeeNumber);
 			List<Employee> othersList = employeeLogic.getOtherCertificationList(employeeNumber);

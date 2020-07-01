@@ -7,6 +7,7 @@
 <%
 //リクエストスコープからインスタンスを取得
 Employee emp = (Employee) request.getAttribute("emp");
+String deployment = (String) request.getAttribute("deployment");
 %>
 
 <!DOCTYPE html>
@@ -40,24 +41,24 @@ Employee emp = (Employee) request.getAttribute("emp");
             <%--2020/6/16　追加 --%>
              <label>所属</label><br>
              <select name="deployment">
+				<%--部署nullの従業員を編集しようとする、または所属を選択してくださいを選択し更新するとJasperException 2020/07/01 修正 --%>
 				<option>所属を選択してください</option>
-				<%--部署nullの従業員を編集しようとするとJasperException --%>
-				<option <%if(emp.getEmployeeDeployment() != null && emp.getEmployeeDeployment().equals("本部")){%>
+				<option <%if(deployment.equals("本部")){%>
 					selected
 				<%}%>>本部</option>
-					<option  <%if(emp.getEmployeeDeployment() != null && emp.getEmployeeDeployment().equals("第1システム部")){%>
+					<option  <%if(deployment.equals("第1システム部")){%>
 					selected
 				<%}%>>第1システム部</option>
-					<option <%if(emp.getEmployeeDeployment() != null && emp.getEmployeeDeployment().equals("第2システム部")){%>
+					<option <%if(deployment.equals("第2システム部")){%>
 					selected
 				<%}%>>第2システム部</option>
-					<option <%if(emp.getEmployeeDeployment() != null && emp.getEmployeeDeployment().equals("第3システム部")){%>
+					<option <%if(deployment.equals("第3システム部")){%>
 					selected
 				<%}%>>第3システム部</option>
-					<option <%if(emp.getEmployeeDeployment() != null && emp.getEmployeeDeployment().equals("第4システム部")){%>
+					<option <%if(deployment.equals("第4システム部")){%>
 					selected
 				<%}%>>第4システム部</option>
-				<option <%if(emp.getEmployeeDeployment() != null && emp.getEmployeeDeployment().equals("その他")){%>
+				<option <%if(deployment.equals("その他")){%>
 					selected
 				<%}%>>その他</option>
 				</select>
