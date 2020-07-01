@@ -15,28 +15,23 @@
       <header>
         <div class="navbar navbar-light bg-light shadow-sm">
             <a href="#" class="navbar-brand">
-              <strong>${emp.employeeName}さん</strong>
+            	<strong>${emp.employeeName}さん</strong>
+        		<input type="button" class="button" value="一覧に戻る"  onclick="location.href='/SelfIntroduction/EmployeeList'">
             </a>
         </div>
       </header>
-	<input type="button" class="button" value="一覧に戻る"  onclick="location.href='/SelfIntroduction/EmployeeList'"><br><br><br>
-
 		<label>基本情報</label>
-		<input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/EmployeeUpdate?employeeNumber=${ emp.employeeNumber }'"><br><br>
+		<input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/EmployeeUpdate?employeeNumber=${ emp.employeeNumber }'">
 		<div class="basicInfo">
-			<label>従業員番号 </label><br>
-			<p> ${emp.employeeNumber }</p><br>
-			<label>氏名</label><br>
-			<p>${emp.employeeName }</p><br>
-			<label>所属 </label><br>
-			<p> ${emp.employeeDeployment }</p><br>
-			<label>プロフィール</label><br>
-			<p> ${emp.employeeProfile }</p>
+			<label><div class="item">従業員番号：</div><div class="content"> ${emp.employeeNumber }</div></label>
+			<label><div class="item">氏名： </div><div class="content"> ${emp.employeeName }</div></label><br>
+			<label><div class="item">所属 ：</div><div class="content"> ${emp.employeeDeployment }</div></label><br>
+			<label><div class="item">プロフィール：</div><div class="content"> ${emp.employeeProfile }</div></label>
 		</div>
 
 	<div class="certificationList">
 	<%--資格とスキルを別テーブルに表示 --%>
-		<br><br><label>資格一覧</label>
+		<br><label>資格一覧</label>
 		<input type="button" class="button" value="新規" onclick="location.href='/SelfIntroduction/SkillsRegister?employeeNumber=${emp.employeeNumber}&regi=c'"><br>
 		<br><table class="table table-bordered table-striped" >
 			<thead  class="thead-light">
@@ -81,7 +76,7 @@
 
 
 	<div class="skillList">
-		<br><br><label>スキル一覧</label>
+		<label>スキル一覧</label>
 		<input type="button" class="button" value="新規" onclick="location.href='/SelfIntroduction/SkillsRegister?employeeNumber=${emp.employeeNumber}&regi=s'"><br>
 		<br><table class="table table-bordered table-striped" >
 			<thead  class="thead-light">
@@ -103,7 +98,7 @@
 	</div>
 
 	<div class="careerList">
-		<br><br><label>業務経歴</label>
+		<br><label>業務経歴</label>
 		<input type="button" class="button" value="新規"  onclick="location.href='/SelfIntroduction/CareerRegister?employeeNumber=${ emp.employeeNumber }'"><br>
 		<br><table class="table table-bordered table-striped" >
 		<thead class="thead-light">
