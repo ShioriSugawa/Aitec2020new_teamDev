@@ -23,7 +23,7 @@
 		<label>基本情報</label>
 		<input type="button" class="button" value="編集"  onclick="location.href='/SelfIntroduction/EmployeeUpdate?employeeNumber=${ emp.employeeNumber }'">
 		<div class="basicInfo">
-			<label><div class="item">従業員番号：</div><div class="content"> ${emp.employeeNumber }</div></label>
+			<label><div class="item">従業員番号：</div><div class="content"> ${emp.employeeNumber }</div></label><br>
 			<label><div class="item">氏名： </div><div class="content"> ${emp.employeeName }</div></label><br>
 			<label><div class="item">所属 ：</div><div class="content"> ${emp.employeeDeployment }</div></label><br>
 			<label><div class="item">プロフィール：</div><div class="content"> ${emp.employeeProfile }</div></label>
@@ -98,7 +98,7 @@
 	</div>
 
 	<div class="careerList">
-		<br><label>業務経歴</label>
+		<label>業務経歴</label>
 		<input type="button" class="button" value="新規"  onclick="location.href='/SelfIntroduction/CareerRegister?employeeNumber=${ emp.employeeNumber }'"><br>
 		<br><table class="table table-bordered table-striped" >
 		<thead class="thead-light">
