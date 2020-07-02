@@ -60,7 +60,15 @@ public class EmployeeList extends HttpServlet {
 		try (Connection connection = ConnectionManager.getConnection()) {
 			// 従業員一覧を取得
 			EmployeeLogic employeeLogic = new EmployeeLogic(connection);
-			List<Employee> empList = employeeLogic.getEmployeeList();
+
+			// 2020/7/2 追加　検索後詳細画面へ遷移後一覧に戻った際に検索結果保持させる
+			HttpSession session = request.getSession();
+			@SuppressWarnings("unchecked")
+			List<Employee> empList =  (ArrayList<Employee>) session.getAttribute("empList");
+			//初期表示などでセッションスコープに値が入っていない場合新規作成
+			if(empList == null) {
+				empList = employeeLogic.getEmployeeList();
+			}
 
 			// 2020/6/18　追加
 			//検索項目をDBより取得
@@ -72,7 +80,6 @@ public class EmployeeList extends HttpServlet {
 
 
 			//セッションスコープに保存
-			HttpSession session = request.getSession();
 			session.setAttribute("empList", empList);
 			// リクエストスコープに保存
 			request.setAttribute("genreList", genreList);
