@@ -67,7 +67,7 @@ String deployment = (String) request.getAttribute("deployment");
 			<%--2020/6/15 所属未選択で遷移されて来たらエラーメッセージ表示 --%>
 			<c:if test = "${ noInputError == true }"  >
 	            <font color="red">
-					<p>所属を未選択です。</p>
+					<p>所属が未選択です。</p>
 	            </font>
         	</c:if>
             <div class="update-profile">
