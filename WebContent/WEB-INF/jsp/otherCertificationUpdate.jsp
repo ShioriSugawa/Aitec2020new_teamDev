@@ -59,7 +59,7 @@
 							<c:out value="${MyL}年" />
 						</option>
 					</c:forEach>
-					<option value="70以前" <c:if test="${0 == sYeI}">selected</c:if>>1970年～</option>
+					<option value="70以前" <c:if test="${0 == sYeI}">selected</c:if>>1970年以前</option>
 				</select>
 
 				<select name="othMonth" required>
