@@ -24,7 +24,7 @@
         <link href="./css/lib/bootstrap.min.css" rel="stylesheet">
 	</head>
 
-	<body>
+	<body class="container-fluid">
 		<header>
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<a href="#" class="navbar-brand">

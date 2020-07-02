@@ -16,10 +16,10 @@
 		<title>資格情報編集</title>
 		<link href="./css/common.css" rel="stylesheet">
 		<link href="./css/lib/bootstrap.min.css" rel="stylesheet">
-		<link href="./css/update.css" rel="stylesheet">
+		<link href="./css/skillsRegister.css" rel="stylesheet">
 	</head>
 
-	<body>
+	<body class="container-fluid">
 		<header>
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<a href="#" class="navbar-brand">

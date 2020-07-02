@@ -18,7 +18,7 @@
 		<link href="./css/update.css" rel="stylesheet">
 	</head>
 
-	<body>
+	<body class="container-fluid">
 		<header>
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<a href="#" class="navbar-brand">
@@ -33,7 +33,7 @@
 
 		<label>ジャンル：${mst.certiGenre}</label><br>
 
-		<form name="mUp" action="/SelfIntroduction/SkillsUpdate" method="post" >
+		<form name="mUp" class="update-form" action="/SelfIntroduction/SkillsUpdate" method="post" >
 
 			<input type="hidden" name="MownedId" value="${mst.ownedId}">
 			<input type="hidden" name="employeeNumber" value="${mst.employeeNumber }">
@@ -65,7 +65,7 @@
 			<br>
 
 			<input type="button" class="button" value="キャンセル"  onclick="location.href='/SelfIntroduction/EmployeeDetail?employeeNumber=${mst.employeeNumber}'">
-			<input type="button" class="button register-button" value="更新" onclick="confirmUpdate()">
+			<input type="button" class="button update-button" value="更新" onclick="confirmUpdate()">
 
 		</form>
 
