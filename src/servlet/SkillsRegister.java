@@ -126,7 +126,7 @@ public class SkillsRegister extends HttpServlet {
 					String mstInfo =request.getParameter("mstInfo");
 					String mstYear =request.getParameter("mstYear");
 					String mstMonth =request.getParameter("mstMonth");
-					String mstDate=mstYear+"/"+mstMonth;
+					String mstDate="";
 
 					List<Employee> mstL=eLogic.getMasterCertificationList(eNum);
 					String mstCode="";
@@ -159,6 +159,12 @@ public class SkillsRegister extends HttpServlet {
 
 						if(mstYear==null||mstMonth==null) {
 							emptyMessage+="「取得日」";
+						}else {
+							if(mstYear.equals("1970")) {
+								mstDate="1970年以前";
+							}else{
+								mstDate=mstYear+"/"+mstMonth;
+							}
 						}
 						if(emptyMessage.equals("")&&doubleMessage.equals("")) {
 							// マスタ資格保有情報を登録
@@ -184,7 +190,7 @@ public class SkillsRegister extends HttpServlet {
 					String othName =request.getParameter("othName");
 					String othYear =request.getParameter("othYear");
 					String othMonth =request.getParameter("othMonth");
-					String othDate=othYear+"/"+othMonth;
+					String othDate="";
 
 					if(othGenre==null) {
 						emptyMessage += "「資格ジャンル」";
@@ -198,7 +204,10 @@ public class SkillsRegister extends HttpServlet {
 					}
 					if(othYear==null||othMonth==null) {
 						emptyMessage += "「取得日」";
-					}
+					}else {
+						if(othYear.equals("1970")) {
+							othDate="1970年以前";
+						}else{othDate=othYear+"/"+othMonth;}}
 					if(emptyMessage.equals("")){
 						// その他資格保有情報を登録
 					cLogic.registerOth(eNum,othGenre,othName,othDate);

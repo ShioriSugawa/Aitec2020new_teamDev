@@ -65,13 +65,20 @@ public class SkillsUpdate extends HttpServlet {
 			if(mc!=null) {
 				int mcI = Integer.parseInt(mc);
 				Certification mst=cLogic.getOwnedMst(mcI);
-				String sldYear=mst.getCertiDate().substring(0,4);
-				String sldMonth=mst.getCertiDate().substring(5);
+				String sldDate=mst.getCertiDate();
+				String sldYear, sldMonth;
+				if(sldDate.equals("1970年以前")) {
+					sldYear="1970";
+					sldMonth="01";
+				}else {
+					sldYear=sldDate.substring(0,4);
+					sldMonth=sldDate.substring(5);}
 				int sYeI=0;
-				if(!(sldYear.equals("70以前"))) {
+				int sMonI=0;
+				//if(!(sldYear.equals("1970"))) {
 					sYeI = Integer.parseInt(sldYear);
-				}
-				int sMonI = Integer.parseInt(sldMonth);
+					sMonI = Integer.parseInt(sldMonth);
+				//}
 				// リクエストスコープに保存
 				request.setAttribute("mst", mst);
 				request.setAttribute("sYeI", sYeI);
@@ -86,12 +93,16 @@ public class SkillsUpdate extends HttpServlet {
 				int ocI = Integer.parseInt(oc);
 				Certification oth=cLogic.getOwnedOth(ocI);
 				List<Certification>cGenL=cLogic.getCertiGenre();
-				String sldYear=oth.getCertiDate().substring(0,4);
-				String sldMonth=oth.getCertiDate().substring(5);
-				int sYeI=0;
-				if(!(sldYear.equals("70以前"))) {
-					sYeI = Integer.parseInt(sldYear);
+				String sldDate=oth.getCertiDate();
+				String sldYear, sldMonth;
+				if(sldDate.equals("1970年以前")) {
+					sldYear="1970";
+					sldMonth="01";
+				}else {
+					sldYear=oth.getCertiDate().substring(0,4);
+					sldMonth=oth.getCertiDate().substring(5);
 				}
+				int sYeI = Integer.parseInt(sldYear);
 				int sMonI = Integer.parseInt(sldMonth);
 				// リクエストスコープに保存
 				request.setAttribute("cGenL", cGenL);
@@ -158,7 +169,12 @@ public class SkillsUpdate extends HttpServlet {
 						String mstYear=request.getParameter("mstYear");
 						String mstMonth=request.getParameter("mstMonth");
 						int mcId= Integer.parseInt(mcIdS);
-						String mstDate;mstDate=mstYear+"/"+mstMonth;
+						String mstDate="";
+						if(mstYear.equals("1970")) {
+							mstDate="1970年以前";
+						}else{
+							mstDate=mstYear+"/"+mstMonth;
+						}
 						// 該当のスキル記述を更新
 						try {
 							cLogic.updateMst(mcId,mstDate);
@@ -176,18 +192,20 @@ public class SkillsUpdate extends HttpServlet {
 						String othMonth=request.getParameter("othMonth");
 						String othName=request.getParameter("certiName");
 						int othId = Integer.parseInt(othIdS);
+						String othDate;
 						int sYeI=0;
 						int sMonI=0;
 						List<Certification>cGenL=cLogic.getCertiGenre();
 						if(othName.isBlank()) {
 							emptyMessage+="資格名";
-							if(!(othYear.equals("70以前"))) {
-								sYeI = Integer.parseInt(othYear);
-							}
+							sYeI = Integer.parseInt(othYear);
 							sMonI = Integer.parseInt(othMonth);
 						}
 						if(emptyMessage.equals("")) {
-							String othDate=othYear+"/"+othMonth;
+							if(othYear.equals("1970")) {
+								othDate="1970年以前";
+							}else{
+								othDate=othYear+"/"+othMonth;}
 							try {
 								// 該当のスキル記述を更新
 								cLogic.updateOth(othId,genCode,othDate,othName);
