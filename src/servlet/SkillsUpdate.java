@@ -21,8 +21,7 @@ import model.Skill;
 import model.SkillLogic;
 
 /**
- * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
- * Copyright 2020 AitecTreasure＆Toraja Co.,Ltd<br>
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED/AitecTreasure＆Toraja Co.,Ltd<br>
  * システム名：自己紹介システム
  * クラス概要：スキル資格編集のコントローラクラス
  */

@@ -3,8 +3,7 @@ package model;
 import java.io.Serializable;
 
 /**
- * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
- * Copyright 2020 AitecTreasure＆Toraja Co.,Ltd<br>
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED/AitecTreasure＆Toraja Co.,Ltd<br>
  * システム名：自己紹介システム<br>
  * クラス概要：スキルのJavaBeansクラス<br>
  */
