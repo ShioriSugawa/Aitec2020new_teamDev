@@ -16,8 +16,7 @@ import dao.CareerDAO;
 import model.Career;
 
 /**
- * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED<br>
- * システム名：自己紹介システム<br>
+ * Copyright 2020 FUJITSU SOCIAL SCIENCE LABORATORY LIMITED/AitecTresur＆Toraja Co.,Ltd<br>
  * クラス概要：<br>
  * CareerDAOの一覧/登録/更新/削除の単体テストクラス<br>
  */
