@@ -65,8 +65,9 @@ public class EmployeeList extends HttpServlet {
 			HttpSession session = request.getSession();
 			@SuppressWarnings("unchecked")
 			List<Employee> empList =  (ArrayList<Employee>) session.getAttribute("empList");
+			String result = request.getParameter("result");
 			//初期表示などでセッションスコープに値が入っていない場合新規作成
-			if(empList == null) {
+			if(empList == null || result != null) {
 				empList = employeeLogic.getEmployeeList();
 			}
 
